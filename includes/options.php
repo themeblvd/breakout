@@ -87,6 +87,19 @@ function breakout_options() {
 			'std'		=> 'denim',
 			'type' 		=> 'select',
 			'options'	=> $texture_options
+		),
+		array(
+			'name' 		=> __( 'Socia Media Button Style', 'themeblvd' ),
+			'desc'		=> __( 'Select the style for your social media buttons depending on the background color you chose. <em>Light</em> will look good on dark background, <em>Dark</em> will look good on a light background, and <em>Grey</em> will look good on a white background.', 'themeblvd' ),
+			'id'		=> 'social_media_style',
+			'std'		=> 'grey',
+			'type' 		=> 'select',
+			'options'	=> array(
+				'light' => __( 'Light', 'themeblvd' ),
+				'dark' 	=> __( 'Dark', 'themeblvd' ),
+				'grey' 	=> __( 'Grey', 'themeblvd' ),
+				'color' => __( 'Color', 'themeblvd' )
+			)
 		)
 	);
 	themeblvd_add_option_section( 'styles', 'header_styles', __( 'Header', 'themeblvd' ), null, $header_options, false );
@@ -201,11 +214,11 @@ function breakout_options() {
 		'desc' 		=> __( 'Configure the social media buttons you\'d like to show in the header of your site. Check the buttons you\'d like to use and then input the full URL you\'d like the button to link to in the corresponding text field that appears.<br><br>Example: http://twitter.com/jasonbobich<br><br><em>Note: On the "Email" button, if you want it to link to an actual email address, you would input it like this:<br><br><strong>mailto:you@youremail.com</strong></em><br><br><em>Note: If you\'re using the RSS button, your default RSS feed URL is:<br><br><strong>'.get_feed_link( 'feed' ).'</strong></em>', 'themeblvd' ),
 		'id' 		=> 'social_media',
 		'std' 		=> array(
-			'includes' =>  array( 'facebook', 'google', 'twitter', 'rss' ),
-			'facebook' => 'http://facebook.com/jasonbobich',
-			'google' => 'https://plus.google.com/116531311472104544767/posts',
-			'twitter' => 'http://twitter.com/jasonbobich',
-			'rss' => get_bloginfo('rss_url')
+			'includes' 	=>  array( 'facebook', 'google', 'twitter', 'rss' ),
+			'facebook' 	=> 'http://facebook.com/jasonbobich',
+			'google' 	=> 'https://plus.google.com/116531311472104544767/posts',
+			'twitter' 	=> 'http://twitter.com/jasonbobich',
+			'rss' 		=> get_feed_link()
 		),
 		'type' 		=> 'social_media'
 	);
@@ -397,6 +410,18 @@ function breakout_customizer(){
 			'id'		=> 'header_tagline',
 			'type' 		=> 'text',
 			'transport'	=> 'postMessage'
+		),
+		'social_media_style' => array(
+			'name' 		=> __( 'Socia Media Button Style', 'themeblvd' ),
+			'id'		=> 'social_media_style',
+			'std'		=> 'grey',
+			'type' 		=> 'select',
+			'options'	=> array(
+				'light' => __( 'Light', 'themeblvd' ),
+				'dark' 	=> __( 'Dark', 'themeblvd' ),
+				'grey' 	=> __( 'Grey', 'themeblvd' ),
+				'color' => __( 'Color', 'themeblvd' )
+			)
 		)
 	);
 	themeblvd_add_customizer_section( 'header', __( 'Header', 'themeblvd' ), $header_options, 2 );
