@@ -220,7 +220,7 @@ class TB_Widget_Contact extends WP_Widget {
         $instance['link_4_icon'] = strip_tags($new_instance['link_4_icon']);
         $instance['link_4_url'] = strip_tags($new_instance['link_4_url']);
         $instance['link_5_icon'] = strip_tags($new_instance['link_5_icon']);
-        $instance['link_5_url'] = strip_tags($new_instance['link_4_url']);
+        $instance['link_5_url'] = strip_tags($new_instance['link_5_url']);
         $instance['link_6_icon'] = strip_tags($new_instance['link_6_icon']);
         $instance['link_6_url'] = strip_tags($new_instance['link_6_url']);
         return $instance;

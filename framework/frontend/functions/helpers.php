@@ -539,6 +539,46 @@ if( ! function_exists( 'themeblvd_text_color' ) ) {
 }
 
 /**
+ * Darken or Lighten a hex color
+ * 
+ * Huge thank you to Jonas John for providing this:
+ * http://www.jonasjohn.de/snippets/php/darker-color.htm
+ *
+ * @since 2.0.5
+ *
+ * @param string $color Hex color to adjust
+ * @param string $difference Amount to adjust color
+ * @param string $direction 'lighten' or 'darken'
+ * @return string $new_color Adjusted color
+ */
+
+if( ! function_exists( 'themeblvd_adjust_color' ) ) {
+	function themeblvd_adjust_color( $color, $difference = 20, $direction = 'darken' ) {
+		
+		// Pop off '#' from start.
+		$color = explode( '#', $color );
+		$color = $color[1];
+		
+		// Send back in black if it's not a properly 
+		// formatted 6-digit hex
+		if ( strlen( $color ) != 6 )
+			return '#000000';
+		
+		// Build new color
+		$new_color = '';
+		for ( $x = 0; $x < 3; $x++ ) {
+		    if( $direction == 'lighten' )
+		    	$c = hexdec( substr( $color, ( 2*$x ), 2 ) ) + $difference;
+		    else
+				$c = hexdec( substr( $color, ( 2*$x ), 2 ) ) - $difference;
+		    $c = ( $c < 0 ) ? 0 : dechex( $c );
+		    $new_color .= ( strlen( $c ) < 2 ) ? '0'.$c : $c;
+		}
+		return '#'.$new_color;
+	}	
+}
+
+/**
  * Get additional classes for elements.
  *
  * @since 2.0.3

@@ -1,5 +1,13 @@
 == Breakout Changelog ==
 
+= 1.0.2 =
+
+* Fixed initial bug with "Theme Blvd Simple Contact" widget where the field titled "Link #5 URL" was not saving properly.
+
+Effected Files:
+/style.css
+/framework/sidebars/widgets/tb-widget-contact.php
+
 = 1.0.1 =
 
 * Now when you turn off responsive design in your Theme Options, your site will have a fixed 960px width across all devices.
