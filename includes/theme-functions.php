@@ -436,10 +436,11 @@ if ( !function_exists( 'breakout_social_media' ) ) :
  */
 function breakout_social_media() {
 	$header_text = themeblvd_get_option( 'header_tagline' );
+	$style = themeblvd_get_option( 'social_media_style', null, 'light' );
 	?>
 	<div class="header-addon<?php if($header_text) echo ' header-addon-with-text'; if(has_action('breakout_header_wpml')) echo ' header-addon-with-wpml';?>">
 		<div class="social-media">
-			<?php echo themeblvd_contact_bar(); ?>
+			<?php echo themeblvd_contact_bar( themeblvd_get_option('social_media'), $style ); ?>
 		</div><!-- .social-media (end) -->
 		<?php do_action('breakout_header_wpml'); ?>
 		<?php if( $header_text ) : ?>

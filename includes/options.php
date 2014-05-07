@@ -92,7 +92,7 @@ function breakout_options() {
 			'name' 		=> __( 'Socia Media Button Style', 'themeblvd' ),
 			'desc'		=> __( 'Select the style for your social media buttons depending on the background color you chose. <em>Light</em> will look good on dark background, <em>Dark</em> will look good on a light background, and <em>Grey</em> will look good on a white background.', 'themeblvd' ),
 			'id'		=> 'social_media_style',
-			'std'		=> 'grey',
+			'std'		=> 'light',
 			'type' 		=> 'select',
 			'options'	=> array(
 				'light' => __( 'Light', 'themeblvd' ),
