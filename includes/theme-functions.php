@@ -479,17 +479,17 @@ if( ! function_exists( 'breakout_footer_sub_content' ) ) :
  */
 function breakout_footer_sub_content() {
 	?>
-	<div id="footer_sub_content">
-		<div class="container">
-			<div class="content">
+	<div id="footer_sub_content" class="clearfix">
+		<div class="footer_sub_content-inner">
+			<div class="footer_sub_content-content">
 				<div class="copyright">
 					<p>
 						<span><?php echo apply_filters( 'themeblvd_footer_copyright', themeblvd_get_option( 'footer_copyright' ) ); ?></span>
 					</p>
 				</div><!-- .copyright (end) -->
 				<div class="clear"></div>
-			</div><!-- .content (end) -->
-		</div><!-- .container (end) -->
+			</div><!-- .footer_sub_content-content (end) -->
+		</div><!-- .footer_sub_content-inner (end) -->
 	</div><!-- .footer_sub_content (end) -->
 	<?php
 }
