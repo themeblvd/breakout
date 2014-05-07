@@ -58,7 +58,7 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 						 	$sidebar_layout == 'full_width' ? $size = 'tb_large' : $size = 'tb_medium';
 						 	break;
 						 case 'small' :
-						 	$size = 'small';
+						 	$size = 'tb_small';
 						 	break;
 					}
 				}			
@@ -69,6 +69,8 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 			$size = null;
 		if( $size == 'full' )
 			$location == 'featured' || $sidebar_layout == 'full_width' ? $size = 'tb_large' : $size = 'tb_medium';
+		if( $size == 'small' )
+			$size = 'tb_small';
 		
 		// If $size was set to null, it means the post 
 		// thumb should be hidden. So, return nothing.
@@ -114,12 +116,17 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 			}
 		}
 		
+		// Image check
 		$image = wp_get_attachment_image_src( $attachment_id, $size );
-		$classes = 'attachment-'.$size.' wp-post-image';
+		
+		// Attributes
+		$size_class = $size;
+		if( $size_class == 'tb_small' ) $size_class = 'small';
+		$classes = 'attachment-'.$size_class.' wp-post-image';
 		if( is_single() ) $title = ' title="'.get_the_title($post->ID).'"';
 		
 		// Final HTML output
-		if( $image && $size ) {
+		if( has_post_thumbnail( $post->ID ) ) {
 			$output .= '<div class="featured-image-wrapper '.$classes.'">';
 			$output .= '<div class="featured-image">';
 			$output .= '<div class="featured-image-inner">';
@@ -130,9 +137,11 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 			$output .= '</div><!-- .featured-image (end) -->';
 			$output .= '</div><!-- .featured-image-wrapper (end) -->';
 		}
+		
 		// Apply filters if allowed
 		if( $allow_filters )
 			$output = apply_filters( 'themeblvd_post_thumbnail', $output, $location, $size, $link );
+		
 		// Return final output
 		return $output;
 	}

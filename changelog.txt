@@ -1,6 +1,20 @@
 Breakout Changelog
 ==================
 
+1.1.2
+-----
+
+* Fixed issues with small thumbnails in post lists and archives after previous update. -- After making this update, although it is not required in all cases, it's suggested that you re-generate your thumbnails.
+* Adjusted header social icons so they open in a new window if they aren't the email icon.
+
+### Effected Files ###
+
+* /style.css
+* /framework/frontend/functions/helpers.php
+* /framework/frontend/functions/parts.php
+
+--------------------------------------------------------------
+
 1.1.1
 -----
 
