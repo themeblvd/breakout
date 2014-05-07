@@ -27,9 +27,8 @@ if( ! function_exists( 'breakout_options' ) ) {
 				'std'		=> 'content_light',
 				'type' 		=> 'select',
 				'options'	=> array(
-					'content_dark' 			=> __( 'Dark', 'themeblvd' ),
-					'content_light' 		=> __( 'Light', 'themeblvd' ),
-					'content_tan' 			=> __( 'Tan', 'themeblvd' )
+					'content_dark' 	=> __( 'Dark', 'themeblvd' ),
+					'content_light' => __( 'Light', 'themeblvd' )
 				)
 			),
 			array(

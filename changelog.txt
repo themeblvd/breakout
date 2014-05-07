@@ -4,6 +4,9 @@ Breakout Changelog
 2.0.0
 -----
 
+TEMP NOTES:
+-Removed "Tan" style option
+
 --------------------------------------------------------------
 
 1.1.4
