@@ -89,10 +89,10 @@
 .content_dark #access li li a > .sf-sub-indicator {
 	background-image:url(../images/sf-arrows-ffffff.png);
 }
-.content_dark #featured .standard-slider-wrapper .prev, 
-.content_dark #featured .standard-slider-wrapper .next, 
-.content_dark #featured .standard-slider-wrapper .pause, 
-.content_dark #featured .standard-slider-wrapper .play { 
+.content_dark #featured .standard-slider-wrapper .flex-prev, 
+.content_dark #featured .standard-slider-wrapper .flex-next, 
+.content_dark #featured .standard-slider-wrapper .flex-pause, 
+.content_dark #featured .standard-slider-wrapper .flex-play { 
 	background-image: url(../images/colors/dark/slider-arrows.png);
 }
 .content_dark #wrapper,
@@ -208,14 +208,14 @@
 .content_dark .widget-area-fixed .themeblvd-search input[type="submit"] {
 	background-image: url(../../framework/frontend/assets/images/parts/search-ffffff.png);
 }
-.content_dark #content .standard-slider-wrapper .prev, 
-.content_dark #content .standard-slider-wrapper .next, 
-.content_dark #content .standard-slider-wrapper .pause, 
-.content_dark #content .standard-slider-wrapper .play,
-.content_dark #featured_below .standard-slider-wrapper .prev, 
-.content_dark #featured_below .standard-slider-wrapper .next, 
-.content_dark #featured_below .standard-slider-wrapper .pause, 
-.content_dark #featured_below .standard-slider-wrapper .play { 
+.content_dark #content .standard-slider-wrapper .flex-prev, 
+.content_dark #content .standard-slider-wrapper .flex-next, 
+.content_dark #content .standard-slider-wrapper .flex-pause, 
+.content_dark #content .standard-slider-wrapper .flex-play,
+.content_dark #featured_below .standard-slider-wrapper .flex-prev, 
+.content_dark #featured_below .standard-slider-wrapper .flex-next, 
+.content_dark #featured_below .standard-slider-wrapper .flex-pause, 
+.content_dark #featured_below .standard-slider-wrapper .flex-play { 
 	background-image: url(../../framework/frontend/assets/images/elements/arrows-ffffff.png);
 }
 .content_dark .element-tweet .tweet-icon {
@@ -387,10 +387,10 @@
 .content_tan #access li li a > .sf-sub-indicator {
 	background-image:url(../images/sf-arrows-505050.png);
 }
-.content_tan #featured .standard-slider-wrapper .prev, 
-.content_tan #featured .standard-slider-wrapper .next, 
-.content_tan #featured .standard-slider-wrapper .pause, 
-.content_tan #featured .standard-slider-wrapper .play { 
+.content_tan #featured .standard-slider-wrapper .flex-prev, 
+.content_tan #featured .standard-slider-wrapper .flex-next, 
+.content_tan #featured .standard-slider-wrapper .flex-pause, 
+.content_tan #featured .standard-slider-wrapper .flex-play { 
 	background-image: url(../../framework/frontend/assets/images/elements/arrows-505050.png);
 }
 .content_tan #wrapper,
@@ -490,14 +490,14 @@
 .content_tan .widget-area-fixed .themeblvd-search input[type="submit"] {
 	background-image: url(../../framework/frontend/assets/images/parts/search-505050.png);
 }
-.content_tan #content .standard-slider-wrapper .prev, 
-.content_tan #content .standard-slider-wrapper .next, 
-.content_tan #content .standard-slider-wrapper .pause, 
-.content_tan #content .standard-slider-wrapper .play,
-.content_tan #featured_below .standard-slider-wrapper .prev, 
-.content_tan #featured_below .standard-slider-wrapper .next, 
-.content_tan #featured_below .standard-slider-wrapper .pause, 
-.content_tan #featured_below .standard-slider-wrapper .play { 
+.content_tan #content .standard-slider-wrapper .flex-prev, 
+.content_tan #content .standard-slider-wrapper .flex-next, 
+.content_tan #content .standard-slider-wrapper .flex-pause, 
+.content_tan #content .standard-slider-wrapper .flex-play,
+.content_tan #featured_below .standard-slider-wrapper .flex-prev, 
+.content_tan #featured_below .standard-slider-wrapper .flex-next, 
+.content_tan #featured_below .standard-slider-wrapper .flex-pause, 
+.content_tan #featured_below .standard-slider-wrapper .flex-play { 
 	background-image: url(../../framework/frontend/assets/images/elements/arrows-505050.png);
 }
 .content_tan .element-tweet .tweet-icon {

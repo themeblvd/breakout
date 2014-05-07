@@ -15,7 +15,12 @@ if( ! function_exists( 'themeblvd_standard_slider_js' ) ) {
 		<script>
 		jQuery(document).ready(function($) {
 			$(window).load(function() {
+				
+				// Initiate flexslider for this slider.
 				$('#tb-slider-<?php echo $id; ?> .flexslider').flexslider({
+					useCSS: false, // Avoid CSS3 glitches
+					video: true, // Avoid CSS3 glitches
+					smoothHeight: true,
 					animation: "<?php echo $options['fx']; ?>",
 					// pauseOnHover: true - This was replaced with a custom solution to work with other controls, see below with "pause_on_hover" option.
 					<?php if( $options['timeout'] ) : ?>
@@ -28,49 +33,53 @@ if( ! function_exists( 'themeblvd_standard_slider_js' ) ) {
 					controlsContainer: ".slides-wrapper-<?php echo $id; ?>",
 					start: function(slider) {
         				<?php if( $options['pause_play'] && $options['timeout'] != '0' ) : ?>
-	        				$('#tb-slider-<?php echo $id; ?> .flex-direction-nav li:first-child').after('<li><a class="pause" href="#">Pause</a></li><li><a class="play" href="#" style="display:none">Play</a></li>');
-	        				$('#tb-slider-<?php echo $id; ?> .pause').click(function(){
+		    				$('#tb-slider-<?php echo $id; ?> .flex-direction-nav li:first-child').after('<li><a class="flex-pause" href="#">Pause</a></li><li><a class="flex-play" href="#" style="display:none">Play</a></li>');
+		    				$('#tb-slider-<?php echo $id; ?> .flex-pause').click(function(){
 								slider.pause();
 								$(this).hide();
-								$('#tb-slider-<?php echo $id; ?> .play').show();
+								$('#tb-slider-<?php echo $id; ?> .flex-play').show();
 								return false;
 							});
-							$('#tb-slider-<?php echo $id; ?> .play').click(function(){
-								slider.resume();
+							$('#tb-slider-<?php echo $id; ?> .flex-play').click(function(){
+								// slider.resume(); currently has a bug with FlexSlider 2.0, so will do the next line instead.
+								$('#tb-slider-<?php echo $id; ?> .flexslider').flexslider('play');
 								$(this).hide();
-								$('#tb-slider-<?php echo $id; ?> .pause').show();
+								$('#tb-slider-<?php echo $id; ?> .flex-pause').show();
 								return false;
 							});
 							$('#tb-slider-<?php echo $id; ?> .flex-control-nav li, #tb-slider-<?php echo $id; ?> .flex-direction-nav li').click(function(){
-								$('#tb-slider-<?php echo $id; ?> .pause').hide();
-								$('#tb-slider-<?php echo $id; ?> .play').show();
+								$('#tb-slider-<?php echo $id; ?> .flex-pause').hide();
+								$('#tb-slider-<?php echo $id; ?> .flex-play').show();
 							});
-        				<?php endif; ?>
+						<?php endif; ?>
         				$('#tb-slider-<?php echo $id; ?> .image-link').click(function(){
-        					$('#tb-slider-<?php echo $id; ?> .pause').hide();
-        					$('#tb-slider-<?php echo $id; ?> .play').show();
+        					$('#tb-slider-<?php echo $id; ?> .flex-pause').hide();
+        					$('#tb-slider-<?php echo $id; ?> .flex-play').show();
         					slider.pause();
         				});
-        				<?php if( isset( $options['pause_on_hover'] ) ) : ?>
-	        				<?php if( $options['pause_on_hover'] == 'pause_on' || $options['pause_on_hover'] == 'pause_on_off' ) : ?>
-	        				$('#tb-slider-<?php echo $id; ?>').hover(
-								function() {
-									$('#tb-slider-<?php echo $id; ?> .pause').hide();
-									$('#tb-slider-<?php echo $id; ?> .play').show();
-									slider.pause();
-								}, 
-								function() {
-									<?php if( $options['pause_on_hover'] == 'pause_on_off' ) : ?>
-									$('#tb-slider-<?php echo $id; ?> .play').hide();
-									$('#tb-slider-<?php echo $id; ?> .pause').show();
-									slider.resume();
-									<?php endif; ?>
-								}
-	        				);
-	        				<?php endif; ?>
-        				<?php endif; ?>
         			}
 				}).parent().find('.tb-loader').fadeOut();
+				
+				<?php if( isset( $options['pause_on_hover'] ) ) : ?>
+					<?php if( $options['pause_on_hover'] == 'pause_on' || $options['pause_on_hover'] == 'pause_on_off' ) : ?>
+					// Custom pause on hover funtionality
+					$('#tb-slider-<?php echo $id; ?>').hover(
+						function() {
+							$('#tb-slider-<?php echo $id; ?> .flex-pause').hide();
+							$('#tb-slider-<?php echo $id; ?> .flex-play').show();
+							$('#tb-slider-<?php echo $id; ?> .flexslider').flexslider('pause');
+						}, 
+						function() {
+							<?php if( $options['pause_on_hover'] == 'pause_on_off' ) : ?>
+							$('#tb-slider-<?php echo $id; ?> .flex-play').hide();
+							$('#tb-slider-<?php echo $id; ?> .flex-pause').show();
+							$('#tb-slider-<?php echo $id; ?> .flexslider').flexslider('play');
+							<?php endif; ?>
+						}
+					);
+					<?php endif; ?>
+				<?php endif; ?>
+				
 			});
 		});
 		</script>

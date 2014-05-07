@@ -533,7 +533,8 @@ if( ! function_exists( 'themeblvd_include_scripts' ) ) {
 		// wp_register_script( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/plugins/prettyphoto/js/jquery.prettyPhoto.js', array('jquery'), '3.1.3' );
 		wp_register_script( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/prettyphoto.js', array('jquery'), '3.1.3' ); // Modified version of prettyPhoto by Jason Bobich
 		wp_register_script( 'superfish', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/superfish.js', array('jquery'), '1.4.8' );
-		wp_register_script( 'flexslider', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/flexslider.js', array('jquery'), '1.8' );
+		// wp_register_script( 'flexslider', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/flexslider.js', array('jquery'), '1.8' );
+		wp_register_script( 'flexslider', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/flexslider-2.js', array('jquery'), '2.0' );
 		wp_register_script( 'roundabout', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/roundabout.js', array('jquery'), '1.1' );
 		wp_register_script( 'themeblvd', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/themeblvd.js', array('jquery'), '1.0' );
 		wp_register_script( 'ios-orientationchange-fix', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/ios-orientationchange-fix.js' );
@@ -749,5 +750,76 @@ if( ! function_exists( 'themeblvd_wpmultisite_signup_sidebar_layout' ) ) {
 		if( $pagenow == 'wp-signup.php' )
 			$sidebar_layout = 'full_width';
 		return $sidebar_layout;
+	}
+}
+
+/**
+ * Homepage posts_per_page bug fix.
+ *
+ * This is an interesting issue that we're trying to fix 
+ * here. It only happens to about 1% of users.
+ *
+ * Basically, if you have a paginated element in a layout 
+ * built with the framework's Layout Builder, SOMETIMES 
+ * WordPress will not honor the "posts_per_page" of query_posts 
+ * and the posts per page will not match up to the posts being 
+ * displayed, resulting in not the correct posts showing on 
+ * each page. 
+ *
+ * The only workaround before this function for this select few 
+ * users was to make sure "Settings > Reading > Blog posts to show at most"
+ * matched whatever the amount of posts per page the custom 
+ * homepage layout has. This of course then effects all other places
+ * posts are displayed throughout the WP site.
+ *
+ * This function is hooked to "pre_get_posts" and makes it so 
+ * the true posts_per_page is adjusted in the query if this is 
+ * a custom layout on the homepage.
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_homepage_posts_per_page' ) ) {
+	function themeblvd_homepage_posts_per_page( $query ){
+	   
+	    // This is only for the homepage
+		if( is_home() ){
+			
+			// The framework has not run at this point, so 
+			// we manually need to check for a homepage layout.
+			$new_posts_per_page = '';
+			$builder = '';
+			$option_name = themeblvd_get_option_name();
+			$theme_options = get_option( $option_name );
+			if( isset( $theme_options['homepage_content'] ) && $theme_options['homepage_content'] == 'custom_layout' ){
+				if( isset( $theme_options['homepage_custom_layout'] ) && $theme_options['homepage_custom_layout'] ){
+					// Determine custom layout info
+					$builder = $theme_options['homepage_custom_layout'];
+					$layout_post_id = themeblvd_post_id_by_name( $builder, 'tb_layout' );
+					$elements = get_post_meta( $layout_post_id, 'elements', true );
+					// Loop through elements searching for one with a primary query element
+					foreach( $elements as $area ){
+						foreach( $area as $element ){
+							switch( $element['type'] ){
+								case 'post_grid_paginated' :
+									if( $element['options']['rows'] && $element['options']['columns'] )
+										$new_posts_per_page = $element['options']['rows'] * $element['options']['columns'];
+									break;
+								case 'post_list_paginated';
+									if( $element['options']['posts_per_page'] )
+										$new_posts_per_page = $element['options']['posts_per_page'];
+									break;
+							}	
+						}
+					}
+				}
+			}
+			
+			// And after ALL that, if we end up with a new post per 
+			// page item, let's add it in!
+			if( $new_posts_per_page )
+				$query->set( 'posts_per_page', $new_posts_per_page );
+				
+	    }
 	}
 }

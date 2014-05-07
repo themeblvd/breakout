@@ -896,7 +896,7 @@ function themeblvd_social_media_option( $id, $name, $val ) {
 		} else {
 			$key == 'email' ? $value = 'mailto:' : $value = 'http://';
 		}
-		$output .= '<input class="of-input social_media-input" value="'.esc_attr( $value ).'" type="text" name="'.esc_attr( $name.'['.$id.']['.$key.']' ).'" />';
+		$output .= '<input class="of-input social_media-input" value="'.esc_attr( $value ).'" type="text" name="'.esc_attr( $name.'['.$id.'][sources]['.$key.']' ).'" />';
 		$output .= '</div><!-- .item (end) -->';
 		if( $counter == $divider ) {
 			// Separate options into two columns

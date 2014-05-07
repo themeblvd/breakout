@@ -14,22 +14,6 @@ define( 'TB_THEME_NAME', 'Breakout' );
 require_once( get_template_directory() . '/includes/options.php' );
 
 /**
- * Breakout Setup 
- * 
- * You can override this function from a child 
- * theme if any basic setup things need to be changed.
- */
-
-if( ! function_exists( 'breakout_setup' ) ) {
-	function breakout_setup() {
-		// Localization
-		load_theme_textdomain( TB_GETTEXT_DOMAIN, get_template_directory() . '/lang' );
-		load_theme_textdomain( TB_GETTEXT_DOMAIN_FRONT, get_template_directory() . '/lang' );
-	}
-}
-add_action( 'after_setup_theme', 'breakout_setup' );
-
-/**
  * Breakout CSS Files
  *
  * To add styles or remove unwanted styles that you 

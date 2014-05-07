@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Breakout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-01 19:43-1000\n"
-"PO-Revision-Date: 2012-07-01 19:43-1000\n"
+"POT-Creation-Date: 2012-08-15 13:41-1000\n"
+"PO-Revision-Date: 2012-08-15 13:41-1000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -589,7 +589,7 @@ msgstr ""
 msgid "Options cleared from database."
 msgstr ""
 
-#: ../framework/admin/modules/options/options-framework.php:267
+#: ../framework/admin/modules/options/options-framework.php:254
 msgid "Options saved."
 msgstr ""
 
@@ -1221,7 +1221,7 @@ msgstr ""
 #: ../framework/api/builder.php:599
 #: ../framework/api/builder.php:734
 #: ../framework/api/builder.php:871
-#: ../framework/frontend/functions/locals.php:21
+#: ../framework/api/locals.php:21
 msgid "Categories"
 msgstr ""
 
@@ -2233,7 +2233,7 @@ msgid "White"
 msgstr ""
 
 #: ../framework/api/helpers.php:1375
-#: ../framework/frontend/functions/locals.php:48
+#: ../framework/api/locals.php:48
 msgid "Pages"
 msgstr ""
 
@@ -2305,6 +2305,199 @@ msgstr ""
 
 #: ../framework/api/helpers.php:1410
 msgid "404 Page"
+msgstr ""
+
+#: ../framework/api/locals.php:15
+msgid "Apologies, but the page you're looking for can't be found."
+msgstr ""
+
+#: ../framework/api/locals.php:16
+msgid "404 Error"
+msgstr ""
+
+#: ../framework/api/locals.php:17
+msgid "Apologies, but there are no posts to display."
+msgstr ""
+
+#: ../framework/api/locals.php:18
+msgid "Archive"
+msgstr ""
+
+#: ../framework/api/locals.php:19
+msgid "by"
+msgstr ""
+
+#: ../framework/api/locals.php:20
+msgid "Cancel reply"
+msgstr ""
+
+#: ../framework/api/locals.php:22
+msgid "Category"
+msgstr ""
+
+#: ../framework/api/locals.php:23
+msgid "Comment navigation"
+msgstr ""
+
+#: ../framework/api/locals.php:24
+msgid "Comment"
+msgstr ""
+
+#: ../framework/api/locals.php:26
+msgid "Comments are closed."
+msgstr ""
+
+#: ../framework/api/locals.php:27
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: ../framework/api/locals.php:28
+msgid "This post is password protected. Enter the password to view any comments."
+msgstr ""
+
+#: ../framework/api/locals.php:29
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: ../framework/api/locals.php:30
+#, php-format
+msgid "One comment on &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#: ../framework/api/locals.php:31
+#, php-format
+msgid "%1$s comments on &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#: ../framework/api/locals.php:32
+msgid "Contact Us"
+msgstr ""
+
+#: ../framework/api/locals.php:33
+msgid "Error 404"
+msgstr ""
+
+#: ../framework/api/locals.php:34
+msgid "Articles posted by"
+msgstr ""
+
+#: ../framework/api/locals.php:35
+msgid "Search results for"
+msgstr ""
+
+#: ../framework/api/locals.php:36
+msgid "Posts tagged"
+msgstr ""
+
+#: ../framework/api/locals.php:37
+msgid "Edit Page"
+msgstr ""
+
+#: ../framework/api/locals.php:38
+msgid "Email"
+msgstr ""
+
+#: ../framework/api/locals.php:39
+msgid "Home"
+msgstr ""
+
+#: ../framework/api/locals.php:40
+#: ../framework/frontend/functions/display.php:579
+msgid "in"
+msgstr ""
+
+#: ../framework/api/locals.php:41
+msgid "Invalid Layout ID"
+msgstr ""
+
+#: ../framework/api/locals.php:42
+msgid "Post Comment"
+msgstr ""
+
+#: ../framework/api/locals.php:43
+msgid "The Last 30 Posts"
+msgstr ""
+
+#: ../framework/api/locals.php:44
+msgid "Log in to Reply"
+msgstr ""
+
+#: ../framework/api/locals.php:45
+msgid "Monthly Archives"
+msgstr ""
+
+#: ../framework/api/locals.php:46
+msgid "Name"
+msgstr ""
+
+#: ../framework/api/locals.php:47
+msgid "Page"
+msgstr ""
+
+#: ../framework/api/locals.php:49
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: ../framework/api/locals.php:50
+msgid "Posted on"
+msgstr ""
+
+#: ../framework/api/locals.php:51
+msgid "Posts per category"
+msgstr ""
+
+#: ../framework/api/locals.php:52
+msgid "Navigation"
+msgstr ""
+
+#: ../framework/api/locals.php:53
+msgid "No Comments"
+msgstr ""
+
+#: ../framework/api/locals.php:54
+msgid "Slider does not exist."
+msgstr ""
+
+#: ../framework/api/locals.php:55
+msgid "Oops! You have not selected a slider in your layout."
+msgstr ""
+
+#: ../framework/api/locals.php:56
+msgid "The video url could not retrieve a video."
+msgstr ""
+
+#: ../framework/api/locals.php:57
+msgid "Read More"
+msgstr ""
+
+#: ../framework/api/locals.php:58
+msgid "Reply"
+msgstr ""
+
+#: ../framework/api/locals.php:59
+msgid "Search the site..."
+msgstr ""
+
+#: ../framework/api/locals.php:60
+msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
+msgstr ""
+
+#: ../framework/api/locals.php:61
+msgid "Tag"
+msgstr ""
+
+#: ../framework/api/locals.php:62
+msgid "Leave a Reply"
+msgstr ""
+
+#: ../framework/api/locals.php:63
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr ""
+
+#: ../framework/api/locals.php:64
+msgid "Website"
 msgstr ""
 
 #: ../framework/api/options.php:103
@@ -2651,199 +2844,6 @@ msgstr ""
 #: ../framework/frontend/functions/builder.php:1023
 #: ../framework/frontend/functions/parts.php:321
 msgid "Could not fetch Twitter RSS feed."
-msgstr ""
-
-#: ../framework/frontend/functions/display.php:579
-#: ../framework/frontend/functions/locals.php:40
-msgid "in"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:15
-msgid "Apologies, but the page you're looking for can't be found."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:16
-msgid "404 Error"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:17
-msgid "Apologies, but there are no posts to display."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:18
-msgid "Archive"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:19
-msgid "by"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:20
-msgid "Cancel reply"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:22
-msgid "Category"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:23
-msgid "Comment navigation"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:24
-msgid "Comment"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:26
-msgid "Comments are closed."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:27
-msgid "Newer Comments &rarr;"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:28
-msgid "This post is password protected. Enter the password to view any comments."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:29
-msgid "&larr; Older Comments"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:30
-#, php-format
-msgid "One comment on &ldquo;%2$s&rdquo;"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:31
-#, php-format
-msgid "%1$s comments on &ldquo;%2$s&rdquo;"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:32
-msgid "Contact Us"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:33
-msgid "Error 404"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:34
-msgid "Articles posted by"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:35
-msgid "Search results for"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:36
-msgid "Posts tagged"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:37
-msgid "Edit Page"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:38
-msgid "Email"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:39
-msgid "Home"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:41
-msgid "Invalid Layout ID"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:42
-msgid "Post Comment"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:43
-msgid "The Last 30 Posts"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:44
-msgid "Log in to Reply"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:45
-msgid "Monthly Archives"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:46
-msgid "Name"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:47
-msgid "Page"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:49
-#, php-format
-msgid "Page %s"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:50
-msgid "Posted on"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:51
-msgid "Posts per category"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:52
-msgid "Navigation"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:53
-msgid "No Comments"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:54
-msgid "Slider does not exist."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:55
-msgid "Oops! You have not selected a slider in your layout."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:56
-msgid "The video url could not retrieve a video."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:57
-msgid "Read More"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:58
-msgid "Reply"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:59
-msgid "Search the site..."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:60
-msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:61
-msgid "Tag"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:62
-msgid "Leave a Reply"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:63
-#, php-format
-msgid "Leave a Reply to %s"
-msgstr ""
-
-#: ../framework/frontend/functions/locals.php:64
-msgid "Website"
 msgstr ""
 
 #: ../framework/shortcodes/shortcodes.php:395
@@ -3370,27 +3370,27 @@ msgstr ""
 msgid "Enter styles to preview their results."
 msgstr ""
 
-#: ../includes/theme-functions.php:292
+#: ../includes/theme-functions.php:276
 msgid "View Post"
 msgstr ""
 
-#: ../includes/theme-functions.php:308
+#: ../includes/theme-functions.php:292
 msgid "Social Media Addon"
 msgstr ""
 
-#: ../includes/theme-functions.php:309
+#: ../includes/theme-functions.php:293
 msgid "This will display your language flags next to your social icons in the header of your website."
 msgstr ""
 
-#: ../includes/theme-functions.php:404
+#: ../includes/theme-functions.php:388
 msgid "<span class=\"leave-reply\">No Comments</span>"
 msgstr ""
 
-#: ../includes/theme-functions.php:404
+#: ../includes/theme-functions.php:388
 msgid "1 Comment"
 msgstr ""
 
-#: ../includes/theme-functions.php:404
+#: ../includes/theme-functions.php:388
 msgid "% Comments"
 msgstr ""
 

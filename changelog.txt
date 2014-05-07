@@ -1,6 +1,40 @@
 Breakout Changelog
 ==================
 
+1.1.4
+-----
+
+*Note: This is just quick update to fix some minor bugs. A fairly signficant update is coming a little down the road.*
+
+* Fixed bug with customizer clearing social icons saved from Theme Options page.
+* Updated FlexSlider jQuery plugin to v2.0 and made adjustments it's compatible. This shouldn't make any immediate difference in your theme, but will allow us to add functionality in the future. **If you're using the Theme Blvd News Scroller widget, make sure to update it!**
+* Hooked in new function to WordPress's "pre get posts" action that adjusts the true "posts per page" setting for custom homepage layouts that contain a paginated element.
+* Added frontend locals.php file to API directory. This allows it to be accessed by any 3rd-party plugin that may be trying to access fronted text strings when is_admin is true, for whatever reason. Specifically, this issue was brought about by the [AJAX Comment Loading](http://wordpress.org/extend/plugins/ajax-comment-loading/) plugin. 
+* Fixed bug with localization not working on text strings included within API areas like Theme Options.
+
+### Effected Files ###
+
+* /style.css
+* /assets/css/colors.css
+* /assets/css/colors.min.css
+* /assets/css/theme.css
+* /assets/css/theme.min.css
+* /framework/admin/functions/display.php
+* /framework/admin/modules/options/options-sanitize.php
+* /framework/admin/modules/options/options-framework.php
+* /framework/api/locals.php (moved from /framework/frontend/functions/)
+* /framework/frontend/assets/css/themeblvd.css
+* /framework/frontend/assets/js/flexslider-2.js (new file)
+* /framework/frontend/functions/actions.php
+* /framework/frontend/functions/display.php
+* /framework/frontend/functions/general.php
+* /framework/frontend/functions/helpers.php
+* /framework/frontend/functions/sliders.php
+* /framework/themeblvd.php
+* /includes/theme-functions.php
+
+--------------------------------------------------------------
+
 1.1.3
 -----
 
@@ -25,6 +59,7 @@ Breakout Changelog
 
 ### Effected Files ###
 
+* /style.css
 * /assets/css/colors.css
 * /assets/css/colors.min.css
 * /assets/css/ie.css

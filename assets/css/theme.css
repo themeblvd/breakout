@@ -1135,7 +1135,7 @@ img#wpstats {
 	width: 10px;
 	height: 11px;
 }
-#featured .standard-slider-wrapper .flex-control-nav li a.active {
+#featured .standard-slider-wrapper .flex-control-nav li a.flex-active {
 	background-position: -10px 0;
 }
 #featured .standard-slider-wrapper .flex-direction-nav {

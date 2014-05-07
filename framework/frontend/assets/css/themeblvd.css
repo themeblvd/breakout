@@ -449,18 +449,18 @@ div.wpcf7 .watermark { color:#888; }
 .standard-slider-wrapper .flex-control-nav{ position:absolute;bottom:15px;left:10px;text-align:center;width:100%;height:11px;z-index:3; }
 .standard-slider-wrapper .flex-control-nav li{ float:left;padding:2px; }
 .standard-slider-wrapper .flex-control-nav li a{ background:url(../images/elements/slider-nav.png) no-repeat;cursor:pointer;display:block;text-indent:-9999px;width:10px;height:11px; }
-.standard-slider-wrapper .flex-control-nav li a.active{ background-position:-10px 0; }
+.standard-slider-wrapper .flex-control-nav li a.flex-active{ background-position:-10px 0; }
 .standard-slider-wrapper .flex-direction-nav{ position:absolute;bottom:15px;right:10px;height:11px;z-index:4; }
 .standard-slider-wrapper .flex-direction-nav li{ float:left;padding:0 2px; }
-.standard-slider-wrapper .prev, .standard-slider-wrapper .next, .standard-slider-wrapper .pause, .standard-slider-wrapper .play{ background:url(../images/elements/arrows.png) no-repeat;display:block;width:15px;height:15px;text-indent:-9999px; }
-.standard-slider-wrapper .prev{ background-position:0 0; }
-.standard-slider-wrapper .next{ background-position:-15px 0; }
-.standard-slider-wrapper .play{ background-position:0 -30px; }
-.standard-slider-wrapper .pause{ background-position:-15px -30px; }
-.standard-slider-wrapper .prev:hover{ background-position:0 -15px; }
-.standard-slider-wrapper .next:hover{ background-position:-15px -15px; }
-.standard-slider-wrapper .play:hover{ background-position:0 -45px; }
-.standard-slider-wrapper .pause:hover{ background-position:-15px -45px; }
+.standard-slider-wrapper .flex-prev, .standard-slider-wrapper .flex-next, .standard-slider-wrapper .flex-pause, .standard-slider-wrapper .flex-play{ background:url(../images/elements/arrows.png) no-repeat;display:block;width:15px;height:15px;text-indent:-9999px; }
+.standard-slider-wrapper .flex-prev{ background-position:0 0; }
+.standard-slider-wrapper .flex-next{ background-position:-15px 0; }
+.standard-slider-wrapper .flex-play{ background-position:0 -30px; }
+.standard-slider-wrapper .flex-pause{ background-position:-15px -30px; }
+.standard-slider-wrapper .flex-prev:hover{ background-position:0 -15px; }
+.standard-slider-wrapper .flex-next:hover{ background-position:-15px -15px; }
+.standard-slider-wrapper .flex-play:hover{ background-position:0 -45px; }
+.standard-slider-wrapper .flex-pause:hover{ background-position:-15px -45px; }
 .sidebar_right .standard-slider, 
 .sidebar_left.standard-slider, 
 .double_sidebar_right .standard-slider,

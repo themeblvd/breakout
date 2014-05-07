@@ -16,6 +16,10 @@ define( 'TB_FRAMEWORK_DIRECTORY', get_template_directory_uri().'/framework' );
 define( 'TB_GETTEXT_DOMAIN', 'themeblvd' );
 define( 'TB_GETTEXT_DOMAIN_FRONT', 'themeblvd_frontend' );
 
+// Load text domain (this will be modified in upcoming v2.2 framework update)
+load_theme_textdomain( TB_GETTEXT_DOMAIN, get_template_directory() . '/lang' );
+load_theme_textdomain( TB_GETTEXT_DOMAIN_FRONT, get_template_directory() . '/lang' );
+
 // Run framework
 if( is_admin() ) {
 	
@@ -37,6 +41,7 @@ if( is_admin() ) {
 	require_once( TB_FRAMEWORK_URL . '/api/builder.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/customizer.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/helpers.php' );
+	require_once( TB_FRAMEWORK_URL . '/api/locals.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/options.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/sidebars.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/sliders.php' );
@@ -92,6 +97,7 @@ if( is_admin() ) {
 	require_once( TB_FRAMEWORK_URL . '/api/builder.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/customizer.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/helpers.php' );
+	require_once( TB_FRAMEWORK_URL . '/api/locals.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/options.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/sidebars.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/sliders.php' );
@@ -99,7 +105,6 @@ if( is_admin() ) {
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/builder.php' );
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/parts.php' );
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/actions.php' );
-	require_once( TB_FRAMEWORK_URL . '/frontend/functions/locals.php' );
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/helpers.php' );
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/display.php' );
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/general.php' );
@@ -125,6 +130,7 @@ if( is_admin() ) {
 	add_filter( 'themeblvd_sidebar_layout', 'themeblvd_wpmultisite_signup_sidebar_layout' );
 	
 	// Apply initial hooks
+	add_action( 'pre_get_posts', 'themeblvd_homepage_posts_per_page' );
 	add_action( 'after_setup_theme', 'themeblvd_register_posts', 5 );
 	add_action( 'after_setup_theme', 'themeblvd_add_theme_support' );
 	add_action( 'after_setup_theme', 'themeblvd_add_image_sizes' );
@@ -183,7 +189,7 @@ if( is_admin() ) {
 	add_action( 'themeblvd_content_top', 'themeblvd_content_top_default' );
 	add_action( 'themeblvd_blog_meta', 'themeblvd_blog_meta_default' );
 	add_action( 'themeblvd_blog_tags', 'themeblvd_blog_tags_default' );
-	add_action( 'themeblvd_the_post_thumbnail', 'themeblvd_the_post_thumbnail_default', 9, 4 );
+	add_action( 'themeblvd_the_post_thumbnail', 'themeblvd_the_post_thumbnail_default', 9, 5 );
 	add_action( 'themeblvd_blog_content', 'themeblvd_blog_content_default' );
 	
 	// Elements
