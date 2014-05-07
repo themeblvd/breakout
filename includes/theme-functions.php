@@ -93,12 +93,17 @@ function breakout_styles() {
 	ob_start();
 	?>
 	/* Fonts */
+	html,
 	body {
-		font-family: <?php echo themeblvd_get_font_face($body_font); ?>;
-		font-size: <?php echo $body_font['size'];?>;
+		font-family: <?php echo themeblvd_get_font_face( $body_font ); ?>;
+		font-size: <?php echo themeblvd_get_font_size( $body_font ); ?>;
+		font-style: <?php echo themeblvd_get_font_style( $body_font ); ?>;
+		font-weight: <?php echo themeblvd_get_font_weight( $body_font ); ?>;
 	}
 	h1, h2, h3, h4, h5, h6, .slide-title {
-		font-family: <?php echo themeblvd_get_font_face($header_font); ?>;
+		font-family: <?php echo themeblvd_get_font_face( $header_font ); ?>;
+		font-style: <?php echo themeblvd_get_font_style( $header_font ); ?>;
+		font-weight: <?php echo themeblvd_get_font_weight( $header_font ); ?>;
 	}
 	#featured .media-full .slide-title,
 	#content .media-full .slide-title,
@@ -106,7 +111,9 @@ function breakout_styles() {
 	.element-slogan .slogan .slogan-text,
 	.element-tweet,
 	.special-font {
-		font-family: <?php echo themeblvd_get_font_face($special_font); ?>;
+		font-family: <?php echo themeblvd_get_font_face( $special_font ); ?>;
+		font-style: <?php echo themeblvd_get_font_style( $special_font ); ?>;
+		font-weight: <?php echo themeblvd_get_font_weight( $special_font ); ?>;
 	}
 	/* Content Texture */
 	#wrapper {
