@@ -318,8 +318,10 @@ if( ! function_exists( 'breakout_options' ) ) {
 		);
 		themeblvd_add_option_section( 'content', 'post_grid', __( 'Post Grids', 'themeblvd' ), $post_grid_description, $post_grid, false );
 		
-		// Modify framework options
+		// Edit default values
+		themeblvd_edit_option( 'content', 'blog', 'blog_thumbs', 'std', 'small' );
 		themeblvd_edit_option( 'content', 'blog', 'blog_content', 'std', 'excerpt' );
+		themeblvd_edit_option( 'layout', 'header', 'logo', 'std', array( 'type' => 'image', 'image' => get_template_directory_uri().'/assets/images/logo.png', 'image_width' => '172', 'image_2x' => get_template_directory_uri().'/assets/images/logo_2x.png' ) );
 	}
 }
 add_action( 'after_setup_theme', 'breakout_options' );
@@ -509,6 +511,7 @@ if( ! function_exists( 'breakout_customizer' ) ) {
 			)
 		);
 		themeblvd_add_customizer_section( 'custom_css', __( 'Custom CSS', 'themeblvd' ), $custom_styles_options, 121 );
+
 	}
 }
 add_action( 'after_setup_theme', 'breakout_customizer' );
