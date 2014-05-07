@@ -20,21 +20,54 @@ require_once( get_template_directory() . '/includes/options.php' );
  */
 function breakout_css() {
 
+	// @TODO CHANGE CSS FILES TO MIN
+
 	// For plugins not inserting their scripts/stylesheets
 	// correctly in the admin.
 	if ( is_admin() ) {
 		return;
 	}
 
-	wp_register_style( 'themeblvd_theme', get_template_directory_uri() . '/assets/css/theme.min.css', false, '1.0' );
-	wp_register_style( 'themeblvd_responsive', get_template_directory_uri() . '/assets/css/responsive.min.css', false, '1.0' );
-	wp_register_style( 'themeblvd_colors', get_template_directory_uri() . '/assets/css/colors.min.css', false, '1.0' );
-	wp_register_style( 'themeblvd_ie', get_template_directory_uri() . '/assets/css/ie.css', false, '1.0' );
-	wp_enqueue_style( 'themeblvd_theme' );
-	if( themeblvd_get_option( 'responsive_css' ) != 'false' ) wp_enqueue_style( 'themeblvd_responsive' );
-	wp_enqueue_style( 'themeblvd_colors' );
+	// Get theme version for stylesheets
+	$theme_data = wp_get_theme( get_template() );
+	$theme_version = $theme_data->get('Version');
+
+	// Get stylesheet API
+	$api = Theme_Blvd_Stylesheets_API::get_instance();
+
+	$template_directory_uri = get_template_directory_uri();
+
+	wp_register_style( 'themeblvd_breakout', $template_directory_uri . '/assets/css/theme.css', $api->get_framework_deps(), $theme_version );
+	wp_register_style( 'themeblvd_dark', $template_directory_uri . '/assets/css/dark.css', array('themeblvd_breakout'), $theme_version );
+	wp_register_style( 'themeblvd_responsive', $template_directory_uri . '/assets/css/responsive.css', array('themeblvd_breakout'), $theme_version );
+	wp_register_style( 'themeblvd_ie', $template_directory_uri . '/assets/css/ie.css', array('themeblvd_breakout'), $theme_version );
+	wp_register_style( 'themeblvd_theme', get_stylesheet_uri(), array('themeblvd_breakout'), $theme_version );
+
+	wp_enqueue_style( 'themeblvd_breakout' );
+
+	if ( themeblvd_get_option( 'content_color' ) == 'content_dark' ) {
+		wp_enqueue_style( 'themeblvd_dark' );
+	}
+
+	if ( themeblvd_supports( 'display', 'responsive' ) ) {
+		wp_enqueue_style( 'themeblvd_responsive' );
+	}
+
+	// IE Styles
 	$GLOBALS['wp_styles']->add_data( 'themeblvd_ie', 'conditional', 'lt IE 9' ); // Add IE conditional
 	wp_enqueue_style( 'themeblvd_ie' );
+
+	// Inline styles from theme options --
+	// Note: Using themeblvd_ie as $handle because it's the only
+	// constant stylesheet just before style.css
+	wp_add_inline_style( 'themeblvd_ie', breakout_styles() );
+
+	// style.css -- This is mainly for WP continuity and Child theme modifications.
+	wp_enqueue_style( 'themeblvd_theme' );
+
+	// Level 3 client API-added styles
+	$api->print_styles(3);
+
 }
 add_action( 'wp_enqueue_scripts', 'breakout_css', 20 );
 
@@ -47,6 +80,7 @@ if ( !function_exists( 'breakout_styles' ) ) :
  * @return string $styles Inline styles for wp_add_inline_style()
  */
 function breakout_styles() {
+	$styles = '';
 	$accent_color = themeblvd_get_option('accent_color');
 	$textures = themeblvd_get_textures();
 	$content_texture = themeblvd_get_option( 'content_texture' );
@@ -56,7 +90,6 @@ function breakout_styles() {
 	$body_font = themeblvd_get_option( 'typography_body' );
 	$header_font = themeblvd_get_option( 'typography_header' );
 	$special_font = themeblvd_get_option( 'typography_special' );
-	echo '<style>'."\n";
 	ob_start();
 	?>
 	/* Fonts */
@@ -182,13 +215,33 @@ function breakout_styles() {
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php
-	// Ouptput compressed CSS
-	echo themeblvd_compress( ob_get_clean() );
+	// Compress inline styles
+	$styles = themeblvd_compress( ob_get_clean() );
+
 	// Add in user's custom CSS
-	if( $custom_styles ) echo $custom_styles;
-	echo "\n</style>\n";
+	if ( $custom_styles ) {
+		$styles .= "\n/* User Custom CSS */\n";
+		$styles .= $custom_styles;
+	}
+
+	return $styles;
 }
-add_action( 'wp_head', 'breakout_styles' ); // Must come after framework loads styles, which are hooked with wp_print_styles
+endif;
+
+/**
+ * Breakout Scripts
+ *
+ * @since 2.0.0
+ */
+function breakout_scripts() {
+
+	global $themeblvd_framework_scripts;
+
+	// Theme-specific script
+	wp_enqueue_script( 'themeblvd_theme', get_template_directory_uri() . '/assets/js/breakout.js', $themeblvd_framework_scripts, '2.0.0', true );
+
+}
+add_action( 'wp_enqueue_scripts', 'breakout_scripts' );
 
 /**
  * Breakout Google Fonts
