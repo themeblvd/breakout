@@ -194,7 +194,7 @@ if( ! function_exists( 'themeblvd_layout' ) ) {
 				/*------------------------------------------------------*/
 				
 				case 'tweet' :
-					echo themeblvd_tweet( $element['options'] );
+					echo themeblvd_tweet( $id, $element['options'] );
 					break;
 				
 			} // End switch
@@ -846,20 +846,35 @@ if( ! function_exists( 'themeblvd_tabs' ) ) {
  */
 
 if( ! function_exists( 'themeblvd_tweet' ) ) {
-	function themeblvd_tweet( $options ) {
+	function themeblvd_tweet( $id, $options ) {
 		// Create the stream context
 		$context = stream_context_create(array(
 		    'http' => array(
 		        'timeout' => 5      // Timeout in seconds
 		    )
 		));
-		// Fetch the data from Twitter
+		
+		// Username
 		$username = $options['account'];
-		$format = 'json';
-		$contents = file_get_contents( "http://api.twitter.com/1/statuses/user_timeline/{$username}.{$format}", 0, $context );
-		// Check to make sure we got something from Twitter
-		if ( ! empty( $contents ) ) {
-		    $tweet = json_decode( $contents );
+		
+		// Check for cached tweet
+		$tweet = get_transient( $id.'-'.$username );
+		
+		// Fetch the data from Twitter
+		if( ! $tweet ) {
+			echo 'new tweet!';
+			$format = 'json';
+			$contents = file_get_contents( "http://api.twitter.com/1/statuses/user_timeline/{$username}.{$format}", 0, $context );
+			if ( ! empty( $contents ) ) {
+				// Decode it.
+				$tweet = json_decode( $contents );
+				// Cache it for next time.
+				set_transient( $id.'-'.$username, $tweet, 60*60*3 ); // 3 hour cache
+			}
+		}
+		
+		// Check to make sure we have a tweet and display it.
+		if ( $tweet ) {
 		    $output = '<span class="tweet-icon '.$options['icon'].'"></span>';
 		    $output .= '<a href="http://twitter.com/'.$username.'/status/'.$tweet[0]->id_str.'" target="_blank">';
 		    $output .= $tweet[0]->text;

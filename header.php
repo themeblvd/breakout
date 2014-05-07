@@ -19,7 +19,9 @@
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
-	<meta name="viewport" content="width=device-width" />
+	<?php if( themeblvd_get_option( 'responsive_css' ) != 'false' ) : ?>
+	<meta name="viewport" content="width=device-width, maximum-scale=1" />
+	<?php endif; ?>
 	<title><?php themeblvd_title(); ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 	<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
@@ -30,7 +32,6 @@
 	<?php if ( is_singular() && get_option( 'thread_comments' ) ) wp_enqueue_script( 'comment-reply' ); ?>
 	<?php wp_head(); ?>
 </head>
-
 <body <?php body_class(); ?>>
 <?php themeblvd_before(); ?>
 <div id="wrapper">

@@ -107,6 +107,7 @@ if( ! function_exists( 'themeblvd_header_logo_default' ) ) {
 if( ! function_exists( 'themeblvd_header_menu_default' ) ) {
 	function themeblvd_header_menu_default() {
 		?>
+		<?php echo themeblvd_nav_menu_select( 'primary' ); ?>
 		<nav id="access" role="navigation">
 			<div class="container">
 				<div class="content">
@@ -177,7 +178,7 @@ if( ! function_exists( 'themeblvd_footer_sub_content_default' ) ) {
 				<div class="content">
 					<div class="copyright">
 						<p>
-							<span><?php echo themeblvd_get_option( 'footer_copyright' ); ?></span>
+							<span><?php echo apply_filters( 'themeblvd_footer_copyright', themeblvd_get_option( 'footer_copyright' ) ); ?></span>
 						</p>
 					</div><!-- .copyright (end) -->
 					<div class="clear"></div>

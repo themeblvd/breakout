@@ -309,6 +309,7 @@ if( ! function_exists( 'themeblvd_shortcode_toggle' ) ) {
             'title' => ''
 	    );
 	    extract( shortcode_atts( $default, $atts ) );
+	    $content = apply_filters( 'the_content', $content );
 		$output  = '<div class="tb-toggle'.$last.'">';
 		$output .= '<a href="#" title="'.$title.'" class="toggle-trigger"><span></span>'.$title.'</a>';
 		$output .= '<div class="toggle-content">'.$content.'</div>';

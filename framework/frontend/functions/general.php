@@ -142,7 +142,13 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 					$featured[] = 'slogan_is_last';
 			}
 		}
-		if( is_home() || is_page_template( 'template_list.php' ) ) {
+		if( is_home() ) {
+			$homepage_content = themeblvd_get_option( 'homepage_content', null, 'posts' );
+			if( $homepage_content != 'custom_layout' )
+				if( themeblvd_get_option( 'blog_featured' ) || themeblvd_supports( 'featured', 'blog' ) )
+					$featured[] = 'has_blog_featured';
+		}
+		if( is_page_template( 'template_list.php' ) ) {
 			if( themeblvd_get_option( 'blog_featured' ) || themeblvd_supports( 'featured', 'blog' ) )
 				$featured[] = 'has_blog_featured';
 		}
@@ -475,7 +481,7 @@ if( ! function_exists( 'themeblvd_include_scripts' ) ) {
 		// Register scripts
 		wp_register_script( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/plugins/prettyphoto/js/jquery.prettyPhoto.js', array('jquery'), '3.1.3' );
 		wp_register_script( 'superfish', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/superfish.js', array('jquery'), '1.4.8' );
-		wp_register_script( 'flexslider', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/flexslider.js', array('jquery'), '1.7' );
+		wp_register_script( 'flexslider', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/flexslider.js', array('jquery'), '1.8' );
 		wp_register_script( 'roundabout', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/roundabout.js', array('jquery'), '1.1' );
 		wp_register_script( 'themeblvd', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/themeblvd.js', array('jquery'), '1.0' );
 		// Enqueue 'em

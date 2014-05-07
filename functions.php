@@ -4,7 +4,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 // Constants
-define( 'TB_FRAMEWORK_VERSION', '2.0.4' );
+define( 'TB_FRAMEWORK_VERSION', '2.0.5' );
 define( 'TB_UPDATE_LOG_URL', 'http://www.themeblvd.com/demo/breakout/wp-content/themes/breakout/changelog.txt' );
 define( 'TB_FRAMEWORK_URL', TEMPLATEPATH.'/framework' );
 define( 'TB_FRAMEWORK_DIRECTORY', get_template_directory_uri().'/framework' );
@@ -23,19 +23,60 @@ if( ! function_exists( 'breakout_setup' ) ) {
 		// Content Width
 		$content_width = 940; // Default width of primary content area
 		
-		// Thumbnail sizes
-		add_image_size( 'large', $content_width, 9999, false ); 	// 940 => Full width thumb for 1-col page
-		add_image_size( 'medium', 620, 9999, false ); 				// 620 => Full width thumb for 2-col/3-col page
-		add_image_size( 'small', 195, 195, false ); 				// Square'ish thumb floated left
-		/* Slider - Heights equal at 350 */
-		add_image_size( 'slider-large', 940, 350, true );			// Slider full-size image
-		add_image_size( 'slider-staged', 564, 350, true );			// Slider staged image
-		/* Grid - Ratio: 200:125 */
-		add_image_size( 'grid_fifth_1', 200, 125, true );			// 1/5 Column
-		add_image_size( 'grid_3', 240, 150, true );					// 1/4 Column
-		add_image_size( 'grid_4', 320, 200, true );					// 1/3 Column
-		add_image_size( 'grid_6', 472, 295, true );					// 1/2 Column
+		// Crop sizes
+		$sizes = array(
+			'large' => array(
+				'width' 	=> $content_width,	// 940 => Full width thumb for 1-col page
+				'height' 	=> 9999,
+				'crop' 		=> false
+			),
+			'medium' => array(
+				'width' 	=> 620, 			// 620 => Full width thumb for 2-col/3-col page
+				'height'	=> 9999,
+				'crop' 		=> false
+			),
+			'small' => array(
+				'width' 	=> 195,				// Square'ish thumb floated left
+				'height' 	=> 195,
+				'crop' 		=> false
+			),
+			'slider-large' => array(
+				'width' 	=> 940,				// Slider full-size image
+				'height' 	=> 350,
+				'crop' 		=> true
+			),
+			'slider-staged' => array(
+				'width' 	=> 564,				// Slider staged image
+				'height' 	=> 350,
+				'crop' 		=> true
+			),
+			'grid_fifth_1' => array(
+				'width' 	=> 200,				// 1/5 Column
+				'height' 	=> 125,
+				'crop' 		=> true
+			),
+			'grid_3' => array(
+				'width' 	=> 240,				// 1/4 Column
+				'height' 	=> 150,
+				'crop' 		=> true
+			),
+			'grid_4' => array(
+				'width' 	=> 320,				// 1/3 Column
+				'height' 	=> 200,
+				'crop' 		=> true
+			),
+			'grid_6' => array(
+				'width' 	=> 472,				// 1/2 Column
+				'height' 	=> 295,
+				'crop' 		=> true
+			)
+		);
+		$sizes = apply_filters( 'themeblvd_image_sizes', $sizes );
 		
+		// Add image sizes
+		foreach( $sizes as $size => $atts )
+			add_image_size( $size, $atts['width'], $atts['height'], $atts['crop'] );
+				
 		// Localization
 		load_theme_textdomain( TB_GETTEXT_DOMAIN, get_template_directory() . '/lang' );
 	}
@@ -398,7 +439,7 @@ if( ! function_exists( 'breakout_featured_end' ) ) {
 	}
 }
 
-/* Archive Titles */
+/* Titles */
 
 if( ! function_exists( 'breakout_content_top' ) ) {
 	function breakout_content_top() {
@@ -411,7 +452,16 @@ if( ! function_exists( 'breakout_content_top' ) ) {
 				echo '</div><!-- .element (end) -->';
 			}
 		}
-		
+		if( is_page_template( 'template_list.php' ) || is_page_template( 'template_grid.php' ) ) {
+			global $post;
+			if( 'hide' != get_post_meta( $post->ID, '_tb_title', true ) ) {
+				echo '<div class="element element-headline primary-entry-title">';
+				echo '<h1 class="entry-title">';
+				echo $post->post_title;
+				echo '</h1>';
+				echo '</div><!-- .element (end) -->';
+			}
+		}
 	}
 }
 

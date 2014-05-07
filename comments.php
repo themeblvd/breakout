@@ -33,7 +33,7 @@ if( is_single() ) {
 		<?php if ( have_comments() ) : ?>
 			<h2 id="comments-title">
 				<?php
-					printf( _n( 'One comment on &ldquo;%2$s&rdquo;', '%1$s comments on &ldquo;%2$s&rdquo;', get_comments_number(), TB_GETTEXT_DOMAIN ),
+					printf( _n( themeblvd_get_local( 'comments_title_single' ), themeblvd_get_local( 'comments_title_multiple' ), get_comments_number(), TB_GETTEXT_DOMAIN ),
 						number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
 				?>
 			</h2>
@@ -80,7 +80,11 @@ if( is_single() ) {
 				'url'    => '<p class="comment-form-url"><input id="url" name="url" type="text" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" />' .
 							'<label for="url">' .themeblvd_get_local( 'website' ) . '</label></p>'
 			),
-			'comment_field' => '<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="10" aria-required="true"></textarea></p>'
+			'comment_field'			=> '<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="10" aria-required="true"></textarea></p>',
+			'title_reply'			=> themeblvd_get_local( 'title_reply' ),
+			'title_reply_to'		=> themeblvd_get_local( 'title_reply_to' ),
+			'cancel_reply_link'		=> themeblvd_get_local( 'cancel_reply_link' ),
+			'label_submit'			=> themeblvd_get_local( 'label_submit' )
 		);
 		?>
 		<div class="comment-form-wrapper">

@@ -522,8 +522,6 @@ input[type=submit]:hover {
 .default:hover {
 	border: 1px solid #555555;
 	color: #333333;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-	filter: alpha(opacity=70);
 	-moz-opacity: 0.7;
 	-khtml-opacity: 0.7;
 	opacity: 0.7;
@@ -584,12 +582,20 @@ img.aligncenter {
 p img {
 	margin-top: 0.4em;
 }
-#content .gallery {
+#wrapper .gallery {
 	margin: 0 auto 1.625em;
 }
-#content .gallery a img {
-    border: none;
-    height: auto;
+#wrapper .gallery .gallery-icon {
+	padding: 10px;
+}
+#wrapper .gallery a img {
+    border: 1px solid #d1d1d1;
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px; 
+	border-radius: 4px;
+	max-width: 98.5%;
+	padding: 4px;
+	height: auto;
 }
 img#wpstats {
     display: block;
@@ -779,16 +785,12 @@ img#wpstats {
 }
 #branding .themeblvd-contact-bar li a { 
 	background-image: url(../../framework/frontend/assets/images/parts/social-media-light.png);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=80);
 	-moz-opacity: 0.8;
 	-khtml-opacity: 0.8;
 	margin: 0 1px;
 	opacity: 0.8;
 }
 #branding .themeblvd-contact-bar li a:hover {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-	filter: alpha(opacity=100);
 	-moz-opacity: 1;
 	-khtml-opacity: 1;
 	opacity: 1;
@@ -1222,8 +1224,6 @@ img#wpstats {
 	border: none;
 	display: inline-block;
 	line-height: 100%;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-	filter: alpha(opacity=70);
 	-moz-opacity: 0.7;
 	-khtml-opacity: 0.7;
 	opacity: 0.7;
@@ -1231,8 +1231,6 @@ img#wpstats {
 	width: 10px;
 }
 #main #breadcrumbs .home-link:hover {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-	filter: alpha(opacity=100);
 	-moz-opacity: 1;
 	-khtml-opacity: 1;
 	opacity: 1;

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Breakout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 16:46-0800\n"
-"PO-Revision-Date: 2011-12-06 16:46-0800\n"
+"POT-Creation-Date: 2012-01-28 11:48-0800\n"
+"PO-Revision-Date: 2012-01-28 11:48-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,32 +24,92 @@ msgstr ""
 msgid "Pages:"
 msgstr ""
 
-#: ../functions.php:189
+#: ../functions.php:251
 msgid "View Post"
 msgstr ""
 
-#: ../framework/themeblvd.php:344
+#: ../framework/themeblvd.php:352
 msgid "Primary Navigation"
 msgstr ""
 
-#: ../framework/themeblvd.php:345
+#: ../framework/themeblvd.php:353
 msgid "Footer Navigation"
 msgstr ""
 
-#: ../framework/themeblvd.php:384
+#: ../framework/themeblvd.php:392
 msgid "Theme Options"
 msgstr ""
 
-#: ../framework/themeblvd.php:394
+#: ../framework/themeblvd.php:402
 msgid "Widget Areas"
 msgstr ""
 
-#: ../framework/themeblvd.php:405
+#: ../framework/themeblvd.php:413
 msgid "Sliders"
 msgstr ""
 
-#: ../framework/themeblvd.php:416
+#: ../framework/themeblvd.php:424
 msgid "Builder"
+msgstr ""
+
+#: ../framework/themeblvd.php:487
+msgid "Boxy"
+msgstr ""
+
+#: ../framework/themeblvd.php:493
+msgid "Chex"
+msgstr ""
+
+#: ../framework/themeblvd.php:499
+msgid "Concrete"
+msgstr ""
+
+#: ../framework/themeblvd.php:505
+msgid "Crosses"
+msgstr ""
+
+#: ../framework/themeblvd.php:511
+msgid "Diganol (thin)"
+msgstr ""
+
+#: ../framework/themeblvd.php:517
+msgid "Diagonal (thin)"
+msgstr ""
+
+#: ../framework/themeblvd.php:523
+msgid "Grid"
+msgstr ""
+
+#: ../framework/themeblvd.php:529
+msgid "Grunge"
+msgstr ""
+
+#: ../framework/themeblvd.php:535
+msgid "Leather"
+msgstr ""
+
+#: ../framework/themeblvd.php:541
+msgid "Mosaic"
+msgstr ""
+
+#: ../framework/themeblvd.php:547
+msgid "Noise"
+msgstr ""
+
+#: ../framework/themeblvd.php:553
+msgid "Paper"
+msgstr ""
+
+#: ../framework/themeblvd.php:559
+msgid "Textile"
+msgstr ""
+
+#: ../framework/themeblvd.php:565
+msgid "Vintage"
+msgstr ""
+
+#: ../framework/themeblvd.php:571
+msgid "Wood"
 msgstr ""
 
 #: ../framework/admin/functions/display.php:43
@@ -251,134 +311,132 @@ msgstr ""
 msgid "You can use basic HTML here, and most shortcodes."
 msgstr ""
 
-#: ../framework/admin/functions/display.php:957
+#: ../framework/admin/functions/display.php:977
 msgid "Site Title"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:958
+#: ../framework/admin/functions/display.php:978
 msgid "Custom Text"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:959
+#: ../framework/admin/functions/display.php:979
 msgid "Image"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:978
+#: ../framework/admin/functions/display.php:998
 msgid "Current Site Title"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:980
+#: ../framework/admin/functions/display.php:1000
 msgid "You can change your site title by going <a href=\"options-general.php\" target=\"_blank\">here</a>."
 msgstr ""
 
-#: ../framework/admin/functions/display.php:993
+#: ../framework/admin/functions/display.php:1013
 msgid "Insert your custom text."
 msgstr ""
 
-#: ../framework/admin/functions/display.php:1005
+#: ../framework/admin/functions/display.php:1025
 msgid "Use the \"Upload\" button to either upload an image or select an image from your media library. You can also type in the URL to an image in the text field."
 msgstr ""
 
-#: ../framework/admin/functions/display.php:1120
+#: ../framework/admin/functions/display.php:1140
 msgid "Sidebar Layout"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:1122
+#: ../framework/admin/functions/display.php:1142
 msgid "Default Sidebar Layout"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:1142
+#: ../framework/admin/functions/display.php:1162
 msgid "Custom Layout"
 msgstr ""
 
-#: ../framework/admin/functions/display.php:1149
+#: ../framework/admin/functions/display.php:1169
 msgid "You haven't created any custom layouts in the Layout builder yet."
 msgstr ""
 
-#: ../framework/admin/functions/general.php:110
+#: ../framework/admin/functions/general.php:98
 msgid "Pages"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:111
+#: ../framework/admin/functions/general.php:99
 msgid "No pages to display."
 msgstr ""
 
-#: ../framework/admin/functions/general.php:115
+#: ../framework/admin/functions/general.php:103
 msgid "Posts"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:116
+#: ../framework/admin/functions/general.php:104
 msgid "No posts to display."
 msgstr ""
 
-#: ../framework/admin/functions/general.php:120
-#: ../framework/admin/modules/builder/builder-default.php:215
-#: ../framework/admin/modules/builder/builder-default.php:319
-#: ../framework/admin/modules/builder/builder-default.php:426
-#: ../framework/admin/modules/builder/builder-default.php:496
-#: ../framework/admin/modules/builder/builder-default.php:613
-#: ../framework/admin/modules/builder/builder-default.php:732
-msgid "Categories"
+#: ../framework/admin/functions/general.php:108
+msgid "Posts in Category"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:121
+#: ../framework/admin/functions/general.php:109
+#: ../framework/admin/functions/general.php:114
 msgid "No categories to display."
 msgstr ""
 
-#: ../framework/admin/functions/general.php:125
-msgid "Tags"
+#: ../framework/admin/functions/general.php:113
+msgid "Category Archives"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:126
+#: ../framework/admin/functions/general.php:118
+msgid "Tag Archives"
+msgstr ""
+
+#: ../framework/admin/functions/general.php:119
 msgid "No tags to display."
 msgstr ""
 
-#: ../framework/admin/functions/general.php:130
+#: ../framework/admin/functions/general.php:123
 msgid "Hierarchy"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:132
-msgid "Posts Homepage"
+#: ../framework/admin/functions/general.php:125
+msgid "Homepage"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:133
+#: ../framework/admin/functions/general.php:126
 msgid "All Posts"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:134
+#: ../framework/admin/functions/general.php:127
 msgid "All Pages"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:135
+#: ../framework/admin/functions/general.php:128
 msgid "All Archives"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:136
+#: ../framework/admin/functions/general.php:129
 msgid "All Category Archives"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:137
+#: ../framework/admin/functions/general.php:130
 msgid "All Tag Archives"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:138
+#: ../framework/admin/functions/general.php:131
 msgid "All Author Archives"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:139
+#: ../framework/admin/functions/general.php:132
 msgid "Search Results"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:140
+#: ../framework/admin/functions/general.php:133
 msgid "404 Page"
 msgstr ""
 
-#: ../framework/admin/functions/general.php:310
+#: ../framework/admin/functions/general.php:313
 msgid "Page Attributes"
 msgstr ""
 
 #: ../framework/admin/functions/locals.php:22
-#: ../framework/admin/modules/builder/builder-framework.php:182
 msgid "Edit Layout"
 msgstr ""
 
@@ -447,7 +505,7 @@ msgid "Hide page's title."
 msgstr ""
 
 #: ../framework/admin/functions/meta.php:36
-#: ../framework/admin/functions/meta.php:105
+#: ../framework/admin/functions/meta.php:151
 msgid "Breadcrumbs"
 msgstr ""
 
@@ -456,169 +514,169 @@ msgid "Select whether you'd like breadcrumbs to show on this page or not."
 msgstr ""
 
 #: ../framework/admin/functions/meta.php:40
-#: ../framework/admin/functions/meta.php:109
+#: ../framework/admin/functions/meta.php:155
 msgid "Use default setting."
 msgstr ""
 
 #: ../framework/admin/functions/meta.php:41
-#: ../framework/admin/functions/meta.php:110
+#: ../framework/admin/functions/meta.php:156
 msgid "Yes, show breadcrumbs."
 msgstr ""
 
 #: ../framework/admin/functions/meta.php:42
-#: ../framework/admin/functions/meta.php:111
+#: ../framework/admin/functions/meta.php:157
 msgid "No, hide breadcrumbs."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:73
+#: ../framework/admin/functions/meta.php:119
 msgid "Post Options"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:81
+#: ../framework/admin/functions/meta.php:127
 msgid "Meta Information"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:82
+#: ../framework/admin/functions/meta.php:128
 msgid "Select if you'd like the meta information (date posted, author, etc) to show at the top of the post. If you're going for a portfolio-type setup, you may want to hide the meta info. This does not apply to when this post is listed in a post list or post grid format. This option only refers to this single post."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:86
-#: ../framework/admin/functions/meta.php:98
-#: ../framework/admin/functions/meta.php:121
+#: ../framework/admin/functions/meta.php:132
+#: ../framework/admin/functions/meta.php:144
+#: ../framework/admin/functions/meta.php:167
 msgid "Use default post setting."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:87
+#: ../framework/admin/functions/meta.php:133
 msgid "Show meta info."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:88
+#: ../framework/admin/functions/meta.php:134
 msgid "Hide meta info."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:93
+#: ../framework/admin/functions/meta.php:139
 msgid "Comments"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:94
+#: ../framework/admin/functions/meta.php:140
 msgid "Select if you'd like to completely hide comments or not below the post. This does not apply to when this post is listed in a post list or post grid format. This option only refers to this single post."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:99
+#: ../framework/admin/functions/meta.php:145
 msgid "Show comments."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:100
+#: ../framework/admin/functions/meta.php:146
 msgid "Hide comments."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:106
+#: ../framework/admin/functions/meta.php:152
 msgid "Select whether you'd like breadcrumbs to show on this post or not."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:116
+#: ../framework/admin/functions/meta.php:162
 msgid "Featured Image"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:117
-msgid "Select how you'd like the featured image to show at the top of the post. This does not apply to when this post is listed in a post list or post grid format. This option only refers to this single post."
+#: ../framework/admin/functions/meta.php:163
+msgid "Select how you'd like the featured image to show at the top of the post. This does <em>not</em> apply to when this post is listed in a post list or post grid. This option only refers to this single post."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:122
+#: ../framework/admin/functions/meta.php:168
 msgid "Show small thumbnail."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:123
+#: ../framework/admin/functions/meta.php:169
 msgid "Show full-width thumbnail."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:124
-msgid "Hide thumbnail."
+#: ../framework/admin/functions/meta.php:170
+msgid "Hide featured image."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:129
+#: ../framework/admin/functions/meta.php:175
 msgid "Featured Image Link"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:130
-msgid "Here you can select how you'd like this post's featured image to react when clicked."
+#: ../framework/admin/functions/meta.php:176
+msgid "Here you can select how you'd like this post's featured image to react when clicked. This <em>does</em> apply to both this single post page and when this post is used in a post list or post grid."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:135
+#: ../framework/admin/functions/meta.php:181
 msgid "Featured image is not a link."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:136
+#: ../framework/admin/functions/meta.php:182
 msgid "It links to its post."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:137
+#: ../framework/admin/functions/meta.php:183
 msgid "It links to its enlarged lightbox version."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:138
+#: ../framework/admin/functions/meta.php:184
 msgid "It links to a custom lightbox image."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:139
+#: ../framework/admin/functions/meta.php:185
 msgid "It links to a lightbox video."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:140
+#: ../framework/admin/functions/meta.php:186
 msgid "It links to a webpage."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:145
+#: ../framework/admin/functions/meta.php:191
 msgid "Featured Image - Image Link"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:146
+#: ../framework/admin/functions/meta.php:192
 msgid "Enter the full URL of enlarged image that the featured image will link to.<br><br>Ex: http://your-site.com/uploads/image.jpg"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:152
+#: ../framework/admin/functions/meta.php:198
 msgid "Featured Image - Video Link"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:153
+#: ../framework/admin/functions/meta.php:199
 msgid "Enter the full URL to a video page on YouTube or Vimeo. You can also enter a link to a Quicktime video file.<br><br>Ex: http://www.youtube.com/watch?v=ginTCwWfGNY<br>Ex: http://vimeo.com/11178250"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:159
+#: ../framework/admin/functions/meta.php:205
 msgid "Featured Image - External Link"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:160
+#: ../framework/admin/functions/meta.php:206
 msgid "Enter the full URL of where the featured image will link.<br><br>Ex: http://google.com"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:167
+#: ../framework/admin/functions/meta.php:213
 msgid "Choose the sidebar layout for this specific post. Keeping it set to \"Website Default\" will allow this post to continue using the sidebar layout selected on the Theme Options page."
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:186
+#: ../framework/admin/functions/meta.php:355
 msgid "(no parent)"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:189
-#: ../framework/admin/functions/meta.php:190
+#: ../framework/admin/functions/meta.php:358
+#: ../framework/admin/functions/meta.php:359
 msgid "Parent"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:198
+#: ../framework/admin/functions/meta.php:367
 msgid "Template"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:199
+#: ../framework/admin/functions/meta.php:368
 msgid "Page Template"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:200
+#: ../framework/admin/functions/meta.php:369
 msgid "Default Template"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:217
-#: ../framework/admin/functions/meta.php:218
+#: ../framework/admin/functions/meta.php:386
+#: ../framework/admin/functions/meta.php:387
 #: ../framework/admin/modules/builder/builder-default.php:256
 #: ../framework/admin/modules/builder/builder-default.php:360
 #: ../framework/admin/modules/builder/builder-default.php:474
@@ -628,7 +686,7 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: ../framework/admin/functions/meta.php:219
+#: ../framework/admin/functions/meta.php:388
 msgid "Need help? Use the Help tab in the upper right of your screen."
 msgstr ""
 
@@ -802,6 +860,15 @@ msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:206
 msgid "Align Right"
+msgstr ""
+
+#: ../framework/admin/modules/builder/builder-default.php:215
+#: ../framework/admin/modules/builder/builder-default.php:319
+#: ../framework/admin/modules/builder/builder-default.php:426
+#: ../framework/admin/modules/builder/builder-default.php:496
+#: ../framework/admin/modules/builder/builder-default.php:613
+#: ../framework/admin/modules/builder/builder-default.php:732
+msgid "Categories"
 msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:216
@@ -1030,6 +1097,7 @@ msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:393
 #: ../framework/admin/modules/builder/builder-default.php:699
+#: ../framework/admin/modules/sliders/sliders-default.php:90
 msgid "Show standard slideshow navigation?"
 msgstr ""
 
@@ -1040,6 +1108,7 @@ msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:398
 #: ../framework/admin/modules/builder/builder-default.php:704
+#: ../framework/admin/modules/sliders/sliders-default.php:94
 msgid "Yes, show navigation."
 msgstr ""
 
@@ -1047,6 +1116,8 @@ msgstr ""
 #: ../framework/admin/modules/builder/builder-default.php:421
 #: ../framework/admin/modules/builder/builder-default.php:705
 #: ../framework/admin/modules/builder/builder-default.php:727
+#: ../framework/admin/modules/sliders/sliders-default.php:95
+#: ../framework/admin/modules/sliders/sliders-default.php:115
 msgid "No, don't show it."
 msgstr ""
 
@@ -1062,16 +1133,21 @@ msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:409
 #: ../framework/admin/modules/builder/builder-default.php:715
+#: ../framework/admin/modules/sliders/sliders-default.php:104
+#: ../framework/admin/modules/sliders/sliders-default.php:126
 msgid "Yes, show arrows."
 msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:410
 #: ../framework/admin/modules/builder/builder-default.php:716
+#: ../framework/admin/modules/sliders/sliders-default.php:105
+#: ../framework/admin/modules/sliders/sliders-default.php:127
 msgid "No, don't show them."
 msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:415
 #: ../framework/admin/modules/builder/builder-default.php:721
+#: ../framework/admin/modules/sliders/sliders-default.php:110
 msgid "Show pause/play button?"
 msgstr ""
 
@@ -1082,6 +1158,7 @@ msgstr ""
 
 #: ../framework/admin/modules/builder/builder-default.php:420
 #: ../framework/admin/modules/builder/builder-default.php:726
+#: ../framework/admin/modules/sliders/sliders-default.php:114
 msgid "Yes, show pause/play button."
 msgstr ""
 
@@ -1508,15 +1585,19 @@ msgstr ""
 msgid "Primary Area"
 msgstr ""
 
-#: ../framework/admin/modules/options/options-framework.php:247
+#: ../framework/admin/modules/options/options-framework.php:248
 msgid "Click OK to reset. Any theme settings will be lost!"
 msgstr ""
 
-#: ../framework/admin/modules/options/options-framework.php:279
+#: ../framework/admin/modules/options/options-framework.php:254
+msgid "Changelog"
+msgstr ""
+
+#: ../framework/admin/modules/options/options-framework.php:284
 msgid "Default options restored."
 msgstr ""
 
-#: ../framework/admin/modules/options/options-framework.php:320
+#: ../framework/admin/modules/options/options-framework.php:325
 msgid "Options saved."
 msgstr ""
 
@@ -1629,17 +1710,16 @@ msgstr ""
 msgid "Save Widget Area"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-ajax.php:204
+#: ../framework/admin/modules/sliders/sliders-ajax.php:209
 msgid "Slider saved."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-ajax.php:253
+#: ../framework/admin/modules/sliders/sliders-ajax.php:258
 msgid "Slider(s) deleted."
 msgstr ""
 
 #: ../framework/admin/modules/sliders/sliders-default.php:25
 #: ../framework/admin/modules/sliders/sliders-default.php:39
-#: ../framework/admin/modules/sliders/sliders-interface.php:118
 msgid "Image Slide"
 msgstr ""
 
@@ -1682,8 +1762,6 @@ msgid "Manage Sliders"
 msgstr ""
 
 #: ../framework/admin/modules/sliders/sliders-framework.php:212
-#: ../framework/admin/modules/sliders/sliders-interface.php:80
-#: ../framework/admin/modules/sliders/sliders-interface.php:86
 msgid "Add New Slider"
 msgstr ""
 
@@ -1736,122 +1814,122 @@ msgstr ""
 msgid "How would you like to display the media?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:178
+#: ../framework/admin/modules/sliders/sliders-interface.php:179
 msgid "Would you like to include additional elements?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:190
+#: ../framework/admin/modules/sliders/sliders-interface.php:191
 msgid "Image Link"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:191
+#: ../framework/admin/modules/sliders/sliders-interface.php:192
 msgid "This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:196
-#: ../framework/admin/modules/sliders/sliders-interface.php:270
+#: ../framework/admin/modules/sliders/sliders-interface.php:197
+#: ../framework/admin/modules/sliders/sliders-interface.php:271
 msgid "Where should the link open?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:201
-#: ../framework/admin/modules/sliders/sliders-interface.php:275
+#: ../framework/admin/modules/sliders/sliders-interface.php:202
+#: ../framework/admin/modules/sliders/sliders-interface.php:276
 msgid "Lightbox Popup"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:205
-#: ../framework/admin/modules/sliders/sliders-interface.php:279
+#: ../framework/admin/modules/sliders/sliders-interface.php:206
+#: ../framework/admin/modules/sliders/sliders-interface.php:280
 msgid "Where should the link go?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:220
+#: ../framework/admin/modules/sliders/sliders-interface.php:221
 msgid "Headline"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:221
+#: ../framework/admin/modules/sliders/sliders-interface.php:222
 msgid "This will allow you to insert a simple headline on your slide. The location and style of this headline will vary depending on the design of the current theme."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:226
+#: ../framework/admin/modules/sliders/sliders-interface.php:227
 msgid "What should the headline say?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:240
+#: ../framework/admin/modules/sliders/sliders-interface.php:241
 msgid "Description"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:241
+#: ../framework/admin/modules/sliders/sliders-interface.php:242
 msgid "This will allow you to insert a simple description on your slide. The location and style of this description will vary depending on the design of the current theme."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:246
+#: ../framework/admin/modules/sliders/sliders-interface.php:247
 msgid "What should the description say?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:261
+#: ../framework/admin/modules/sliders/sliders-interface.php:262
 msgid "This will allow you to include a button on your slide. You can configure it to open a webpage or a lightbox popup of different media types."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:266
+#: ../framework/admin/modules/sliders/sliders-interface.php:267
 msgid "What should the button say?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:292
+#: ../framework/admin/modules/sliders/sliders-interface.php:293
 msgid "You cannot have any elements on top of full-size video. If you'd like to include elements, align the video to the right or left."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:306
+#: ../framework/admin/modules/sliders/sliders-interface.php:308
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:306
+#: ../framework/admin/modules/sliders/sliders-interface.php:308
 msgid "Delete Slide"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:344
+#: ../framework/admin/modules/sliders/sliders-interface.php:346
 msgid "Update Slider"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:352
+#: ../framework/admin/modules/sliders/sliders-interface.php:354
 msgid "Options"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:364
+#: ../framework/admin/modules/sliders/sliders-interface.php:366
 msgid "Manage Slides"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:365
+#: ../framework/admin/modules/sliders/sliders-interface.php:367
 msgid "Add New Slide"
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:376
+#: ../framework/admin/modules/sliders/sliders-interface.php:378
 msgid "You haven't added any slides yet. Get started by clicking \"Add New Slide\" above."
 msgstr ""
 
-#: ../framework/admin/modules/sliders/sliders-interface.php:385
+#: ../framework/admin/modules/sliders/sliders-interface.php:387
 msgid "Error: The slider you're trying to edit doesn't exist."
 msgstr ""
 
-#: ../framework/frontend/functions/display.php:397
+#: ../framework/frontend/functions/display.php:398
 msgid "Posted on"
 msgstr ""
 
-#: ../framework/frontend/functions/display.php:399
+#: ../framework/frontend/functions/display.php:400
 msgid "by"
 msgstr ""
 
-#: ../framework/frontend/functions/display.php:401
+#: ../framework/frontend/functions/display.php:402
 msgid "in"
 msgstr ""
 
-#: ../framework/frontend/functions/display.php:405
+#: ../framework/frontend/functions/display.php:406
 msgid "<span class=\"leave-reply\">No Comments</span>"
 msgstr ""
 
-#: ../framework/frontend/functions/display.php:405
+#: ../framework/frontend/functions/display.php:406
 msgid "1 Comment"
 msgstr ""
 
-#: ../framework/frontend/functions/display.php:405
+#: ../framework/frontend/functions/display.php:406
 msgid "% Comments"
 msgstr ""
 
@@ -1871,124 +1949,155 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:24
-msgid "Category"
+#: ../framework/frontend/functions/locals.php:23
+msgid "Cancel reply"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:25
+msgid "Category"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:26
 msgid "Comment navigation"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:27
+#: ../framework/frontend/functions/locals.php:28
 msgid "Comments are closed."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:28
+#: ../framework/frontend/functions/locals.php:29
 msgid "Newer Comments &rarr;"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:29
+#: ../framework/frontend/functions/locals.php:30
 msgid "This post is password protected. Enter the password to view any comments."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:30
+#: ../framework/frontend/functions/locals.php:31
 msgid "&larr; Older Comments"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:31
-msgid "Error 404"
-msgstr ""
-
 #: ../framework/frontend/functions/locals.php:32
-msgid "Articles posted by"
+#, php-format
+msgid "One comment on &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:33
-msgid "Search results for"
+#, php-format
+msgid "%1$s comments on &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:34
-msgid "Posts tagged"
+msgid "Contact Us"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:35
-msgid "Edit Page"
+msgid "Error 404"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:36
-msgid "Email"
+msgid "Articles posted by"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:37
-msgid "Home"
+msgid "Search results for"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:38
-msgid "Invalid Layout ID"
+msgid "Posts tagged"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:39
-msgid "The Last 30 Posts"
+msgid "Edit Page"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:40
-msgid "Monthly Archives"
+msgid "Email"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:41
-msgid "Name"
+msgid "Home"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:42
-msgid "Page"
+msgid "Invalid Layout ID"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:43
+msgid "Post Comment"
 msgstr ""
 
 #: ../framework/frontend/functions/locals.php:44
+msgid "The Last 30 Posts"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:45
+msgid "Monthly Archives"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:46
+msgid "Name"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:47
+msgid "Page"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:49
 #, php-format
 msgid "Page %s"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:45
+#: ../framework/frontend/functions/locals.php:50
 msgid "Posts per category"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:46
+#: ../framework/frontend/functions/locals.php:51
 msgid "Navigation"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:47
+#: ../framework/frontend/functions/locals.php:52
 msgid "Slider does not exist."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:48
+#: ../framework/frontend/functions/locals.php:53
 msgid "Oops! You have not selected a slider in your layout."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:49
+#: ../framework/frontend/functions/locals.php:54
 msgid "The video url could not retrieve a video."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:50
+#: ../framework/frontend/functions/locals.php:55
 msgid "Read More"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:51
+#: ../framework/frontend/functions/locals.php:56
 msgid "Search the site..."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:52
+#: ../framework/frontend/functions/locals.php:57
 msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:53
+#: ../framework/frontend/functions/locals.php:58
 msgid "Tag"
 msgstr ""
 
-#: ../framework/frontend/functions/locals.php:54
+#: ../framework/frontend/functions/locals.php:59
+msgid "Leave a Reply"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:60
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr ""
+
+#: ../framework/frontend/functions/locals.php:61
 msgid "Website"
 msgstr ""
 
-#: ../framework/frontend/functions/parts.php:322
+#: ../framework/frontend/functions/parts.php:320
 msgid "No public Tweets found"
 msgstr ""
 
@@ -2102,9 +2211,88 @@ msgstr ""
 msgid "This is a fixed sidebar with ID, <strong>%s</strong>, but you haven't put any widgets in it yet."
 msgstr ""
 
-#: ../framework/sidebars/widgets/tb-widget-twitter.php:42
-#: ../framework/sidebars/widgets/tb-widget-video.php:36
+#: ../framework/sidebars/widgets/tb-widget-contact.php:85
+msgid "All fields are optional. Only fill in the items you want to show."
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:87
 msgid "Title:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:91
+msgid "Phone #1:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:95
+msgid "Phone #2:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:99
+msgid "Email Address #1:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:103
+msgid "Email Address #2:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:107
+msgid "URL to Contact Page:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:111
+msgid "Skype Username:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:115
+msgid "Icon Links"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:118
+msgid "Link #1 Icon:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:126
+msgid "Link #1 URL:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:132
+msgid "Link #2 Icon:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:140
+msgid "Link #2 URL:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:146
+msgid "Link #3 Icon:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:154
+msgid "Link #3 URL:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:160
+msgid "Link #4 Icon:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:168
+msgid "Link #4 URL:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:174
+msgid "Link #5 Icon:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:182
+msgid "Link #5 URL:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:188
+msgid "Link #6 Icon:"
+msgstr ""
+
+#: ../framework/sidebars/widgets/tb-widget-contact.php:196
+msgid "Link #6 URL:"
 msgstr ""
 
 #: ../framework/sidebars/widgets/tb-widget-twitter.php:46
@@ -2135,277 +2323,317 @@ msgstr ""
 msgid "You forgot to enter a video URL."
 msgstr ""
 
-#: ../includes/options.php:65
+#: ../includes/options.php:70
+msgid "You haven't created any custom layouts yet."
+msgstr ""
+
+#: ../includes/options.php:77
 msgid "Styles"
 msgstr ""
 
-#: ../includes/options.php:70
-#: ../includes/options.php:191
+#: ../includes/options.php:82
+#: ../includes/options.php:203
 msgid "Main"
 msgstr ""
 
-#: ../includes/options.php:73
+#: ../includes/options.php:85
 msgid "Content Color"
 msgstr ""
 
-#: ../includes/options.php:74
+#: ../includes/options.php:86
 msgid "Select the primary color. This color makes up the background of the site."
 msgstr ""
 
-#: ../includes/options.php:79
+#: ../includes/options.php:91
 msgid "Dark"
 msgstr ""
 
-#: ../includes/options.php:80
+#: ../includes/options.php:92
 msgid "Light"
 msgstr ""
 
-#: ../includes/options.php:81
+#: ../includes/options.php:93
 msgid "Tan"
 msgstr ""
 
-#: ../includes/options.php:84
+#: ../includes/options.php:96
 msgid "Primary Color"
 msgstr ""
 
-#: ../includes/options.php:85
+#: ../includes/options.php:97
 msgid "This color gets applied to the background of the header and the footer, as well as being applied to a couple different highlighted areas of the theme."
 msgstr ""
 
-#: ../includes/options.php:94
+#: ../includes/options.php:106
 msgid "Links"
 msgstr ""
 
-#: ../includes/options.php:97
+#: ../includes/options.php:109
 msgid "Link Color"
 msgstr ""
 
-#: ../includes/options.php:98
+#: ../includes/options.php:110
 msgid "Choose the color you'd like applied to links."
 msgstr ""
 
-#: ../includes/options.php:103
+#: ../includes/options.php:115
 msgid "Link Hover Color"
 msgstr ""
 
-#: ../includes/options.php:104
+#: ../includes/options.php:116
 msgid "Choose the color you'd like applied to links when they are hovered over."
 msgstr ""
 
-#: ../includes/options.php:109
+#: ../includes/options.php:121
 msgid "Footer Link Color"
 msgstr ""
 
-#: ../includes/options.php:110
+#: ../includes/options.php:122
 msgid "Choose the color you'd like applied to links in the footer."
 msgstr ""
 
-#: ../includes/options.php:115
+#: ../includes/options.php:127
 msgid "Footer Link Hover Color"
 msgstr ""
 
-#: ../includes/options.php:116
+#: ../includes/options.php:128
 msgid "Choose the color you'd like applied to links in the footer when they are hovered over."
 msgstr ""
 
-#: ../includes/options.php:125
+#: ../includes/options.php:137
 msgid "Typography"
 msgstr ""
 
-#: ../includes/options.php:128
+#: ../includes/options.php:140
 msgid "Primary Font"
 msgstr ""
 
-#: ../includes/options.php:129
+#: ../includes/options.php:141
 msgid "This applies to most of the text on your site."
 msgstr ""
 
-#: ../includes/options.php:135
+#: ../includes/options.php:147
 msgid "Header Font"
 msgstr ""
 
-#: ../includes/options.php:136
+#: ../includes/options.php:148
 msgid "This applies to all of the primary headers throughout your site (h1, h2, h3, h4, h5, h6). This would include header tags used in redundant areas like widgets and the content of posts and pages."
 msgstr ""
 
-#: ../includes/options.php:142
+#: ../includes/options.php:154
 msgid "Special Font"
 msgstr ""
 
-#: ../includes/options.php:143
-msgid "It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used. The most noticeable place you will see this font is the main title at the top of your pages and posts."
+#: ../includes/options.php:155
+msgid "It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used."
 msgstr ""
 
-#: ../includes/options.php:153
+#: ../includes/options.php:165
 msgid "Custom"
 msgstr ""
 
-#: ../includes/options.php:156
+#: ../includes/options.php:168
 msgid "Custom CSS"
 msgstr ""
 
-#: ../includes/options.php:157
+#: ../includes/options.php:169
 msgid "If you have some minor CSS changes, you can put them here to override the theme's default styles. However, if you plan to make a lot of CSS changes, it would be best to create a child theme."
 msgstr ""
 
-#: ../includes/options.php:176
+#: ../includes/options.php:188
 msgid "Configure the primary branding logo for the header of your site."
 msgstr ""
 
-#: ../includes/options.php:182
+#: ../includes/options.php:194
 msgid "Configure the social media buttons you'd like to show in the header of your site. Check the buttons you'd like to use and then input the full URL you'd like the button to link to in the corresponding text field that appears.<br><br>Example: http://twitter.com/jasonbobich<br><br><em>Note: On the \"Email\" button, if you want it to link to an actual email address, you would input it like this:<br><br><strong>mailto:you@youremail.com</strong></em><br><br><em>Note: If you're using the RSS button, your default RSS feed URL is:<br><br><strong>"
 msgstr ""
 
-#: ../includes/options.php:195
+#: ../includes/options.php:207
 msgid "Select whether you'd like breadcrumbs to show throughout the site or not."
 msgstr ""
 
-#: ../includes/options.php:206
+#: ../includes/options.php:218
 msgid "Choose the default sidebar layout for the main content area of your site.<br><br><em>Note: This will be the default sidebar layout throughout your site, but you can be override this setting for any specific page or custom layout.</em>"
 msgstr ""
 
-#: ../includes/options.php:216
+#: ../includes/options.php:228
 msgid "Footer"
 msgstr ""
 
-#: ../includes/options.php:228
+#: ../includes/options.php:240
 msgid "Footer Column #1"
 msgstr ""
 
-#: ../includes/options.php:235
+#: ../includes/options.php:247
 msgid "Footer Column #2"
 msgstr ""
 
-#: ../includes/options.php:242
+#: ../includes/options.php:254
 msgid "Footer Column #3"
 msgstr ""
 
-#: ../includes/options.php:249
+#: ../includes/options.php:261
 msgid "Footer Column #4"
 msgstr ""
 
-#: ../includes/options.php:256
+#: ../includes/options.php:268
 msgid "Footer Column #5"
 msgstr ""
 
-#: ../includes/options.php:265
+#: ../includes/options.php:277
 msgid "Footer Copyright Text"
 msgstr ""
 
-#: ../includes/options.php:266
+#: ../includes/options.php:278
 msgid "Enter the copyright text you'd like to show in the footer of your site."
 msgstr ""
 
-#: ../includes/options.php:277
+#: ../includes/options.php:289
 msgid "Content"
 msgstr ""
 
-#: ../includes/options.php:282
+#: ../includes/options.php:298
+msgid "Homepage Content"
+msgstr ""
+
+#: ../includes/options.php:299
+msgid "Select the content you'd like to show on your homepage. Note that for this setting to take effect, you must go to Settings > Reading > Frontpage displays, and select \"your latest posts.\""
+msgstr ""
+
+#: ../includes/options.php:308
+msgid "Select Custom Layout"
+msgstr ""
+
+#: ../includes/options.php:309
+msgid "Select from the custom layouts you've built under the <a href=\"admin.php?page=builder_blvd\">Builder</a> section."
+msgstr ""
+
+#: ../includes/options.php:319
 msgid "Single Posts"
 msgstr ""
 
-#: ../includes/options.php:285
+#: ../includes/options.php:322
 msgid "Show meta information at top of posts?"
 msgstr ""
 
-#: ../includes/options.php:286
+#: ../includes/options.php:323
 msgid "Select if you'd like the meta information (date posted, author, etc) to show at the top of the post. If you're going for a portfolio-type setup, you may want to hide the meta info."
 msgstr ""
 
-#: ../includes/options.php:295
+#: ../includes/options.php:332
 msgid "Show featured images at top of posts?"
 msgstr ""
 
-#: ../includes/options.php:296
+#: ../includes/options.php:333
 msgid "Choose how you want your featured images to show at the top of the posts. It can be useful to turn this off if you want to have featured images over on your blogroll or post grid sections, but you don't want them to show on the actual posts themeselves."
 msgstr ""
 
-#: ../includes/options.php:306
+#: ../includes/options.php:343
 msgid "Show comments below posts?"
 msgstr ""
 
-#: ../includes/options.php:307
+#: ../includes/options.php:344
 msgid "Select if you'd like to completely hide comments or not below the post."
 msgstr ""
 
-#: ../includes/options.php:320
+#: ../includes/options.php:357
 msgid "Primary Posts Display"
 msgstr ""
 
-#: ../includes/options.php:321
-msgid "These settings apply to your primary posts page that you've seleved under Settings > Reading and <strong>all</strong> instances of the \"Post List\" page template. Note that if you want to use the post list page template for multiple pages with different categories on each, you can accomplish this on each specific page with custom fields - <a href=\"http://vimeo.com/32754998\">Learn More</a>."
+#: ../includes/options.php:358
+msgid "These settings apply to your primary posts page that you've selected under Settings > Reading and <strong>all</strong> instances of the \"Post List\" page template. Note that if you want to use the post list page template for multiple pages with different categories on each, you can accomplish this on each specific page with custom fields - <a href=\"http://vimeo.com/32754998\">Learn More</a>."
 msgstr ""
 
-#: ../includes/options.php:325
+#: ../includes/options.php:362
 msgid "Select the size of the blog's post thumbnail or whether you'd like to hide them all together when posts are listed."
 msgstr ""
 
-#: ../includes/options.php:335
-#: ../includes/options.php:398
+#: ../includes/options.php:372
+#: ../includes/options.php:435
 msgid "Show excerpts or full content?"
 msgstr ""
 
-#: ../includes/options.php:345
+#: ../includes/options.php:382
 msgid "Exclude Categories"
 msgstr ""
 
-#: ../includes/options.php:346
+#: ../includes/options.php:383
 msgid "Select any categories you'd like to be excluded from your blog."
 msgstr ""
 
-#: ../includes/options.php:355
+#: ../includes/options.php:392
 msgid "Show slider above blog?"
 msgstr ""
 
-#: ../includes/options.php:360
+#: ../includes/options.php:397
 msgid "Featured Slider"
 msgstr ""
 
-#: ../includes/options.php:361
+#: ../includes/options.php:398
 msgid "Select a slider from you custom-made sliders. Sliders are created <a href=\"admin.php?page=slider_blvd\" target=\"_blank\">here</a>."
 msgstr ""
 
-#: ../includes/options.php:373
+#: ../includes/options.php:410
 msgid "Archives"
 msgstr ""
 
-#: ../includes/options.php:374
+#: ../includes/options.php:411
 msgid "These settings apply any time you're viewing search results or posts specific to a category, tag, date, author, etc."
 msgstr ""
 
-#: ../includes/options.php:377
+#: ../includes/options.php:414
 msgid "Show title on archive pages?"
 msgstr ""
 
-#: ../includes/options.php:378
+#: ../includes/options.php:415
 msgid "Choose whether or not you want the title to show on tag archives, category archives, date archives, author archives and search result pages."
 msgstr ""
 
-#: ../includes/options.php:383
+#: ../includes/options.php:420
 msgid "Yes, show main title at the top of archive pages."
 msgstr ""
 
-#: ../includes/options.php:384
+#: ../includes/options.php:421
 msgid "No, hide the title."
 msgstr ""
 
-#: ../includes/options.php:387
+#: ../includes/options.php:424
 msgid "Show featured images on archive pages?"
 msgstr ""
 
-#: ../includes/options.php:388
+#: ../includes/options.php:425
 msgid "Choose whether or not you want featured images to show on tag archives, category archives, date archives, author archives and search result pages."
 msgstr ""
 
-#: ../includes/options.php:417
+#: ../includes/options.php:454
+msgid "Responsiveness"
+msgstr ""
+
+#: ../includes/options.php:457
+msgid "Tablets and Mobile Devices"
+msgstr ""
+
+#: ../includes/options.php:458
+msgid "This theme comes with a special stylesheet that will target the screen resolution of your website vistors and show them a slightly modified design if their screen resolution matches common sizes for a tablet or a mobile device."
+msgstr ""
+
+#: ../includes/options.php:463
+msgid "Yes, apply special styles to tablets and mobile devices."
+msgstr ""
+
+#: ../includes/options.php:464
+msgid "No, allow website to show normally on tablets and mobile devices."
+msgstr ""
+
+#: ../includes/options.php:469
 msgid "Analytics"
 msgstr ""
 
-#: ../includes/options.php:420
+#: ../includes/options.php:472
 msgid "Analytics Code"
 msgstr ""
 
-#: ../includes/options.php:421
+#: ../includes/options.php:473
 msgid "Paste in the code provided by your Analytics service.<br><br>If you're looking for a free analytics service, definitely check out <a href=\"http://www.google.com/analytics/\">Google Analytics</a>."
 msgstr ""
 

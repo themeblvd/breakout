@@ -226,6 +226,16 @@ function themeblvd_allowed_tags( $extended = false ) {
 				'class' => array(),
 				'id'	=> array(),
 				'style' => array()
+			),
+			'iframe' => array(
+				'style' => array(),
+				'width' => array(),
+				'height' => array(),
+				'src' => array(),
+				'frameborder' => array(),
+				'allowfullscreen' => array(),
+				'webkitAllowFullScreen' => array(),
+				'mozallowfullscreen' => array()
 			)
 		);
 		$addons = array_merge( $addons, $extended_addons );

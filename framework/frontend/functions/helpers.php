@@ -125,7 +125,7 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 			$output .= '</div><!-- .featured-image (end) -->';
 			$output .= '</div><!-- .featured-image-wrapper (end) -->';
 		}
-		return $output;
+		return apply_filters( 'themeblvd_post_thumbnail', $output, $location, $size, $link );
 	}
 }
 
@@ -393,7 +393,9 @@ if( ! function_exists( 'themeblvd_posts_page_page' ) ) {
 if( ! function_exists( 'themeblvd_grid_class' ) ) {
 	function themeblvd_grid_class( $columns ) {
 		$class = 'grid_3'; // default
-		if( $columns == 2 )
+		if( $columns == 1 )
+			$class = 'grid_12';
+		else if( $columns == 2 )
 			$class = 'grid_6';
 		else if( $columns == 3 )
 			$class = 'grid_4';
@@ -458,10 +460,10 @@ if( ! function_exists( 'themeblvd_oembed_result' ) ) {
  * @since 2.0.0
  */
  
-if( ! function_exists( 'themeblvd_youtube_wmode_transprent' ) ) {
-	function themeblvd_youtube_wmode_transprent( $html, $url ) {
+if( ! function_exists( 'themeblvd_youtube_wmode_transparent' ) ) {
+	function themeblvd_youtube_wmode_transparent( $html, $url ) {
 		if( strpos( $url, 'youtube' ) )
-			return str_replace('</param><embed', '</param><param name="wmode" value="transparent"></param><embed wmode="transparent"', $html);
+			return str_replace('&feature=oembed', '&feature=oembed&wmode=transparent', $html);
 		else
 			return $html;
 	}

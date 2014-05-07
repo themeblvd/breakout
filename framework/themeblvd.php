@@ -69,7 +69,7 @@ if( is_admin() ) {
 	
 	// Filters
 	add_filter( 'body_class', 'themeblvd_body_class' );
-	add_filter( 'oembed_result', 'themeblvd_youtube_wmode_transprent', 10, 2 );
+	add_filter( 'oembed_result', 'themeblvd_youtube_wmode_transparent', 10, 2 );
 	add_filter( 'oembed_result', 'themeblvd_oembed_result', 10, 2 );
 	
 	// Apply initial hooks
@@ -470,4 +470,110 @@ function themeblvd_sidebar_layouts(){
 		)
 	);
 	return apply_filters( 'themeblvd_sidebar_layouts', $layouts );
+}
+
+/**
+ * Get transparent textures
+ *
+ * @since 2.0.5
+ *
+ * @return array
+ */
+ 
+function themeblvd_get_textures(){
+	$imagepath = get_template_directory_uri().'/framework/frontend/assets/images/textures/';
+	$textures = array(
+		'boxy' => array( 
+			'name' 		=> __( 'Boxy', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'boxy.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'chex' => array( 
+			'name' 		=> __( 'Chex', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'chex.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'concrete' => array( 
+			'name' 		=> __( 'Concrete', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'concrete.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'cross' => array( 
+			'name' 		=> __( 'Crosses', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'cross.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'diagnol_thin' => array( 
+			'name' 		=> __( 'Diganol (thin)', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'diagnol_thin.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'diagnol_thick' => array( 
+			'name' 		=> __( 'Diagonal (thin)', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'diagnol_thick.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'grid' => array( 
+			'name' 		=> __( 'Grid', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'grid.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'grunge' => array( 
+			'name' 		=> __( 'Grunge', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'grunge.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'leather' => array( 
+			'name' 		=> __( 'Leather', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'leather.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'mosaic' => array( 
+			'name' 		=> __( 'Mosaic', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'mosaic.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'noise' => array( 
+			'name' 		=> __( 'Noise', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'noise.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'paper' => array( 
+			'name' 		=> __( 'Paper', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'paper.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'textile' => array( 
+			'name' 		=> __( 'Textile', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'textile.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'vintage' => array( 
+			'name' 		=> __( 'Vintage', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'vintage.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		),
+		'wood' => array( 
+			'name' 		=> __( 'Wood', TB_GETTEXT_DOMAIN ),
+			'url' 		=> $imagepath.'wood.png',
+			'position' 	=> '0 0',
+			'repeat' 	=> 'repeat',
+		)
+
+	);
+	return apply_filters( 'themeblvd_textures', $textures );
 }

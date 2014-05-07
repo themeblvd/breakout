@@ -1,5 +1,52 @@
 == Breakout Changelog ==
 
+= 1.0.3 =
+
+* Adjusted Post List and Post Grid page templates so that the title will show according to option selected under Page Options.
+* Removed most old IE transparency filters.
+* I still do not claim the theme is fully compatible with IE7, but I did adjust the CSS so main navigation drop down menus will appear correctly on top of sliders in IE7.
+* Added frames to images in [gallery].
+* Altered how theme adds image sizes so they can be filtered from plugin or child theme.
+* Adjusted how viewport meta tag is set in head of the site depending on whether you have responsive design turned on or off.
+* Integrated comments better into framework's internal front-end localization filter.
+* Fixed YouTube filter to fix YouTube's wmode bug in their native embed code.
+* Adjusted Changelog link on theme options page to open in lightbox popup.
+* Fixed Picasa icon of social icon selections.
+* Added "themeblvd_footer_copyright" filter to footer copyright text option output for use in plugins.
+* Added "themeblvd_post_thumbnail" filter for use in plugins.
+* Now allowing input of 1 column in [post_grid] shortcode.
+* Adjusted recent tweet element to use caching.
+* Updated FlexSlider jQuery plugin to v1.8
+* Added iframe as accepted HTML tag in content areas of the framework.
+* Fixed bug with Featured area of custom layouts showing on Homepage with no featured elements.
+* In generating [icon] shortcode from TinyMCE shortcode generator, fixed mug icon and added additional icons.
+* Now toggle shortcode accepts shortcodes within along with WordPress automatic formatting.
+* Re-generated localization file.
+* Updated framework to version 2.0.5.
+
+Effected Files:
+/style.css
+/comments.php
+/functions.php
+/header.php
+/assets/css/colors.css
+/assets/css/colors.min.css
+/assets/css/theme.css
+/assets/css/theme.min.css
+/framework/themeblvd.php
+/framework/admin/modules/options/options-framework.php
+/framework/frontend/assets/css/themeblvd.css
+/framework/frontend/functions/display.php
+/framework/frontend/functions/helpers.php
+/framework/frontend/functions/locals.php
+/framework/frontend/functions/builder.php
+/framework/frontend/assets/js/flexslider.js
+/framework/frontend/functions/general.php
+/framework/shortcodes/tinymce/shortcodes/tb_icon.js
+/framework/frontend/assets/images/textures/ (new directory)
+/framework/shortcodes/shortcodes.php
+/lang/breakout.po
+
 = 1.0.2 =
 
 * Fixed initial bug with "Theme Blvd Simple Contact" widget where the field titled "Link #5 URL" was not saving properly.

@@ -251,7 +251,7 @@ function optionsframework_page() {
 	</form>
 	<div class="tb-footer-text">
 		<?php echo $footer_text; ?>
-		( <a href="<?php echo TB_UPDATE_LOG_URL; ?>" target="_blank" class="tb-update-log"><?php _e( 'Update Log', TB_GETTEXT_DOMAIN ); ?></a> )
+		( <a href="<?php echo TB_UPDATE_LOG_URL; ?>?TB_iframe=1" target="_blank" class="thickbox tb-update-log" onclick="return false;"><?php _e( 'Changelog', TB_GETTEXT_DOMAIN ); ?></a> )
 	</div><!-- .tb-footer-text (end) -->
 </div> <!-- / #container -->
 </div>

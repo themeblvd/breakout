@@ -58,3 +58,16 @@
 	*float: left; /* IE7 */
 	*margin-top: 2px; /* IE7 */
 }
+/* Allow drop down menus from main navigation to appear over sliders in IE7 */
+#container {
+	*position: relative; /* IE7 */
+	*z-index: 1; /* IE7 */
+}
+#container #top {
+	*position: relative; /* IE7 */
+	*z-index: 3; /* IE7 */
+}
+#container #featured {
+	*position: relative; /* IE7 */
+	*z-index: 2; /* IE7 */
+}
