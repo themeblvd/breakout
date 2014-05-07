@@ -130,18 +130,13 @@ function breakout_styles() {
 	#content .media-full .slide-title span,
 	#featured_below .media-full .slide-title span,
 	.standard-slider .image-link,
-	.carrousel-slider .image-link,
-	.default,
-	.default:hover {
+	.carrousel-slider .image-link {
 		background-color: <?php echo $accent_color; ?>;
 		<?php if( 'accent_text_dark' == themeblvd_get_option( 'accent_text' ) ) : ?>
 		color: #666666;
 		<?php else : ?>
 		color: #ffffff;
 		<?php endif; ?>
-	}
-	.default {
-		border: 1px solid <?php echo themeblvd_adjust_color( $accent_color ); ?>;
 	}
 	/* Header Color and Texture */
 	#top {
@@ -369,17 +364,6 @@ function breakout_image_sizes( $sizes ) {
 	return $sizes;
 }
 add_filter( 'themeblvd_image_sizes', 'breakout_image_sizes' );
-
-/**
- * Text String Overwrites
- *
- * @since 1.0.0
- */
-function breakout_frontend_locals( $locals ) {
-	$locals['read_more'] = __( 'View Post', 'themeblvd_front' );
-	return $locals;
-}
-add_filter( 'themeblvd_frontend_locals', 'breakout_frontend_locals' );
 
 /**
  * De-register footer navigation for this theme
