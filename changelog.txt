@@ -1,44 +1,26 @@
 Breakout Changelog
 ==================
 
-1.1.4
+2.0.0
 -----
 
-*Note: This is just quick update to fix some minor bugs. A fairly signficant update is coming a little down the road.*
+--------------------------------------------------------------
+
+1.1.4
+-----
 
 * Fixed bug with customizer clearing social icons saved from Theme Options page.
 * Updated FlexSlider jQuery plugin to v2.0 and made adjustments it's compatible. This shouldn't make any immediate difference in your theme, but will allow us to add functionality in the future. **If you're using the Theme Blvd News Scroller widget, make sure to update it!**
 * Hooked in new function to WordPress's "pre get posts" action that adjusts the true "posts per page" setting for custom homepage layouts that contain a paginated element.
-* Added frontend locals.php file to API directory. This allows it to be accessed by any 3rd-party plugin that may be trying to access fronted text strings when is_admin is true, for whatever reason. Specifically, this issue was brought about by the [AJAX Comment Loading](http://wordpress.org/extend/plugins/ajax-comment-loading/) plugin. 
+* Added frontend locals.php file to API directory. This allows it to be accessed by any 3rd-party plugin that may be trying to access fronted text strings when is_admin is true, for whatever reason. Specifically, this issue was brought about by the [AJAX Comment Loading](http://wordpress.org/extend/plugins/ajax-comment-loading/) plugin.
 * Fixed bug with localization not working on text strings included within API areas like Theme Options.
-
-### Effected Files ###
-
-* /style.css
-* /assets/css/colors.css
-* /assets/css/colors.min.css
-* /assets/css/theme.css
-* /assets/css/theme.min.css
-* /framework/admin/functions/display.php
-* /framework/admin/modules/options/options-sanitize.php
-* /framework/admin/modules/options/options-framework.php
-* /framework/api/locals.php (moved from /framework/frontend/functions/)
-* /framework/frontend/assets/css/themeblvd.css
-* /framework/frontend/assets/js/flexslider-2.js (new file)
-* /framework/frontend/functions/actions.php
-* /framework/frontend/functions/display.php
-* /framework/frontend/functions/general.php
-* /framework/frontend/functions/helpers.php
-* /framework/frontend/functions/sliders.php
-* /framework/themeblvd.php
-* /includes/theme-functions.php
 
 --------------------------------------------------------------
 
 1.1.3
 -----
 
-* **Added compatibility with WordPress 3.4 Customizer (still experimental).**
+* Added compatibility with WordPress 3.4 Customizer.
 * Added optional pause on hover feature to standard slider options.
 * Added alt tags to images in sliders for you SEO folks.
 * Added title as accepted parameter for img tags when saving theme textareas.
@@ -53,54 +35,9 @@ Breakout Changelog
 * Adjusted slider mobile fallback to display shortcodes in descriptions.
 * Adjusted so when no custom layouts have been created, you won't see any message about custom layouts under "Page Attributes" until you attempt to select the "Custom Layout" page template.
 * Added specific support for WordPress Multisite signup page.
-* Added stripslashes to titles of tabs to allow apostrophes. 
+* Added stripslashes to titles of tabs to allow apostrophes.
 * Styled mobile fallback for sliders to look nicer.
 * Fixed option for header when selecting if you chose a light or dark background color.
-
-### Effected Files ###
-
-* /style.css
-* /assets/css/colors.css
-* /assets/css/colors.min.css
-* /assets/css/ie.css
-* /assets/css/theme.css
-* /assets/css/theme.min.css
-* /assets/images/menu-bg-light.png
-* /content.php
-* /content-attachment.php
-* /content-page.php
-* /framework/admin/assets/css/customizer.css (new file)
-* /framework/admin/assets/js/customizer.js (new file)
-* /framework/admin/assets/js/customizer.min.js (new file)
-* /framework/admin/assets/js/meta-box.js
-* /framework/admin/assets/js/meta-box.min.js
-* /framework/admin/assets/js/shared.js
-* /framework/admin/assets/js/shared.min.js
-* /framework/admin/functions/display.php
-* /framework/admin/functions/general.php
-* /framework/admin/modules/builder/builder-framework.php
-* /framework/admin/modules/options/options-framework.php
-* /framework/admin/modules/options/options-sanitize.php
-* /framework/admin/modules/sidebars/sidebars-framework.php
-* /framework/admin/modules/sliders/sliders-ajax.php
-* /framework/admin/modules/sliders/sliders-default.php
-* /framework/admin/modules/sliders/sliders-framework.php
-* /framework/admin/modules/sliders/sliders-interface.php
-* /framework/admin/functions/general.php
-* /framework/admin/functions/locals.php
-* /framework/api/builder.php
-* /framework/api/customizer.php (new file)
-* /framework/api/helpers.php
-* /framework/api/options.php
-* /framework/frontend/functions/builder.php
-* /framework/frontend/functions/display.php
-* /framework/frontend/functions/general.php
-* /framework/frontend/functions/sliders.php
-* /framework/themeblvd.php
-* /includes/options.php
-* /includes/theme-functions.php
-* /lang/breakout.po
-* /searchform.php
 
 --------------------------------------------------------------
 
@@ -109,12 +46,6 @@ Breakout Changelog
 
 * Fixed issues with small thumbnails in post lists and archives after previous update. -- After making this update, although it is not required in all cases, it's suggested that you re-generate your thumbnails.
 * Adjusted header social icons so they open in a new window if they aren't the email icon.
-
-### Effected Files ###
-
-* /style.css
-* /framework/frontend/functions/helpers.php
-* /framework/frontend/functions/parts.php
 
 --------------------------------------------------------------
 
@@ -132,52 +63,32 @@ Breakout Changelog
 * Fixed mobile select menu primary navigation to look consistent no matter what style options are selected.
 * Re-generated PO file.
 
-### Effected Files ###
-
-* /assets/css/responsive.css
-* /assets/css/responsive.min.css
-* /assets/css/theme.css
-* /assets/css/theme.min.css
-* /framework/api/helpers.php
-* /framework/admin/modules/sliders/sliders-ajax.php
-* /framework/frontend/functions/helpers.php
-* /framework/frontend/functions/locals.php
-* /framework/shortcodes/tinymce/editor_plugin.php
-* /framework/shortcodes/tinymce/layout/css/tinymce_shortcodes.css
-* /framework/shortcodes/tinymce/shortcodes/tb_iconlink.js
-* /framework/themeblvd.php
-* /includes/theme-functions.php
-* /lang/breakout.po
-
 --------------------------------------------------------------
 
 1.1.0
 -----
 
+* **Updated to Theme Blvd Framework 2.1.0.**
 * Added many new styling theme options. -- *Make sure to visit your theme options after updating.*
 * Tweaked theme design a bit with header and footer.
 * Added option for text string under social icons in header.
 * Improved drop down menus on mobile for "graphic" style menu.
 * Added display options for post lists, archives, and post grids.
 * Adjusted sidebar layouts to have less space in between columns and more space on content areas; this is most noticeable on double-sidebar layouts.
-* Increased font size on mobile devices and tablets. 
+* Increased font size on mobile devices and tablets.
 * Added option to switch main navigation into simple select menu on mobile devices.
 * Adjusted slider design so if nav arrows and nav buttons are hidden, nav area will be hidden.
 * Increased font size on mobile devices and tablets.
 * Added basic print CSS styles.
 * Adjusted some background images that were too light with Tan content color.
-* Styled featured images of post grids to look nicer on wider mobile devices like iPhone landscape mode. 
-* **Updated framework to version 2.1.0.** [Learn More](http://www.wpjumpstart.com/framework-updates/theme-blvd-2-1-0-framework-update/)
-
-### Effected Files ###
-
-* *All files and folders have been modified.*
+* Styled featured images of post grids to look nicer on wider mobile devices like iPhone landscape mode.
 
 --------------------------------------------------------------
 
 1.0.3
 -----
 
+* Updated to Theme Blvd Framework 2.0.5.
 * Adjusted Post List and Post Grid page templates so that the title will show according to option selected under Page Options.
 * Removed most old IE transparency filters.
 * I still do not claim the theme is fully compatible with IE7, but I did adjust the CSS so main navigation drop down menus will appear correctly on top of sliders in IE7.
@@ -198,31 +109,6 @@ Breakout Changelog
 * In generating [icon] shortcode from TinyMCE shortcode generator, fixed mug icon and added additional icons.
 * Now toggle shortcode accepts shortcodes within along with WordPress automatic formatting.
 * Re-generated localization file.
-* Updated framework to version 2.0.5.
-
-### Effected Files ###
-
-* /style.css
-* /comments.php
-* /functions.php
-* /header.php
-* /assets/css/colors.css
-* /assets/css/colors.min.css
-* /assets/css/theme.css
-* /assets/css/theme.min.css
-* /framework/themeblvd.php
-* /framework/admin/modules/options/options-framework.php
-* /framework/frontend/assets/css/themeblvd.css
-* /framework/frontend/functions/display.php
-* /framework/frontend/functions/helpers.php
-* /framework/frontend/functions/locals.php
-* /framework/frontend/functions/builder.php
-* /framework/frontend/assets/js/flexslider.js
-* /framework/frontend/functions/general.php
-* /framework/shortcodes/tinymce/shortcodes/tb_icon.js
-* /framework/frontend/assets/images/textures/ (new directory)
-* /framework/shortcodes/shortcodes.php
-/lang/breakout.po
 
 --------------------------------------------------------------
 
@@ -231,16 +117,12 @@ Breakout Changelog
 
 * Fixed initial bug with "Theme Blvd Simple Contact" widget where the field titled "Link #5 URL" was not saving properly.
 
-### Effected Files ###
-
-* /style.css
-* /framework/sidebars/widgets/tb-widget-contact.php
-
 --------------------------------------------------------------
 
 1.0.1
 -----
 
+* Updated to Theme Blvd Framework 2.0.4.
 * Now when you turn off responsive design in your Theme Options, your site will have a fixed 960px width across all devices.
 * Edited some descriptions on Theme Options page to try and avoid confusion with some options.
 * Fixed bug with Slider Builder and needing text in "Link URL" field when hitting "Insert into Slider" button.
@@ -248,7 +130,7 @@ Breakout Changelog
 * Added new widget - "Theme Blvd Simple Contact"
 * On post list/post grid short code generator, link=true/false will now be inserted properly.
 * Compressed some CSS files in admin panel.
-* Improved caching with Twitter widget to avoid the error message that kept coming up, "No public Tweets." 
+* Improved caching with Twitter widget to avoid the error message that kept coming up, "No public Tweets."
 * Fixed breadcrumbs options not working correctly on archives, 404, and search results pages.
 * Added first-element/last-element CSS classes to elements in custom layouts.
 * Added additional CSS classes to standard slider effected by options user selects.
@@ -257,49 +139,6 @@ Breakout Changelog
 * Edited some wording of option descriptions for clarity under Post Options and Page Options meta boxes.
 * Under Appearance > Theme Options you can now see the current theme version, framework version, and a link to the latest update log.
 * Added several actions and filters for developers throughout different items of the framework.
-* Updated framework to version 2.0.4.
-
-### Effected Files ###
-
-* /style.css
-* /functions.php
-* /includes/options.php
-* /archive.php
-* /footer.php
-* /functions.php
-* /header.php
-* /index.php
-* /page.php
-* /single.php
-* /template_grid.php
-* /template_list.php
-* /framework/themeblvd.php
-* /framework/admin/assets/css/admin-style.css
-* /framework/admin/assets/css/meta-box.css
-* /framework/admin/modules/options/css/admin-style.css
-* /framework/frontend/functions/locals.php
-* /framework/frontend/functions/builder.php
-* /framework/frontend/functions/parts.php
-* /framework/frontend/functions/actions.php
-* /framework/frontend/functions/sliders.php
-* /framework/frontend/assets/js/themeblvd.js
-* /framework/frontend/functions/helpers.php
-* /framework/frontend/functions/display.php
-* /framework/frontend/functions/general.php
-* /framework/frontend/functions/meta.php
-* /framework/frontend/functions/helpers.php
-* /framework/admin/functions/meta.php
-* /framework/admin/functions/general.php
-* /framework/admin/modules/options/js/of-medialibrary-uploader.js
-* /framework/admin/modules/options/options-framework.php
-* /framework/admin/modules/options/options-sanitize.php
-* /framework/admin/modules/sliders/sliders-ajax.php
-* /framework/admin/modules/sliders/sliders-interface.php
-* /framework/sidebars/widgets/tb-widget-contact.php (New file)
-* /framework/sidebars/widgets/tb-widget-twitter.php
-* /framework/shortcodes/shortcodes.php
-* /framework/shortcodes/tinymce/shortcodes/tb_post_grid.js
-* /framework/shortcodes/tinymce/shortcodes/tb_post_list.js
 
 --------------------------------------------------------------
 
