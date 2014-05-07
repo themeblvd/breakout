@@ -2,20 +2,18 @@
 /**
  * The default template for displaying content in an archive.
  */
-global $location;
-global $content;
 ?>
 <div class="article-wrap">
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<header class="entry-header">
-			<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h1>
-			<?php if( 'show' == themeblvd_get_option( 'archive_meta', null, 'show' ) ) : ?>
+			<h1 class="entry-title"><?php themeblvd_the_title(); ?></h1>
+			<?php if( 'show' == themeblvd_get_option( 'archive_meta', null, 'show' ) && 'page' != get_post_type() ) : ?>
 				<?php themeblvd_blog_meta(); ?>
 			<?php endif; ?>
 		</header><!-- .entry-header -->
 		<div class="entry-content">
-			<?php themeblvd_the_post_thumbnail( $location ); ?>
-			<?php themeblvd_blog_content( $content ); ?>
+			<?php themeblvd_the_post_thumbnail( themeblvd_get_att( 'location' ) ); ?>
+			<?php themeblvd_blog_content( themeblvd_get_att( 'content' ) ); ?>
 			<?php if( 'show' == themeblvd_get_option( 'archive_tags', null, 'show' ) ) : ?>
 				<?php themeblvd_blog_tags(); ?>
 			<?php endif; ?>
