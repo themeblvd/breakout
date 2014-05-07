@@ -273,7 +273,7 @@ add_filter( 'themeblvd_image_sizes', 'breakout_image_sizes' );
 
 // Text String Overwrites
 function breakout_frontend_locals( $locals ) {
-	$locals['read_more'] = __( 'View Post', TB_GETTEXT_DOMAIN_FRONT );
+	$locals['read_more'] = __( 'View Post', 'themeblvd_front' );
 	return $locals;
 }
 add_filter( 'themeblvd_frontend_locals', 'breakout_frontend_locals' );
@@ -289,8 +289,8 @@ add_filter( 'themeblvd_nav_menus', 'breakout_nav_menus' );
 function breakout_wpml_theme_locations( $current_locations ) {
 	$new_locations = array();
 	$new_locations['social_media_addon'] = array(
-		'name' 		=> __( 'Social Media Addon', TB_GETTEXT_DOMAIN ),
-		'desc' 		=> __( 'This will display your language flags next to your social icons in the header of your website.', TB_GETTEXT_DOMAIN ),
+		'name' 		=> __( 'Social Media Addon', 'themeblvd' ),
+		'desc' 		=> __( 'This will display your language flags next to your social icons in the header of your website.', 'themeblvd' ),
 		'action' 	=> 'breakout_header_wpml'
 	);
 	$new_locations = array_merge( $new_locations, $current_locations );
@@ -377,18 +377,22 @@ if( ! function_exists( 'breakout_blog_meta' ) ) {
 	function breakout_blog_meta() {
 		?>
 		<div class="entry-meta">
-			<span class="sep"><?php _e( 'Posted on', TB_GETTEXT_DOMAIN ); ?></span>
-			<time class="entry-date" datetime="<?php the_time('c'); ?>" pubdate><?php the_time( get_option('date_format') ); ?></time>
-			<span class="sep"> <?php _e( 'by', TB_GETTEXT_DOMAIN ); ?> </span>
-			<span class="author vcard"><a class="url fn n" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" title="<?php echo sprintf( esc_attr__( 'View all posts by %s', TB_GETTEXT_DOMAIN ), get_the_author() ); ?>" rel="author"><?php the_author(); ?></a></span>
-			<span class="sep"> <?php _e( 'in', TB_GETTEXT_DOMAIN ); ?> </span>
-			<span class="category"><?php the_category(', '); ?></span>
+			<span class="sep"><?php echo themeblvd_get_local( 'posted_on' ); ?></span>
+			<time class="entry-date updated" datetime="<?php the_time('c'); ?>"><?php the_time( get_option('date_format') ); ?></time>
+			<span class="sep"> <?php echo themeblvd_get_local( 'by' ); ?> </span>
+			<span class="author vcard"><a class="url fn n" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" title="<?php echo sprintf( esc_attr__( 'View all posts by %s', 'themeblvd_frontend' ), get_the_author() ); ?>" rel="author"><?php the_author(); ?></a></span>
+			<span class="sep"> <?php echo themeblvd_get_local( 'in' ); ?> </span>
+			<?php if ( 'portfolio_item' == get_post_type() ) : ?>
+				<span class="category"><?php echo get_the_term_list( get_the_id(), 'portfolio', '', ', ' ); ?></span>
+			<?php else : ?>
+				<span class="category"><?php the_category(', '); ?></span>
+			<?php endif; ?>
 			<?php if ( comments_open() ) : ?>
 				<span class="comments-link">
-					<?php comments_popup_link( __( '<span class="leave-reply">No Comments</span>', TB_GETTEXT_DOMAIN ), __( '1 Comment', TB_GETTEXT_DOMAIN ), __( '% Comments', TB_GETTEXT_DOMAIN ) ); ?>
+					<?php comments_popup_link( '<span class="leave-reply">'.themeblvd_get_local( 'no_comments' ).'</span>', '1 '.themeblvd_get_local( 'comment' ), '% '.themeblvd_get_local( 'comments' ) ); ?>
 				</span>
 			<?php endif; ?>
-		</div><!-- .entry-meta -->	
+		</div><!-- .entry-meta -->
 		<?php
 	}
 }

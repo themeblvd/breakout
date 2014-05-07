@@ -12,7 +12,7 @@ global $show_meta;
 		</header><!-- .entry-header -->
 		<?php if( $show_meta ) : ?>
 			<div class="meta-wrapper">
-				<?php themeblvd_blog_meta(); ?>	
+				<?php themeblvd_blog_meta(); ?>
 			</div><!-- .meta-wrapper (end) -->
 		<?php endif; ?>
 		<div class="entry-content">
@@ -21,7 +21,7 @@ global $show_meta;
 			<div class="clear"></div>
 			<?php themeblvd_blog_tags(); ?>
 			<?php wp_link_pages( array( 'before' => '<div class="page-link">' . themeblvd_get_local('pages').': ', 'after' => '</div>' ) ); ?>
-			<?php edit_post_link( __( 'Edit', TB_GETTEXT_DOMAIN ), '<span class="edit-link">', '</span>' ); ?>
+			<?php edit_post_link( themeblvd_get_local('edit_page'), '<span class="edit-link">', '</span>' ); ?>
 		</div><!-- .entry-content -->
 	</article><!-- #post-<?php the_ID(); ?> -->
 </div><!-- .article-wrap (end) -->
