@@ -2,12 +2,12 @@
 /**
  * Template Name: Post List
  *
- * WARNING: This template file is a core part of the 
- * Theme Blvd WordPress Framework. This framework is 
- * designed around this file NEVER being altered. It 
- * is advised that any edits to the way this file 
- * displays its content be done with via hooks and filters.
- * 
+ * WARNING: This template file is a core part of the
+ * Theme Blvd WordPress Framework. It is advised
+ * that any edits to the way this file displays its
+ * content be done with via hooks, filters, and
+ * template parts.
+ *
  * @author		Jason Bobich
  * @copyright	Copyright (c) Jason Bobich
  * @link		http://jasonbobich.com
@@ -15,100 +15,62 @@
  * @package 	Theme Blvd WordPress Framework
  */
 
-// Fake conditional
-$fake_conditional = themeblvd_get_fake_conditional();
+get_header();
+?>
 
-// Setup query string
-$query_string = '';
-$custom_query_string = get_post_meta( $post->ID, 'query', true );
-if( $custom_query_string ) {
-	// Custom query string
-	$query_string = htmlspecialchars_decode($custom_query_string).'&';
-	if ( get_query_var('paged') )
-        $paged = get_query_var('paged');
-    else if ( get_query_var('page') )
-        $paged = get_query_var('page');
-	else
-        $paged = 1;
-	$query_string .= 'paged='.$paged;
-
-} else {
-	// Generated query string
-	$query_string = themeblvd_query_string();
-}
-
-// How to display blog content, carried into 
-// editable content file (default: content-list.php).
-$content = themeblvd_get_option( 'blog_content' );
-
-// Header
-get_header(); 
-
-	// Featured area
-	if( themeblvd_config( 'featured' ) ) {
-		themeblvd_featured_start();
-		themeblvd_featured( 'page' );
-		themeblvd_featured( 'blog' );
-		themeblvd_featured_end();
-	}
-	
-	// Start main area
-	themeblvd_main_start();
-	themeblvd_main_top();
-	
-	// Breadcrumbs
-	themeblvd_breadcrumbs();
-	
-	// Before sidebar+content layout
-	themeblvd_before_layout();
-	?>
-	
-	<div id="sidebar_layout">
+	<div id="sidebar_layout" class="clearfix">
 		<div class="sidebar_layout-inner">
-			<div class="grid-protection">
+			<div class="row grid-protection">
 
-				<?php themeblvd_sidebars( 'left' ); ?>
-				
+				<?php get_sidebar( 'left' ); ?>
+
 				<!-- CONTENT (start) -->
-	
-				<div id="content" role="main">
+
+				<div id="content" class="<?php echo themeblvd_get_column_class('content'); ?> clearfix" role="main">
 					<div class="inner">
 						<?php themeblvd_content_top(); ?>
+
 						<div class="primary-post-list element-post_list_paginated post_list<?php echo themeblvd_get_classes( 'element_post_list_paginated', true ); ?>">
-							<?php query_posts( $query_string ); ?>
-							<?php global $more; $more = 0; ?>
-							<?php if ( have_posts() ) : ?>
-								<?php while ( have_posts() ) : the_post(); ?>
-									<?php get_template_part( 'content', themeblvd_get_part( 'list_paginated' ) ); ?>
-								<?php endwhile; ?>
-							<?php else : ?>
-								<p><?php echo themeblvd_get_local( 'archive_no_posts' ); ?></p>
-							<?php endif; ?>
-							<?php themeblvd_pagination(); ?>
+							<?php
+							// Query the post list
+							$post_list = new WP_Query( themeblvd_get_second_query() );
+
+							// Start the loop
+							if ( $post_list->have_posts() ) {
+
+								while ( $post_list->have_posts() ) {
+
+									$post_list->the_post();
+
+									global $more;
+									$more = 0;
+
+									// Get template part, framework default is content-list.php
+									get_template_part( 'content', themeblvd_get_part( 'list_paginated' ) );
+
+								}
+
+							} else {
+
+								// No posts to display
+								printf( '<p>%s</p>', themeblvd_get_local( 'archive_no_posts' ) );
+
+							}
+							themeblvd_pagination( $post_list->max_num_pages );
+							wp_reset_postdata();
+							?>
 						</div><!-- .post_list (end) -->
+
+						<?php themeblvd_content_bottom(); ?>
 					</div><!-- .inner (end) -->
 				</div><!-- #content (end) -->
-					
+
 				<!-- CONTENT (end) -->
-				
-				<?php themeblvd_sidebars( 'right' ); ?>
-			
+
+				<?php get_sidebar( 'right' ); ?>
+
 			</div><!-- .grid-protection (end) -->
 		</div><!-- .sidebar_layout-inner (end) -->
-	</div><!-- .sidebar-layout-wrapper (end) -->
-		
-	<?php	
-	// End main area
-	themeblvd_main_bottom();
-	themeblvd_main_end();
-	
-	// Featured area (below)
-	if( themeblvd_config( 'featured_below' ) ) {
-		themeblvd_featured_below_start();
-		themeblvd_featured_below( 'page' );
-		themeblvd_featured_below( 'blog' );
-		themeblvd_featured_below_end();
-	}
-	
-// Footer
-get_footer();
+	</div><!-- #sidebar_layout (end) -->
+
+<?php get_footer(); ?>

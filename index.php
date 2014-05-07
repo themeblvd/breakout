@@ -1,194 +1,119 @@
 <?php
 /**
  * The main template file.
- * 
- * WARNING: This template file is a core part of the 
- * Theme Blvd WordPress Framework. This framework is 
- * designed around this file NEVER being altered. It 
- * is advised that any edits to the way this file 
- * displays its content be done with via hooks and filters.
- * 
+ *
+ * WARNING: This template file is a core part of the
+ * Theme Blvd WordPress Framework. It is advised
+ * that any edits to the way this file displays its
+ * content be done with via hooks, filters, and
+ * template parts.
+ *
  * @author		Jason Bobich
  * @copyright	Copyright (c) Jason Bobich
  * @link		http://jasonbobich.com
  * @link		http://themeblvd.com
  * @package 	Theme Blvd WordPress Framework
  */
-// global $_themeblvd_config;
-// echo '<pre>'; print_r($_themeblvd_config); echo "</pre>"; // Debug
-$homepage_content = themeblvd_get_option( 'homepage_content', null, 'posts' );
-$content = themeblvd_get_option( 'blog_content' );
 
-// In displaying the homepage, we need to first figure out if a custom layout
-// should show or we're going to list out posts. If the user were to apply a 
-// custom layout to a static page, and then set that as the frontpage under 
-// Settings > Reading > Frontpage displays, any paginated elements in the 
-// layout will not work right. So, to combat this, it's setup that the user 
-// can select a custom layout from their Theme Options page and leave their 
-// frontpage displays option to "your latest posts."
+get_header();
+?>
 
-if( $homepage_content == 'custom_layout' ) {
-	
-	/*------------------------------------------------------*/
-	/* Custom Layout Homepage
-	/*------------------------------------------------------*/
-	
-	get_template_part( 'template_builder' );
+	<div id="sidebar_layout" class="clearfix">
+		<div class="sidebar_layout-inner">
+			<div class="row grid-protection">
 
-} else {
+				<?php get_sidebar( 'left' ); ?>
 
-	// Template part
-	$template_part = themeblvd_get_part( 'index' );
-	
-	// Setup
-	if( $template_part == 'grid' || $template_part == 'index_grid' ) {
-		
-		/*------------------------------------------------------*/
-		/* Magazine Homepage setup (post grid)
-		/*------------------------------------------------------*/
-	
-		// Columns
-		$columns = themeblvd_get_option( 'index_grid_columns' );
-		if( ! $columns ) $columns = apply_filters( 'themeblvd_default_grid_columns', 3 );
-		// Rows
-		$rows = themeblvd_get_option( 'index_grid_rows' );
-		if( ! $rows ) $rows = apply_filters( 'themeblvd_default_grid_columns', 4 );
-		// Thumbnail size
-		$size = themeblvd_grid_class( $columns );
-		// Re-Build query string
-		$query_string = '';
-		// Categories
-		$exclude = themeblvd_get_option( 'index_grid_categories' );
-		if( $exclude ) {
-			$categories = 'cat=';
-			foreach( $exclude as $key => $value )
-				if( $value )
-					$categories .= '-'.$key.',';
-			$categories = themeblvd_remove_trailing_char( $categories, ',' );
-		}
-		if( isset( $categories ) )
-			$query_string .= $categories;
-		// Posts per page
-		$query_string .= 'posts_per_page='.get_option( 'posts_per_page' ).'&';
-		// Pagination
-		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-		$query_string .= $paged;
-	
-	} else {
-		
-		/*------------------------------------------------------*/
-		/* Standard Blog Homepage setup (post list)
-		/*------------------------------------------------------*/
-		
-		$query_string = themeblvd_query_string();
-		$content = themeblvd_get_option( 'blog_content' );
-	
-	}
-	
-	// Header
-	get_header(); 
-	
-		// Featured area
-		if( themeblvd_config( 'featured' ) ) {
-			themeblvd_featured_start();
-			themeblvd_featured( 'blog' );
-			themeblvd_featured_end();
-		}
-		
-		// Start main area
-		themeblvd_main_start();
-		themeblvd_main_top();
-		
-		// Breadcrumbs
-		themeblvd_breadcrumbs();
-		
-		// Before sidebar+content layout
-		themeblvd_before_layout();
-		?>
-		
-		<div id="sidebar_layout">
-			<div class="sidebar_layout-inner">
-				<div class="grid-protection">
-	
-					<?php themeblvd_sidebars( 'left' ); ?>
-					
-					<!-- CONTENT (start) -->
-					
-					<div id="content" role="main">
-						<div class="inner">
-							<?php themeblvd_content_top(); ?>
-							<?php if( $template_part == 'grid' || $template_part == 'index_grid' ) : ?>
-								
-								<!-- HOMEPAGE POST GRID (start) -->
-								
-								<div class="primary-post-grid post_grid_paginated post_grid">
-									<div class="grid-protection">
-										<?php
-										query_posts( $query_string );
-										$counter = 1;
-										if ( have_posts() ) {
-											while ( have_posts() ) {
-												the_post();
-												if( $counter == 1 ) themeblvd_open_row();
-												get_template_part( 'content', $template_part );
-												if( $counter % $columns == 0 ) themeblvd_close_row();
-												if( $counter % $columns == 0 && $posts_per_page != $counter ) themeblvd_open_row();
-												$counter++;
-											}
-											if( ($counter-1) != $posts_per_page ) themeblvd_close_row();
-										} else {
-											echo '<p>'.themeblvd_get_local( 'archive_no_posts' ).'</p>';
-										}
-										?>
-									</div><!-- .grid-protection (end) -->
-									<?php themeblvd_pagination(); ?>
-								</div><!-- .post_grid (end) -->
-								
-								<!-- HOMEPAGE POST GRID (end) -->
-								
-							<?php else : ?>
-								
-								<!-- HOMEPAGE POST LIST (start) -->
-								
-								<div class="primary-post-list post_list_paginated post_list">
-									<?php query_posts( $query_string ); ?>
+				<!-- CONTENT (start) -->
+
+				<div id="content" class="<?php echo themeblvd_get_column_class('content'); ?> clearfix" role="main">
+					<div class="inner">
+						<?php themeblvd_content_top(); ?>
+
+						<?php if ( themeblvd_is_grid_mode() ) : ?>
+
+							<!-- HOMEPAGE POST GRID (start) -->
+
+							<div class="primary-post-grid post_grid_paginated post_grid">
+								<div class="grid-protection">
+
+									<?php
+									global $more;
+									$more = 0;
+									$counter = themeblvd_set_att( 'counter', 1 );
+									$columns = themeblvd_get_att( 'columns' );
+									?>
 									<?php if ( have_posts() ) : ?>
+
+										<!-- ROW (start) -->
+										<?php themeblvd_open_row(); ?>
+
 										<?php while ( have_posts() ) : the_post(); ?>
+
 											<?php get_template_part( 'content', themeblvd_get_part( 'index' ) ); ?>
+
+											<?php if ( $counter % $columns == 0 ) : ?>
+												<?php themeblvd_close_row(); ?>
+												<!-- ROW (end) -->
+											<?php endif; ?>
+
+											<?php if ( $counter % $columns == 0 && themeblvd_get_att( 'posts_per_page' ) != $counter ) : ?>
+												<!-- ROW (start) -->
+												<?php themeblvd_open_row(); ?>
+											<?php endif; ?>
+
+											<?php $counter = themeblvd_set_att( 'counter', $counter+1 ); ?>
+
 										<?php endwhile; ?>
+
+										<?php if ( ($counter-1) != themeblvd_get_att( 'posts_per_page' ) ) : ?>
+											<?php themeblvd_close_row(); ?>
+											<!-- ROW (end) -->
+										<?php endif; ?>
+
 									<?php else : ?>
+
 										<p><?php echo themeblvd_get_local( 'archive_no_posts' ); ?></p>
+
 									<?php endif; ?>
-									<?php themeblvd_pagination(); ?>
-								</div><!-- .blogroll (end) -->
-								
-								<!-- HOMEPAGE POST LIST (end) -->
-								
-							<?php endif; ?>
-						</div><!-- .inner (end) -->
-					</div><!-- #content (end) -->
-						
-					<!-- CONTENT (end) -->
-					
-					<?php themeblvd_sidebars( 'right' ); ?>
-				
-				</div><!-- .grid-protection (end) -->
-			</div><!-- .sidebar_layout-inner (end) -->
-		</div><!-- .sidebar-layout-wrapper (end) -->
-		
-		<?php	
-		// End main area
-		themeblvd_main_bottom();
-		themeblvd_main_end();
-		
-		// Featured area (below)
-		if( themeblvd_config( 'featured_below' ) ) {
-			themeblvd_featured_below_start();
-			themeblvd_featured_below( 'blog' );
-			themeblvd_featured_below_end();
-		}
-		
-	// Footer
-	get_footer();
-	
-}
+
+								</div><!-- .grid-protection (end) -->
+
+								<?php themeblvd_pagination(); ?>
+
+							</div><!-- .post_grid (end) -->
+
+							<!-- HOMEPAGE POST GRID (end) -->
+
+						<?php else : ?>
+
+							<!-- HOMEPAGE POST LIST (start) -->
+
+							<div class="primary-post-list post_list_paginated post_list">
+								<?php if ( have_posts() ) : ?>
+									<?php while ( have_posts() ) : the_post(); ?>
+										<?php get_template_part( 'content', themeblvd_get_part( 'index' ) ); ?>
+									<?php endwhile; ?>
+								<?php else : ?>
+									<p><?php echo themeblvd_get_local( 'archive_no_posts' ); ?></p>
+								<?php endif; ?>
+								<?php themeblvd_pagination(); ?>
+							</div><!-- .blogroll (end) -->
+
+							<!-- HOMEPAGE POST LIST (end) -->
+
+						<?php endif; ?>
+
+						<?php themeblvd_content_bottom(); ?>
+					</div><!-- .inner (end) -->
+				</div><!-- #content (end) -->
+
+				<!-- CONTENT (end) -->
+
+				<?php get_sidebar( 'right' ); ?>
+
+			</div><!-- .grid-protection (end) -->
+		</div><!-- .sidebar_layout-inner (end) -->
+	</div><!-- #sidebar_layout (end) -->
+
+<?php get_footer(); ?>
