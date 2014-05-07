@@ -427,6 +427,18 @@ function breakout_plugins( $plugins ){
 }
 add_filter( 'themeblvd_plugins', 'breakout_plugins' );
 
+/**
+ * Apply gradient buttons, which were default
+ * before Bootstrap 3.
+ *
+ * @since 2.1.0
+ */
+function akita_btn_gradient( $class ) {
+	$class[] = 'tb-btn-gradient';
+	return $class;
+}
+add_filter( 'body_class', 'akita_btn_gradient' );
+
 /*-----------------------------------------------------------------------------------*/
 /* Theme Blvd Hooked Functions
 /*
