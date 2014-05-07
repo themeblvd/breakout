@@ -483,13 +483,13 @@ $plugin_url = get_template_directory_uri().'/framework/shortcodes/tinymce/';
 								jQuery("body").append(b);
 								jQuery("#themeblvd-dialog").hide();
 								var f=jQuery(window).width();
-								b=jQuery(window).height();
+								b=jQuery(window).height() - 30;
 								f=720<f?720:f;
 								f-=80;
 								b-=84;
 							
-							tb_show("Insert ThemeBlvd "+ themeblvdSelectedShortcodeTitle +" Shortcode", "#TB_inline?width="+f+"&height="+b+"&inlineId=themeblvd-dialog");jQuery("#themeblvd-shortcode-options h3:first").text(""+c.title+" Shortcode Settings");
-							
+								tb_show("Insert ThemeBlvd "+ themeblvdSelectedShortcodeTitle +" Shortcode", "#TB_inline?width="+f+"&height="+b+"&inlineId=themeblvd-dialog");jQuery("#themeblvd-shortcode-options h3:first").text(""+c.title+" Shortcode Settings");
+								
 								break;
 							
 							} // End SWITCH Statement

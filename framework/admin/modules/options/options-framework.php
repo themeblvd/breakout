@@ -202,8 +202,8 @@ if ( ! function_exists( 'optionsframework_page' ) ) {
 					<?php echo $return[0]; /* Settings */ ?>
 			        
 			        <div id="optionsframework-submit">
-						<input type="submit" class="button-primary" name="update" value="<?php esc_attr_e( 'Save Options' ); ?>" />
-			            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults' ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!', TB_GETTEXT_DOMAIN ) ); ?>' );" />
+						<input type="submit" class="button-primary" name="update" value="<?php esc_attr_e( 'Save Options', TB_GETTEXT_DOMAIN ); ?>" />
+			            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults', TB_GETTEXT_DOMAIN ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!', TB_GETTEXT_DOMAIN ) ); ?>' );" />
 			            <div class="clear"></div>
 					</div>
 				</form>

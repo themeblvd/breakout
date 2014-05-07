@@ -221,7 +221,7 @@ if( ! function_exists( 'builder_blvd_ajax_delete_layout' ) ) {
 			
 			// Display update message
 			echo '<div id="setting-error-delete_layout" class="updated fade settings-error ajax-update">';
-			echo '	<p><strong>'.__( 'Layout(s) deleted.' ).'</strong></p>';
+			echo '	<p><strong>'.__( 'Layout(s) deleted.', TB_GETTEXT_DOMAIN ).'</strong></p>';
 			echo '</div>';
 		
 		}

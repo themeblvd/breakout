@@ -1,6 +1,39 @@
 Breakout Changelog
 ==================
 
+1.1.1
+-----
+
+* Fixed responsiveness of header logo and social icons for mobile devices.
+* Fixed shortcode generator not inserting [icon_link] properly.
+* Adjusted styling on shortcode generator.
+* Added TB_THEME_NAME constant for internal processes.
+* Improved overall localization for upcoming "Theme Blvd WPML Bridge" plugin. Frontend text strings now have a separate gettext domain.
+* Added frontend theme location support and styling for upcoming "Theme Blvd WPML Bridge" plugin.
+* Responsive CSS fixes to allow images to be re-sized in Visual editor, but still remain responsive.
+* Fixed issues with conflicting native WordPress thumbnail sizes -- small, medium, and large.
+* Fixed mobile select menu primary navigation to look consistent no matter what style options are selected.
+* Re-generated PO file.
+
+### Effected Files ###
+
+* /assets/css/responsive.css
+* /assets/css/responsive.min.css
+* /assets/css/theme.css
+* /assets/css/theme.min.css
+* /framework/api/helpers.php
+* /framework/admin/modules/sliders/sliders-ajax.php
+* /framework/frontend/functions/helpers.php
+* /framework/frontend/functions/locals.php
+* /framework/shortcodes/tinymce/editor_plugin.php
+* /framework/shortcodes/tinymce/layout/css/tinymce_shortcodes.css
+* /framework/shortcodes/tinymce/shortcodes/tb_iconlink.js
+* /framework/themeblvd.php
+* /includes/theme-functions.php
+* /lang/breakout.po
+
+--------------------------------------------------------------
+
 1.1.0
 -----
 

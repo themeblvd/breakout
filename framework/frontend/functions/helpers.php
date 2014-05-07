@@ -55,7 +55,7 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 						 	$size = null;
 						 	break;
 						 case 'full' :
-						 	$sidebar_layout == 'full_width' ? $size = 'large' : $size = 'medium';
+						 	$sidebar_layout == 'full_width' ? $size = 'tb_large' : $size = 'tb_medium';
 						 	break;
 						 case 'small' :
 						 	$size = 'small';
@@ -68,7 +68,7 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 		if( $size == 'hide' )
 			$size = null;
 		if( $size == 'full' )
-			$location == 'featured' || $sidebar_layout == 'full_width' ? $size = 'large' : $size = 'medium';
+			$location == 'featured' || $sidebar_layout == 'full_width' ? $size = 'tb_large' : $size = 'tb_medium';
 		
 		// If $size was set to null, it means the post 
 		// thumb should be hidden. So, return nothing.

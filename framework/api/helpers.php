@@ -916,6 +916,10 @@ function themeblvd_stats() {
 		foreach ( $data as $k => $v ) {
 			$url .= $k . '/' . $v . '/';
 		}
+		// Manually set theme name to avoid confusion with feed
+		if( defined( 'TB_THEME_NAME' ) )
+			$data['theme_name'] = TB_THEME_NAME;
+		// Send response and set transient
 		$response = wp_remote_get( $url );
 		set_transient('presstrends_data', $data, 60*60*24); // 1 day transient
 	}
@@ -995,20 +999,20 @@ if( ! function_exists( 'themeblvd_add_image_sizes' ) ) {
 		
 		// Content Width
 		$content_width = apply_filters( 'themeblvd_content_width', 940 ); // Default width of primary content area
-
+		
 		// Crop sizes
 		$sizes = array(
-			'large' => array(
+			'tb_large' => array(
 				'width' 	=> $content_width,	// 940 => Full width thumb for 1-col page
 				'height' 	=> 9999,
 				'crop' 		=> false
 			),
-			'medium' => array(
+			'tb_medium' => array(
 				'width' 	=> 620, 			// 620 => Full width thumb for 2-col/3-col page
 				'height'	=> 9999,
 				'crop' 		=> false
 			),
-			'small' => array(
+			'tb_small' => array(
 				'width' 	=> 195,				// Square'ish thumb floated left
 				'height' 	=> 195,
 				'crop' 		=> false
@@ -1080,6 +1084,9 @@ if( ! function_exists( 'themeblvd_add_image_sizes' ) ) {
 if( ! function_exists( 'themeblvd_image_size_names_choose' ) ) {
 	function themeblvd_image_size_names_choose( $sizes ) {
 		$themeblvd_sizes = array(
+			'tb_small' 		=> 'TB Small',
+			'tb_medium' 	=> 'TB Medium',
+			'tb_large' 		=> 'TB Large',
 			'slider-large' 	=> 'Slider Full Width',
 			'slider-staged' => 'Slider Staged',
 			'grid_fifth_1' 	=> '1/5 Column of Grid',

@@ -6,8 +6,9 @@
 /* to modify the framework's default setting to construct the current theme.
 /*-----------------------------------------------------------------------------------*/
 
-// Define theme ID
+// Define theme constants
 define( 'TB_THEME_ID', 'breakout' );
+define( 'TB_THEME_NAME', 'Breakout' );
 
 // Modify framework's theme options
 require_once( get_template_directory() . '/includes/options.php' );
@@ -23,6 +24,7 @@ if( ! function_exists( 'breakout_setup' ) ) {
 	function breakout_setup() {
 		// Localization
 		load_theme_textdomain( TB_GETTEXT_DOMAIN, get_template_directory() . '/lang' );
+		load_theme_textdomain( TB_GETTEXT_DOMAIN_FRONT, get_template_directory() . '/lang' );
 	}
 }
 add_action( 'after_setup_theme', 'breakout_setup' );
@@ -134,7 +136,7 @@ if( ! function_exists( 'breakout_styles' ) ) {
 			background-repeat: <?php echo $textures[$header_texture]['repeat']; ?>;
 			<?php endif; ?>
 		}		
-		<?php if( 'header_text_dark' == themeblvd_get_option( 'header_text' ) ) : ?>
+		<?php if( 'header_text_dark' == themeblvd_get_option( 'header_text_color' ) ) : ?>
 		#top:after {
 			content:"";
 			background: url(<?php echo get_template_directory_uri(); ?>/assets/images/thin-light-divider.png) 0 bottom repeat-x;
@@ -338,7 +340,7 @@ add_filter( 'themeblvd_image_sizes', 'breakout_image_sizes' );
 
 // Text String Overwrites
 function breakout_frontend_locals( $locals ) {
-	$locals['read_more'] = __( 'View Post', TB_GETTEXT_DOMAIN );
+	$locals['read_more'] = __( 'View Post', TB_GETTEXT_DOMAIN_FRONT );
 	return $locals;
 }
 add_filter( 'themeblvd_frontend_locals', 'breakout_frontend_locals' );
@@ -349,6 +351,19 @@ function breakout_nav_menus( $menus ) {
 	return $menus;
 }
 add_filter( 'themeblvd_nav_menus', 'breakout_nav_menus' );
+
+// Theme Blvd WPML Bridge support
+function breakout_wpml_theme_locations( $current_locations ) {
+	$new_locations = array();
+	$new_locations['social_media_addon'] = array(
+		'name' 		=> __( 'Social Media Addon', TB_GETTEXT_DOMAIN ),
+		'desc' 		=> __( 'This will display your language flags next to your social icons in the header of your website.', TB_GETTEXT_DOMAIN ),
+		'action' 	=> 'breakout_header_wpml'
+	);
+	$new_locations = array_merge( $new_locations, $current_locations );
+	return $new_locations;
+}
+add_filter( 'tb_wpml_theme_locations', 'breakout_wpml_theme_locations' );
 
 /*-----------------------------------------------------------------------------------*/
 /* Theme Blvd Hooked Functions
@@ -363,10 +378,11 @@ if( ! function_exists( 'breakout_social_media' ) ) {
 	function breakout_social_media() {
 		$header_text = themeblvd_get_option( 'header_tagline' );
 		?>
-		<div class="header-addon<?php if($header_text) echo ' header-addon-with-text'; ?>">
+		<div class="header-addon<?php if($header_text) echo ' header-addon-with-text'; if(has_action('breakout_header_wpml')) echo ' header-addon-with-wpml';?>">
 			<div class="social-media">
 				<?php echo themeblvd_contact_bar(); ?>
 			</div><!-- .social-media (end) -->
+			<?php do_action('breakout_header_wpml'); ?>
 			<?php if( $header_text ) : ?>
 				<div class="header-text">
 					<?php echo $header_text; ?>
@@ -376,8 +392,6 @@ if( ! function_exists( 'breakout_social_media' ) ) {
 		<?php
 	}
 }
-
-
 
 // Featured slider on blog
 if( ! function_exists( 'breakout_featured_blog' ) ) {

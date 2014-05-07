@@ -36,14 +36,14 @@ function themeblvd_post_table( $post_type, $columns ) {
 	$header .= '</tr>';
 	
 	// Start main output
-	$output = '<table class="widefat">';
+	$output  = '<table class="widefat">';
 	$output .= '<div class="tablenav top">';
 	$output .= '<div class="alignleft actions">';
 	$output .= '<select name="action">';
-	$output .= '<option value="-1" selected="selected">'.__( 'Bulk Actions' ).'</option>';
-	$output .= '<option value="trash">'.__( 'Delete' ).' '.$name.'</option>';
+	$output .= '<option value="-1" selected="selected">'.__( 'Bulk Actions', TB_GETTEXT_DOMAIN ).'</option>';
+	$output .= '<option value="trash">'.__( 'Delete', TB_GETTEXT_DOMAIN ).' '.$name.'</option>';
 	$output .= '</select>';
-	$output .= '<input type="submit" id="doaction" class="button-secondary action" value="'.__( 'Apply' ).'">';
+	$output .= '<input type="submit" id="doaction" class="button-secondary action" value="'.__( 'Apply', TB_GETTEXT_DOMAIN ).'">';
 	$output .= '</div>';
 	$output .= '<div class="alignright tablenav-pages">';
 	$output .= '<span class="displaying-num">'.sprintf( _n( '1 '.$singular_name, '%s '.$name, count($posts) ), number_format_i18n( count($posts) ) ).'</span>';
@@ -71,13 +71,13 @@ function themeblvd_post_table( $post_type, $columns ) {
 				switch( $column['type'] ) {
 					case 'title' :
 						$output .= '<td class="post-title page-title column-title">';
-						$output .= '<strong><a href="#'.$post->ID.'" class="title-link edit-'.$post_type.'" title="'.__( 'Edit' ).'">'.stripslashes($post->post_title).'</strong></a>';
+						$output .= '<strong><a href="#'.$post->ID.'" class="title-link edit-'.$post_type.'" title="'.__( 'Edit', TB_GETTEXT_DOMAIN ).'">'.stripslashes($post->post_title).'</strong></a>';
 						$output .= '<div class="row-actions">';
 						$output .= '<span class="edit">';
-						$output .= '<a href="#'.$post->ID.'" class="edit-post edit-'.$post_type.'" title="'.__( 'Edit' ).'">'.__( 'Edit' ).'</a> | ';
+						$output .= '<a href="#'.$post->ID.'" class="edit-post edit-'.$post_type.'" title="'.__( 'Edit', TB_GETTEXT_DOMAIN ).'">'.__( 'Edit', TB_GETTEXT_DOMAIN ).'</a> | ';
 						$output .= '</span>';
 						$output .= '<span class="trash">';
-						$output .= '<a title="'.__( 'Delete' ).'" href="#'.$post->ID.'">'.__( 'Delete' ).'</a>';
+						$output .= '<a title="'.__( 'Delete', TB_GETTEXT_DOMAIN ).'" href="#'.$post->ID.'">'.__( 'Delete', TB_GETTEXT_DOMAIN ).'</a>';
 						$output .= '</span>';
 						$output .= '</div>';
 						break;
@@ -142,7 +142,7 @@ function themeblvd_post_table( $post_type, $columns ) {
 		}
 	} else {
 		$num = count( $columns ) + 1; // number of columns + the checkbox column
-		$output .= '<tr><td colspan="'.$num.'">'.__('No items have been created yet. Click the Add tab above to get started.').'</td></tr>';
+		$output .= '<tr><td colspan="'.$num.'">'.__('No items have been created yet. Click the Add tab above to get started.', TB_GETTEXT_DOMAIN).'</td></tr>';
 	}
 	$output .= '</tbody>';
 	$output .= '</table>';

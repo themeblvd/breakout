@@ -109,11 +109,11 @@ if( ! function_exists( 'slider_blvd_ajax_save_slider' ) ) {
 					
 					// Image URL's ready to be be used in actual slider
 					if( isset( $slides[$key]['image']['id'] ) ) {
-						$medium = wp_get_attachment_image_src( $slides[$key]['image']['id'], 'medium' );
-						$slides[$key]['image']['medium'] = $medium[0];
+						$medium = wp_get_attachment_image_src( $slides[$key]['image']['id'], 'tb_medium' );
+						$slides[$key]['image']['tb_medium'] = $medium[0];
 						
-						$small = wp_get_attachment_image_src( $slides[$key]['image']['id'], 'small' );
-						$slides[$key]['image']['small'] = $small[0];
+						$small = wp_get_attachment_image_src( $slides[$key]['image']['id'], 'tb_small' );
+						$slides[$key]['image']['tb_small'] = $small[0];
 						
 						$slider_large = wp_get_attachment_image_src( $slides[$key]['image']['id'], 'slider-large' );
 						$slides[$key]['image']['slider-large'] = $slider_large[0];
@@ -256,7 +256,7 @@ if( ! function_exists( 'slider_blvd_ajax_save_slider' ) ) {
 		
 		// Display update message
 		echo '<div id="setting-error-save_options" class="updated fade settings-error ajax-update">';
-		echo '	<p><strong>'.__( 'Slider saved.' ).'</strong></p>';
+		echo '	<p><strong>'.__( 'Slider saved.', TB_GETTEXT_DOMAIN ).'</strong></p>';
 		echo '</div>';
 		die();
 	}
@@ -323,7 +323,7 @@ if( ! function_exists( 'slider_blvd_ajax_delete_slider' ) ) {
 			
 			// Display update message
 			echo '<div id="setting-error-delete_slider" class="updated fade settings-error ajax-update">';
-			echo '	<p><strong>'.__( 'Slider(s) deleted.' ).'</strong></p>';
+			echo '	<p><strong>'.__( 'Slider(s) deleted.', TB_GETTEXT_DOMAIN ).'</strong></p>';
 			echo '</div>';
 		
 		}

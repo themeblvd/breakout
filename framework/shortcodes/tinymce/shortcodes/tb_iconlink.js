@@ -41,6 +41,6 @@ themeblvdShortcodeAtts={
 		}
 		
 	],
-	defaultContent:"",
+	defaultContent:"Link Text",
 	shortcode:"icon_link"
 };

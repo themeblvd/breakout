@@ -139,7 +139,7 @@ if ( ! function_exists( 'optionsframework_medialibrary_uploader' ) ) {
 			// Slider image ID input w/hidden image URL input for user admin display
 			$output .= '<span class="locked"><span></span><input id="' . $id . '_id" class="locked upload' . $class . '" type="text" name="'.$name.'[id]" value="' . $value['id'] . '" /></span>' . "\n";
 			$output .= '<input id="' . $id . '" class="image-url upload' . $class . '" type="hidden" name="'.$name.'[url]" value="' . $value['url'] . '" />' . "\n";
-			$output .= '<p class="explain">'.__( 'You must use the "Get Image" button modify the image ID for this slide. This is what the locked icon represents.' ).'</p>';
+			$output .= '<p class="explain">'.__( 'You must use the "Get Image" button modify the image ID for this slide. This is what the locked icon represents.', TB_GETTEXT_DOMAIN ).'</p>';
 		} else {
 			// Standard image input
 			$output .= '<input id="' . $id . '" class="image-url upload' . $class . '" type="text" name="'.$name.'" value="' . $value['url'] . '" />' . "\n";
@@ -168,7 +168,7 @@ if ( ! function_exists( 'optionsframework_medialibrary_uploader' ) ) {
 				$output .= '';
 			
 				// Standard generic output if it's not an image.	
-				$title = __( 'View File', 'optionsframework' );
+				$title = __( 'View File', TB_GETTEXT_DOMAIN );
 				$output .= '<div class="no_image"><span class="file_link"><a href="' . $value['url'] . '" target="_blank" rel="external">'.$title.'</a></span>' . $remove . '</div>';
 			}	
 		}
@@ -305,7 +305,7 @@ if ( ! function_exists( 'optionsframework_mlu_js_popup' ) ) {
 if ( ! function_exists( 'optionsframework_mlu_modify_tabs' ) ) {
 
 	function optionsframework_mlu_modify_tabs ( $tabs ) {
-		$tabs['gallery'] = str_replace( __( 'Gallery', 'optionsframework' ), __( 'Previously Uploaded', 'optionsframework' ), $tabs['gallery'] );
+		$tabs['gallery'] = str_replace( __( 'Gallery', TB_GETTEXT_DOMAIN ), __( 'Previously Uploaded', TB_GETTEXT_DOMAIN ), $tabs['gallery'] );
 		return $tabs;
 	}
 }

@@ -26,10 +26,11 @@
 	/* Grids */
 	#main #content, #main .fixed-sidebar, .column { float:none; margin:0; width:100%; }
 	/* Header */
+	.mobile_nav_select select {background:#ffffff;border:none;color:#000000;}
 	#top {overflow:hidden;}
 	#branding #header_content { padding-left: 0; padding-right: 0; }
 	#branding .header_logo {float:none;margin-bottom:10px;text-align:center;}
-	#branding .header_logo .tb-image-logo img {display:inline;}
+	#branding .header_logo .tb-image-logo img {display:inline;float:none;}	
 	#branding .header-addon {margin:0;position:static;}
 	#branding .header-addon-with-text {margin:0;}
 	#branding .header-text {text-align:center;}
@@ -37,6 +38,7 @@
 	#branding .themeblvd-contact-bar ul {float:none;}
 	#branding .themeblvd-contact-bar li {display:inline-block; float:none;}
 	#access { border-bottom-width:1px; height:inherit; margin:10px; }
+	#access ul {float:none;}
 	#access .container { background-image:none; margin:0; }
 	#access:before, #access:after  { content:""; background:transparent; position:static; width:0; height:0; }
 	#access li { background-image:none;border-right:none;float:none;padding-right:0; }

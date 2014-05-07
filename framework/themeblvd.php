@@ -14,6 +14,7 @@ define( 'TB_FRAMEWORK_VERSION', '2.1.0' );
 define( 'TB_FRAMEWORK_URL', get_template_directory().'/framework' );
 define( 'TB_FRAMEWORK_DIRECTORY', get_template_directory_uri().'/framework' );
 define( 'TB_GETTEXT_DOMAIN', 'themeblvd' );
+define( 'TB_GETTEXT_DOMAIN_FRONT', 'themeblvd_frontend' );
 
 // Run framework
 if( is_admin() ) {

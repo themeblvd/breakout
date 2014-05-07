@@ -157,7 +157,7 @@ if( ! function_exists( 'sidebar_blvd_ajax_delete_sidebar' ) ) {
 					
 			// Respond with update message and management table
 			echo '<div id="setting-error-delete_sidebar" class="updated fade settings-error ajax-update">';
-			echo '	<p><strong>'.__( 'Sidebar(s) deleted.' ).'</strong></p>';
+			echo '	<p><strong>'.__( 'Sidebar(s) deleted.', TB_GETTEXT_DOMAIN ).'</strong></p>';
 			echo '</div>';
 			echo '[(=>)]';
 			sidebar_blvd_manage();
