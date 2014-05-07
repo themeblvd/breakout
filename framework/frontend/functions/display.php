@@ -362,7 +362,7 @@ if( ! function_exists( 'themeblvd_breadcrumbs_default' ) ) {
 	function themeblvd_breadcrumbs_default() {
 		wp_reset_query();
 		global $post;
-		$display = 'show';
+		$display = '';
 		// Pages and Posts
 		if( is_page() || is_single() )
 			$display = get_post_meta( $post->ID, '_tb_breadcrumbs', true );

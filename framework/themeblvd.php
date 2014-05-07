@@ -24,6 +24,7 @@ if( is_admin() ) {
 	require_once( TB_FRAMEWORK_URL . '/admin/functions/display.php' );
 	require_once( TB_FRAMEWORK_URL . '/admin/functions/locals.php' );
 	require_once( TB_FRAMEWORK_URL . '/sidebars/sidebars.php' );
+	require_once( TB_FRAMEWORK_URL . '/sidebars/widgets/tb-widget-contact.php' );
 	require_once( TB_FRAMEWORK_URL . '/sidebars/widgets/tb-widget-video.php' );
 	require_once( TB_FRAMEWORK_URL . '/sidebars/widgets/tb-widget-twitter.php' );
 	require_once( TB_FRAMEWORK_URL . '/shortcodes/tinymce/tinymce_shortcodes.php' );
@@ -62,13 +63,14 @@ if( is_admin() ) {
 	require_once( TB_FRAMEWORK_URL . '/frontend/functions/general.php' );
 	require_once( TB_FRAMEWORK_URL . '/shortcodes/shortcodes.php' );
 	require_once( TB_FRAMEWORK_URL . '/sidebars/sidebars.php' );
+	require_once( TB_FRAMEWORK_URL . '/sidebars/widgets/tb-widget-contact.php' );
 	require_once( TB_FRAMEWORK_URL . '/sidebars/widgets/tb-widget-video.php' );
 	require_once( TB_FRAMEWORK_URL . '/sidebars/widgets/tb-widget-twitter.php' );
 	
 	// Filters
 	add_filter( 'body_class', 'themeblvd_body_class' );
 	add_filter( 'oembed_result', 'themeblvd_youtube_wmode_transprent', 10, 2 );
-	add_filter( 'oembed_result', 'themeblvd_oembed_result' );
+	add_filter( 'oembed_result', 'themeblvd_oembed_result', 10, 2 );
 	
 	// Apply initial hooks
 	add_action( 'after_setup_theme', 'themeblvd_register_posts' );
@@ -80,7 +82,7 @@ if( is_admin() ) {
 	// Apply other hooks after theme has had a chance to add filters
 	add_action( 'after_setup_theme', 'themeblvd_register_navs', 1000 );
 	add_action( 'after_setup_theme', 'themeblvd_register_sidebars', 1000 );
-	add_action( 'template_redirect', 'themeblvd_frontend_init', 5 ); // This absolutely needs to run before any plugins hook into it
+	add_action( 'template_redirect', 'themeblvd_frontend_init', 5 ); // This needs to run before any plugins hook into it
 	
 	// <head> hooks
 	add_action( 'themeblvd_title', 'themeblvd_title_default' );

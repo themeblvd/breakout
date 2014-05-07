@@ -106,34 +106,36 @@ function slider_blvd_ajax_save_slider () {
 					$slides[$key]['custom'] = apply_filters( 'of_sanitize_textarea', $slide['custom'] );
 				
 				// Elements
-				foreach( $slide['elements'] as $element_key => $element ) {
-					
-					// Check if element should even exist
-					if( ! in_array( $element_key, $slider['elements'] ) ) {
-						unset( $slides[$element_key] );
-						continue;
-					}
-					
-					// Now sanitize the inner options of each element
-					switch( $element_key ) {
-						case 'image_link' :
-							if( ! in_array( $element['target'], $targets  ) ) $element['target'] = '_self';
-							$element['url'] = apply_filters( 'of_sanitize_text', $element['url'] );
-							break;
-							
-						case 'headline' :
-							$element = apply_filters( 'of_sanitize_text', $element );
-							break;
-							
-						case 'description' :
-							$element = apply_filters( 'of_sanitize_text', $element );
-							break;
-							
-						case 'button' :
-							if( ! in_array( $element['target'], $targets  ) ) $element['target'] = '_self';
-							$element['url'] = apply_filters( 'of_sanitize_text', $element['url'] );
-							$element['text'] = apply_filters( 'of_sanitize_text', $element['text'] );
-							break;
+				if( isset( $slide['elements'] ) ) {
+					foreach( $slide['elements'] as $element_key => $element ) {
+						
+						// Check if element should even exist
+						if( ! in_array( $element_key, $slider['elements'] ) ) {
+							unset( $slides[$element_key] );
+							continue;
+						}
+						
+						// Now sanitize the inner options of each element
+						switch( $element_key ) {
+							case 'image_link' :
+								if( ! in_array( $element['target'], $targets  ) ) $element['target'] = '_self';
+								$element['url'] = apply_filters( 'of_sanitize_text', $element['url'] );
+								break;
+								
+							case 'headline' :
+								$element = apply_filters( 'of_sanitize_text', $element );
+								break;
+								
+							case 'description' :
+								$element = apply_filters( 'of_sanitize_text', $element );
+								break;
+								
+							case 'button' :
+								if( ! in_array( $element['target'], $targets  ) ) $element['target'] = '_self';
+								$element['url'] = apply_filters( 'of_sanitize_text', $element['url'] );
+								$element['text'] = apply_filters( 'of_sanitize_text', $element['text'] );
+								break;
+						}
 					}
 				}
 				
@@ -198,7 +200,10 @@ function slider_blvd_ajax_save_slider () {
 	// Update even they're empty
 	update_post_meta( $slider_id, 'slides', $slides );
 	update_post_meta( $slider_id, 'settings', $settings );
-
+	
+	// Allow plugins to hook in
+	do_action( 'themeblvd_save_slider_'.$slider_type, $slider_id, $slides, $settings );
+	
 	// Display update message
 	echo '<div id="setting-error-save_options" class="updated fade settings-error ajax-update">';
 	echo '	<p><strong>'.__( 'Slider saved.' ).'</strong></p>';

@@ -174,28 +174,103 @@ function slider_blvd_edit_slide( $slider_id, $slider_type, $slide_id, $slide_opt
 			        			?>
 							</select>
 						</div><!-- .slide-section (end) -->
-						<div class="slide-section">
-							<h4><?php _e( 'Would you like to include additional elements?', TB_GETTEXT_DOMAIN ); ?></h4>
-							<table class="widefat slide-elements">
-								<tbody>
-								<?php
-								foreach( $slider_types[$slider_type]['elements'] as $element ) {
-									switch( $element ) {
-										
-										case 'image_link' : 
-											if( $key != 'video' ) {	// A video would never be wrapped in a link
+						<?php if( ! empty( $slider_types[$slider_type]['elements'] ) ) : ?>
+							<div class="slide-section">
+								<h4><?php _e( 'Would you like to include additional elements?', TB_GETTEXT_DOMAIN ); ?></h4>
+								<table class="widefat slide-elements">
+									<tbody>
+									<?php
+									foreach( $slider_types[$slider_type]['elements'] as $element ) {
+										switch( $element ) {
+											
+											case 'image_link' : 
+												if( $key != 'video' ) {	// A video would never be wrapped in a link
+													?>
+													<tr class="element-image_link slide-element-header">
+														<td class="slide-element-check"><input value="image_link" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'image_link'); ?> /></td>
+														<td class="slide-element-name"><?php _e( 'Image Link', TB_GETTEXT_DOMAIN ); ?></td>
+														<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
+													</tr>
+													<tr class="element-image_link slide-element-options">
+														<td colspan="3">
+															<div class="field">
+																<h5><?php _e( 'Where should the link open?', TB_GETTEXT_DOMAIN ); ?></h5>
+																<?php $target = slider_blvd_slide_value($slide_options, 'image_link', 'target'); ?>
+																<select name="slides[<?php echo $slide_id; ?>][elements][image_link][target]">
+																	<option value="_self" <?php selected( $target, '_self' ); ?>><?php _e( 'Same Window', TB_GETTEXT_DOMAIN ); ?></option>
+																	<option value="_blank" <?php selected( $target, '_blank' ); ?>><?php _e( 'New Window', TB_GETTEXT_DOMAIN ); ?></option>
+																	<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Popup', TB_GETTEXT_DOMAIN ); ?></option>
+																</select>
+															</div><!-- .field (end) -->
+															<div class="field">
+																<h5><?php _e( 'Where should the link go?', TB_GETTEXT_DOMAIN ); ?></h5>
+																<input name="slides[<?php echo $slide_id; ?>][elements][image_link][url]" type="text" value="<?php echo slider_blvd_slide_value($slide_options, 'image_link', 'url'); ?>" class="input" />
+																</div><!-- .class="more-info (end) -->
+															</div><!-- .field (end) -->
+														</td>
+													</tr>
+													<?php
+												}
+												break;
+												
+											case 'headline' : 
+												
 												?>
-												<tr class="element-image_link slide-element-header">
-													<td class="slide-element-check"><input value="image_link" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'image_link'); ?> /></td>
-													<td class="slide-element-name"><?php _e( 'Image Link', TB_GETTEXT_DOMAIN ); ?></td>
-													<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
+												<tr class="element-headline slide-element-header">
+													<td class="slide-element-check"><input value="headline" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'headline'); ?> /></td>
+													<td class="slide-element-name"><?php _e( 'Headline', TB_GETTEXT_DOMAIN ) ?></td>
+													<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to insert a simple headline on your slide. The location and style of this headline will vary depending on the design of the current theme.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
 												</tr>
-												<tr class="element-image_link slide-element-options">
+												<tr class="element-headline slide-element-options">
 													<td colspan="3">
 														<div class="field">
+															<h5><?php _e( 'What should the headline say?', TB_GETTEXT_DOMAIN ); ?></h5>
+															<textarea name="slides[<?php echo $slide_id; ?>][elements][headline]"><?php echo slider_blvd_slide_value($slide_options, 'headline'); ?></textarea>
+														</div><!-- .field (end) -->
+													</td>
+												</tr>
+												<?php
+												
+												break;
+												
+											case 'description' : 
+												
+												?>
+												<tr class="element-description slide-element-header">
+													<td class="slide-element-check"><input value="description" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'description'); ?> /></td>
+													<td class="slide-element-name"><?php _e( 'Description', TB_GETTEXT_DOMAIN ); ?></td>
+													<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to insert a simple description on your slide. The location and style of this description will vary depending on the design of the current theme.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
+												</tr>
+												<tr class="element-description slide-element-options">
+													<td colspan="3">
+														<div class="field">
+															<h5><?php _e( 'What should the description say?', TB_GETTEXT_DOMAIN ); ?></h5>
+															<textarea name="slides[<?php echo $slide_id; ?>][elements][description]"><?php echo slider_blvd_slide_value($slide_options, 'description'); ?></textarea>
+														</div><!-- .field (end) -->
+													</td>
+												</tr>
+												<?php
+												
+												break;
+												
+											case 'button' : 
+												
+												?>
+												<tr class="element-button slide-element-header">
+													<td class="slide-element-check"><input value="button" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'button'); ?> /></td>
+													<td class="slide-element-name"><?php _e( 'Button', TB_GETTEXT_DOMAIN ); ?></td>
+													<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to include a button on your slide. You can configure it to open a webpage or a lightbox popup of different media types.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
+												</tr>
+												<tr class="element-button slide-element-options">
+													<td colspan="3">
+														<div class="field">
+															<h5><?php _e( 'What should the button say?', TB_GETTEXT_DOMAIN ); ?></h5>
+															<input name="slides[<?php echo $slide_id; ?>][elements][button][text]" type="text" value="<?php echo slider_blvd_slide_value($slide_options, 'button', 'text'); ?>" class="input" />
+														</div><!-- .field (end) -->
+														<div class="field">
 															<h5><?php _e( 'Where should the link open?', TB_GETTEXT_DOMAIN ); ?></h5>
-															<?php $target = slider_blvd_slide_value($slide_options, 'image_link', 'target'); ?>
-															<select name="slides[<?php echo $slide_id; ?>][elements][image_link][target]">
+															<?php $target = slider_blvd_slide_value($slide_options, 'button', 'target'); ?>
+															<select name="slides[<?php echo $slide_id; ?>][elements][button][target]">
 																<option value="_self" <?php selected( $target, '_self' ); ?>><?php _e( 'Same Window', TB_GETTEXT_DOMAIN ); ?></option>
 																<option value="_blank" <?php selected( $target, '_blank' ); ?>><?php _e( 'New Window', TB_GETTEXT_DOMAIN ); ?></option>
 																<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Popup', TB_GETTEXT_DOMAIN ); ?></option>
@@ -203,94 +278,21 @@ function slider_blvd_edit_slide( $slider_id, $slider_type, $slide_id, $slide_opt
 														</div><!-- .field (end) -->
 														<div class="field">
 															<h5><?php _e( 'Where should the link go?', TB_GETTEXT_DOMAIN ); ?></h5>
-															<input name="slides[<?php echo $slide_id; ?>][elements][image_link][url]" type="text" value="<?php echo slider_blvd_slide_value($slide_options, 'image_link', 'url'); ?>" class="input" />
-															</div><!-- .class="more-info (end) -->
+															<input name="slides[<?php echo $slide_id; ?>][elements][button][url]" type="text" value="<?php echo slider_blvd_slide_value($slide_options, 'button', 'url'); ?>" class="input" />
 														</div><!-- .field (end) -->
 													</td>
 												</tr>
 												<?php
-											}
-											break;
-											
-										case 'headline' : 
-											
-											?>
-											<tr class="element-headline slide-element-header">
-												<td class="slide-element-check"><input value="headline" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'headline'); ?> /></td>
-												<td class="slide-element-name"><?php _e( 'Headline', TB_GETTEXT_DOMAIN ) ?></td>
-												<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to insert a simple headline on your slide. The location and style of this headline will vary depending on the design of the current theme.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
-											</tr>
-											<tr class="element-headline slide-element-options">
-												<td colspan="3">
-													<div class="field">
-														<h5><?php _e( 'What should the headline say?', TB_GETTEXT_DOMAIN ); ?></h5>
-														<textarea name="slides[<?php echo $slide_id; ?>][elements][headline]"><?php echo slider_blvd_slide_value($slide_options, 'headline'); ?></textarea>
-													</div><!-- .field (end) -->
-												</td>
-											</tr>
-											<?php
-											
-											break;
-											
-										case 'description' : 
-											
-											?>
-											<tr class="element-description slide-element-header">
-												<td class="slide-element-check"><input value="description" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'description'); ?> /></td>
-												<td class="slide-element-name"><?php _e( 'Description', TB_GETTEXT_DOMAIN ); ?></td>
-												<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to insert a simple description on your slide. The location and style of this description will vary depending on the design of the current theme.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
-											</tr>
-											<tr class="element-description slide-element-options">
-												<td colspan="3">
-													<div class="field">
-														<h5><?php _e( 'What should the description say?', TB_GETTEXT_DOMAIN ); ?></h5>
-														<textarea name="slides[<?php echo $slide_id; ?>][elements][description]"><?php echo slider_blvd_slide_value($slide_options, 'description'); ?></textarea>
-													</div><!-- .field (end) -->
-												</td>
-											</tr>
-											<?php
-											
-											break;
-											
-										case 'button' : 
-											
-											?>
-											<tr class="element-button slide-element-header">
-												<td class="slide-element-check"><input value="button" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo slider_blvd_slide_value($slide_options, 'include', 'button'); ?> /></td>
-												<td class="slide-element-name"><?php _e( 'Button', TB_GETTEXT_DOMAIN ); ?></td>
-												<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to include a button on your slide. You can configure it to open a webpage or a lightbox popup of different media types.', TB_GETTEXT_DOMAIN ); ?>">Help</a></td>
-											</tr>
-											<tr class="element-button slide-element-options">
-												<td colspan="3">
-													<div class="field">
-														<h5><?php _e( 'What should the button say?', TB_GETTEXT_DOMAIN ); ?></h5>
-														<input name="slides[<?php echo $slide_id; ?>][elements][button][text]" type="text" value="<?php echo slider_blvd_slide_value($slide_options, 'button', 'text'); ?>" class="input" />
-													</div><!-- .field (end) -->
-													<div class="field">
-														<h5><?php _e( 'Where should the link open?', TB_GETTEXT_DOMAIN ); ?></h5>
-														<?php $target = slider_blvd_slide_value($slide_options, 'button', 'target'); ?>
-														<select name="slides[<?php echo $slide_id; ?>][elements][button][target]">
-															<option value="_self" <?php selected( $target, '_self' ); ?>><?php _e( 'Same Window', TB_GETTEXT_DOMAIN ); ?></option>
-															<option value="_blank" <?php selected( $target, '_blank' ); ?>><?php _e( 'New Window', TB_GETTEXT_DOMAIN ); ?></option>
-															<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Popup', TB_GETTEXT_DOMAIN ); ?></option>
-														</select>
-													</div><!-- .field (end) -->
-													<div class="field">
-														<h5><?php _e( 'Where should the link go?', TB_GETTEXT_DOMAIN ); ?></h5>
-														<input name="slides[<?php echo $slide_id; ?>][elements][button][url]" type="text" value="<?php echo slider_blvd_slide_value($slide_options, 'button', 'url'); ?>" class="input" />
-													</div><!-- .field (end) -->
-												</td>
-											</tr>
-											<?php
-											
-											break;
+												
+												break;
+										}
 									}
-								}
-								?>
-								</tbody>
-							</table>
-							<p class="warning slide-elements-warning"><?php _e( 'You cannot have any elements on top of full-size video. If you\'d like to include elements, align the video to the right or left.', TB_GETTEXT_DOMAIN ); ?></p>
-						</div><!-- .slide-section (end) -->
+									?>
+									</tbody>
+								</table>
+								<p class="warning slide-elements-warning"><?php _e( 'You cannot have any elements on top of full-size video. If you\'d like to include elements, align the video to the right or left.', TB_GETTEXT_DOMAIN ); ?></p>
+							</div><!-- .slide-section (end) -->
+						<?php endif; ?>
 					</div><!-- .slide-include-elements (end) -->
 					<div class="clear"></div>
 				</div><!-- .grid-wrap (end) -->

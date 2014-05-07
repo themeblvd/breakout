@@ -36,10 +36,12 @@ if( ! function_exists( 'themeblvd_layout' ) ) {
 		}
 		// Gather elements and only move forward if we have elements to show.
 		$elements = get_post_meta( $layout_id, 'elements', true );
-		if( is_array( $elements ) && isset( $elements[$location] ) && ! empty( $elements[$location] ) )
+		if( is_array( $elements ) && isset( $elements[$location] ) && ! empty( $elements[$location] ) ) {
 			$elements = $elements[$location];
-		else
+			$num_elements = count($elements);
+		} else {
 			return;
+		}
 
 		// Loop through elements
 		foreach( $elements as $id => $element ) {
@@ -49,6 +51,10 @@ if( ! function_exists( 'themeblvd_layout' ) ) {
 			
 			// CSS classes for element
 			$classes = 'element '.$location.'-element-'.$counter.' element-'.$element['type'];
+			if( $counter == 1 )
+				$classes .= ' first-element';
+			if( $num_elements == $counter )
+				$classes .= ' last-element';
 			if( $element['type'] == 'slider' ) {
 				$slider_id = themeblvd_post_id_by_name( $element['options']['slider_id'], 'tb_slider' );
 				$type = get_post_meta( $slider_id, 'type', true );
@@ -56,6 +62,7 @@ if( ! function_exists( 'themeblvd_layout' ) ) {
 			}
 			if( $element['type'] == 'paginated_post_lst' || $element['type'] == 'paginated_post_grid' )
 				$classes .= $element['type'];
+			$classes .= themeblvd_get_classes( 'element_'.$element['type'], true );
 			
 			// Start ouput
 			echo '<div class="'.$classes.'">';
@@ -194,7 +201,7 @@ if( ! function_exists( 'themeblvd_layout' ) ) {
 			
 			// Allow to add on custom element that's
 			// not in the framework
-			do_action( 'themeblvd_'.$element['type'], $id, $element['options'] );
+			do_action( 'themeblvd_'.$element['type'], $id, $element['options'], $location );
 			
 			// End output
 			echo '<div class="clear"></div>';
@@ -359,7 +366,7 @@ if( ! function_exists( 'themeblvd_headline' ) ) {
 
 if( ! function_exists( 'themeblvd_post_slider' ) ) {
 	function themeblvd_post_slider( $id, $options, $type, $current_location ) {
-		
+
 		global $content; // $options['content']
 		global $size; // $options['thumbs']
 		global $counter;
@@ -368,6 +375,12 @@ if( ! function_exists( 'themeblvd_post_slider' ) ) {
 		global $post;
 		$location = $current_location;
 		$args = themeblvd_get_posts_args( $options, $type, true );
+		
+		// Configure additional CSS classes
+		$classes = '';
+		$options['nav_standard'] == '1' ? $classes .= ' show-nav_standard' : $classes .= ' hide-nav_standard';
+		$options['nav_arrows'] == '1' ? $classes .= ' show-nav_arrows' : $classes .= ' hide-nav_arrows';
+		$options['pause_play'] == '1' ? $classes .= ' show-pause_play' : $classes .= ' hide-pause_play';
 		
 		// Config before query string
 		if( $type == 'grid' ) {
@@ -397,7 +410,7 @@ if( ! function_exists( 'themeblvd_post_slider' ) ) {
 		themeblvd_standard_slider_js( $id, $options );
 		?>
 		<div id="tb-slider-<?php echo $id; ?>" class="slider-wrapper standard-slider-wrapper">
-			<div class="slider-inner">
+			<div class="slider-inner<?php echo $classes; ?>">
 				<div class="slides-wrapper slides-wrapper-<?php echo $id; ?>">
 					<div class="slides-inner">
 						<div class="slider standard-slider flexslider">
@@ -733,16 +746,8 @@ if( ! function_exists( 'themeblvd_slider' ) ) {
 		$type = get_post_meta( $slider_id, 'type', true );
 		$settings = get_post_meta( $slider_id, 'settings', true );
 		$slides = get_post_meta( $slider_id, 'slides', true );
-		// Display slider based on it being one of the framework's 
-		// four slider types
-		switch( $type ) {
-			case 'standard' :
-				do_action( 'themeblvd_standard_slider', $slider, $settings, $slides );
-				break;
-			case 'carrousel' :
-				do_action( 'themeblvd_carrousel_slider', $slider, $settings, $slides );
-				break;
-		}
+		// Display slider based on its slider type
+		do_action( 'themeblvd_'.$type.'_slider', $slider, $settings, $slides );
 	}
 }
 

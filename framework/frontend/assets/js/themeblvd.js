@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
 	// Lightbox
 	// ---------------------------------------------------------
 	
-	$('a[rel^="themeblvd_lightbox"]').prettyPhoto({ 
+	$('a[rel^="themeblvd_lightbox"], a[rel^="featured_themeblvd_lightbox"]').prettyPhoto({ 
 		deeplinking: false,
 		overlay_gallery: false,
 		show_title: false

@@ -1,10 +1,11 @@
 /*-------------------------------------------------------------------------------------------*/
-/* OptionsFramework Admin Styles */
+/* OptionsFramework Admin Styles
 /*-------------------------------------------------------------------------------------------*/
 
 .updated{max-width:764px;margin-bottom:0!important;}
 #optionsframework{position:relative;z-index:0;max-width:780px;background:#fff;}
 #optionsframework p{margin-bottom:0;padding-bottom:10px;}
+#optionsframework .postbox h3 {cursor:inherit;}
 #optionsframework .section{border-bottom:1px solid #dfdfdf;padding:15px;}
 #optionsframework .section-description{border-bottom:1px solid #dfdfdf;color:#888888;font-family:Georgia,"Times New Roman",Times,serif;font-size:12px;font-style:italic;line-height:1.5em;padding:15px;}
 #optionsframework .group .section:last-of-type{padding-bottom:40px;}
@@ -21,8 +22,8 @@
 #optionsframework .section-color .controls{min-width:125px;}
 #optionsframework .controls input, #optionsframework .controls select, #optionsframework .controls textarea{margin-bottom:10px;width:100%;}
 #optionsframework .controls textarea { line-height:150%; }
-#optionsframework .section-radio label,#optionsframework .section-multicheck label{float:left;}
-#optionsframework input.checkbox,#optionsframework input.of-radio{width:30px;float:left;clear:both;}
+#optionsframework .section-radio label,#optionsframework .section-multicheck label{float:left;line-height:15px; display:block;}
+#optionsframework input.checkbox,#optionsframework input.of-radio{width:25px;float:left;clear:both;vertical-align:middle;}
 #optionsframework .controls .of-color{float:left;width:80px;margin-left:5px;margin-right:5px;}
 #optionsframework .controls .of-typography-size{width:80px;margin-left:5px;float:left;}
 #optionsframework .controls .of-typography-unit{width:50px;margin-left:5px;float:left;}
@@ -41,6 +42,8 @@
 #optionsframework .mini .controls input,#optionsframework .mini .controls{min-width:140px;width:140px;}
 #optionsframework .mini .explain{max-width:74%;}
 #optionsframework .controls .of-background-repeat,#optionsframework .controls .of-background-position,#optionsframework .controls .of-background-attachment{width:125px;margin-right:5px;float:left;}
+#optionsframework .tb-footer-text {background-color:#f8f8f8;border:1px solid #f2f2f2;border-top:none;color:#999999;font-style:italic;padding:10px;}
+#optionsframework .tb-footer-text .tb-update-log {text-decoration:none;}
 
 /* Image Uploader */
 #optionsframework .controls input.upload{width:80%;}

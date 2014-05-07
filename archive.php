@@ -16,7 +16,7 @@
  */
 
 // Template part
-$template_part = themeblvd_get_part( 'index' );
+$template_part = themeblvd_get_part( 'archive' );
 
 // Setup
 if( $template_part == 'grid' || $template_part == 'index_grid' ) {
@@ -111,7 +111,7 @@ get_header();
 							<div class="post_list post_list_paginated archive">
 								<?php if ( have_posts() ) : ?>
 									<?php while ( have_posts() ) : the_post(); ?>
-										<?php get_template_part( 'content', $template_part ); ?>
+										<?php get_template_part( 'content', themeblvd_get_part( 'archive' ) ); ?>
 									<?php endwhile; ?>
 								<?php else : ?>
 									<p><?php echo themeblvd_get_local( 'archive_no_posts' ); ?></p>

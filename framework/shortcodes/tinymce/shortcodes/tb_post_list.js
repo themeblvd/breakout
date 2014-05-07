@@ -61,7 +61,7 @@ themeblvdShortcodeAtts={
 		},
 		{
 			label:"Link",
-			id:"order",
+			id:"link",
 			help:"Select whether to show a link after your posts or not.", 
 			controlType:"select-control", 
 			selectValues:['true', 'false']

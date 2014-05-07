@@ -55,7 +55,7 @@ get_header();
 				<div id="content" role="main">
 					<div class="inner">
 						<?php themeblvd_content_top(); ?>
-						<div class="primary-post-grid post_grid_paginated post_grid">
+						<div class="primary-post-grid post_grid_paginated post_grid<?php echo themeblvd_get_classes( 'element_post_grid_paginated', true ); ?>">
 							<div class="grid-protection">
 								<?php
 								query_posts( $query_string );

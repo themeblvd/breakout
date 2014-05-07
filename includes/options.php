@@ -152,7 +152,7 @@ if( ! function_exists( 'optionsframework_options' ) ) {
 							'type' 		=> 'typography' );
 							
 		$options[] = array( 'name' 		=> __( 'Special Font', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used. The most noticeable place you will see this font is the main title at the top of your pages and posts.', TB_GETTEXT_DOMAIN ),
+							'desc' 		=> __( 'It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used.', TB_GETTEXT_DOMAIN ),
 							'id' 		=> 'typography_special',
 							'std' 		=> array('size' => '','face' => 'google','color' => '', 'google' => 'Josefin Sans'),
 							'atts'		=> array('face'),
@@ -355,7 +355,7 @@ if( ! function_exists( 'optionsframework_options' ) ) {
 		// Blog
 		
 		$options[] = array( 'name' 		=> __( 'Primary Posts Display', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'These settings apply to your primary posts page that you\'ve seleved under Settings > Reading and <strong>all</strong> instances of the "Post List" page template. Note that if you want to use the post list page template for multiple pages with different categories on each, you can accomplish this on each specific page with custom fields - <a href="http://vimeo.com/32754998">Learn More</a>.', TB_GETTEXT_DOMAIN ),
+							'desc'		=> __( 'These settings apply to your primary posts page that you\'ve selected under Settings > Reading and <strong>all</strong> instances of the "Post List" page template. Note that if you want to use the post list page template for multiple pages with different categories on each, you can accomplish this on each specific page with custom fields - <a href="http://vimeo.com/32754998">Learn More</a>.', TB_GETTEXT_DOMAIN ),
 							'type' 		=> 'section_start');
 		
 		$options[] = array( 'name' 		=> __( 'Featured Images', TB_GETTEXT_DOMAIN ), /* Required by Framework */

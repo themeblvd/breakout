@@ -260,22 +260,22 @@ if( ! function_exists( 'themeblvd_twitter' ) ) {
 			$filtered_message = null;
 			$output = null;
 			$iterations = 0;
-			
+
 			// Check for cached tweets
-			$cache = get_transient( TB_GETTEXT_DOMAIN.'_tweetcache_id_'.$username.'_'.$widget_id );
-			
-			if( $cache ) {
-				// Get tweets from cache
-				$tweets = get_option( TB_GETTEXT_DOMAIN.'_tweetcache_'.$username.'_'.$widget_id );
-			} else {
+			$tweets = get_transient( $widget_id.'-'.$username );
+
+			// If cache is set, use it, but if not, grab from Twitter.
+			if( ! $tweets ) {
 				// Grab response from Twitter if no cache
-				$response = wp_remote_get( 'http://api.twitter.com/1/statuses/user_timeline.xml?screen_name='.$username );
-				if ( ! is_wp_error( $response ) ) {
-					$xml = simplexml_load_string( $response['body'] );
-					if( empty( $xml->error ) ) {
-				    	if ( isset( $xml->status[0] ) ) {
+				$raw_response = wp_remote_get( 'http://api.twitter.com/1/statuses/user_timeline.xml?screen_name='.$username );
+				if ( ! is_wp_error( $raw_response ) ) {
+					// Parse it.
+					$twitter_response = simplexml_load_string( $raw_response['body'] );
+					// Setup the tweets.
+					if( empty( $twitter_response->error ) ) {
+				    	if ( isset( $twitter_response->status[0] ) ) {
 				    	    $tweets = array();
-				    	    foreach ( $xml->status as $tweet ) {
+				    	    foreach ( $twitter_response->status as $tweet ) {
 				    	    	if( $iterations == $count ) break;
 				    	    	$text = (string) $tweet->text;
 				    	    	if( $exclude_replies == 'no' || ( $exclude_replies == 'yes' && $text[0] != "@") ) {
@@ -294,8 +294,8 @@ if( ! function_exists( 'themeblvd_twitter' ) ) {
 				    	    		);
 				    			}
 				    		}
-				    		set_transient( TB_GETTEXT_DOMAIN.'_tweetcache_id_'.$username.'_'.$widget_id, 'true', 60*30);
-				    		update_option( TB_GETTEXT_DOMAIN.'_tweetcache_id_'.$username.'_'.$widget_id, $tweets );
+							// Cache it for next time.
+							set_transient( $widget_id.'-'.$username, $tweets, 60*60*3 ); // 3 hour cache
 				    	}
 				    }
 				}
@@ -311,10 +311,8 @@ if( ! function_exists( 'themeblvd_twitter' ) ) {
 		    		$output .= '</div><!-- .tweet-wrap (end) -->';
 		    		$output .= '</li>';
 				}
-		    } else {
-		    	$tweets = get_option(TB_GETTEXT_DOMAIN.'_tweetcache_'.$username.'_'.$widget_id);
 		    }
-		
+		    
 			// Filter output
 			if( $output )
 				$filtered_tweet = '<ul class="tweets">'.$output.'</ul>';
@@ -355,5 +353,56 @@ if( ! function_exists( 'themeblvd_nav_menu_select' ) ) {
 			}
 		}
 		return $select_menu;
+	}
+}
+
+/** 
+ * Simple Contact module (primary meant for simple contact widget)
+ *
+ * @since 2.0.3
+ *
+ * @param array $args Arguments to be used for the elements
+ */
+
+if( ! function_exists( 'themeblvd_get_simple_contact' ) ) {
+	function themeblvd_get_simple_contact( $args ) {
+		// Setup icon links
+		$icons = array();
+		$i = 1; // 6 possible icons
+		while ( $i <= 6 ) {
+			if( isset( $args['link_'.$i.'_url'] ) && $args['link_'.$i.'_url'] )
+				$icons[$args['link_'.$i.'_icon']] = $args['link_'.$i.'_url'];
+			$i++;
+		}
+		// Start Output
+		$module = '<ul class="simple-contact">';
+		// Phone #1
+		if( isset( $args['phone_1'] ) && $args['phone_1'] )
+			$module .= '<li class="phone">'.$args['phone_1'].'</li>';
+		// Phone #2
+		if( isset( $args['phone_2'] ) && $args['phone_2'] )
+			$module .= '<li class="phone">'.$args['phone_2'].'</li>';
+		// Email #1
+		if( isset( $args['email_1'] ) && $args['email_1'] )
+			$module .= '<li class="email"><a href="mailto:'.$args['email_1'].'">'.$args['email_1'].'</a></li>';
+		// Email #2
+		if( isset( $args['email_2'] ) && $args['email_2'] )
+			$module .= '<li class="email"><a href="mailto:'.$args['email_2'].'">'.$args['email_2'].'</a></li>';
+		// Contact Page
+		if( isset( $args['contact'] ) && $args['contact'] )
+			$module .= '<li class="contact"><a href="'.$args['contact'].'">'.themeblvd_get_local( 'contact_us' ).'</a></li>';
+		// Skype
+		if( isset( $args['skype'] ) && $args['skype'] )
+			$module .= '<li class="skype">'.$args['skype'].'</li>';
+		// Social Icons
+		if( ! empty( $icons ) ) {
+			$module .= '<li class="link"><ul class="icons">';
+			foreach( $icons as $icon => $url ) {
+				$module .= '<li class="'.$icon.'"><a href="'.$url.'" target="_blank" title="'.ucfirst($icon).'">'.ucfirst($icon).'</a></li>';
+			}
+			$module .= '</ul></li>';
+		}
+		$module .= '</ul>';
+		return $module;
 	}
 }

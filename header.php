@@ -38,6 +38,7 @@
 		
 		<!-- HEADER (start) -->
 		
+		<?php themeblvd_header_before(); ?>
 		<div id="top">
 			<header id="branding" role="banner">
 				<div class="content">
@@ -53,5 +54,6 @@
 				</div><!-- .content (end) -->
 			</header><!-- #branding (end) -->
 		</div><!-- #top (end) -->
+		<?php themeblvd_header_after(); ?>
 		
 		<!-- HEADER (end) -->

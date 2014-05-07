@@ -4,7 +4,8 @@
 /*-----------------------------------------------------------------------------------*/
 
 // Constants
-define( 'TB_FRAMEWORK_VERSION', '2.0.2' );
+define( 'TB_FRAMEWORK_VERSION', '2.0.4' );
+define( 'TB_UPDATE_LOG_URL', 'http://www.themeblvd.com/demo/breakout/wp-content/themes/breakout/changelog.txt' );
 define( 'TB_FRAMEWORK_URL', TEMPLATEPATH.'/framework' );
 define( 'TB_FRAMEWORK_DIRECTORY', get_template_directory_uri().'/framework' );
 define( 'TB_GETTEXT_DOMAIN', 'themeblvd' );
@@ -105,8 +106,6 @@ if( ! function_exists( 'breakout_styles' ) ) {
 		#branding .header_logo .tb-text-logo,
 		#featured .media-full .slide-title,
 		#content .media-full .slide-title,
-		#featured .featured-entry-title .entry-title,
-		#content .featured-entry-title .entry-title,
 		.element-slogan .slogan .slogan-text,
 		.element-tweet,
 		.special-font {
@@ -149,6 +148,22 @@ if( ! function_exists( 'breakout_styles' ) ) {
 		#bottom .widget ul li a:hover {
 			color: <?php echo themeblvd_get_option('footer_link_hover_color'); ?>;
 		}
+		<?php if( themeblvd_get_option( 'responsive_css' ) == 'false' ) : ?>
+		#top #branding .content,
+		#main .main-content,
+		#featured .featured-content,
+		#colophon .footer_content,
+		#colophon #footer_sub_content,
+		#colophon .footer-below {
+			width: 960px;
+		}
+		#top #branding .content {
+			width: 976px;
+		}
+		#colophon #footer_sub_content {
+			width: 980px;
+		}
+		<?php endif; ?>
 		<?php
 		// Ouptput compressed CSS
 		echo themeblvd_compress( ob_get_clean() );

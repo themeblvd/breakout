@@ -13,26 +13,14 @@
 function themeblvd_admin_init() {
 	
 	/*------------------------------------------------------*/
-	/* Meta Boxes
-	/*------------------------------------------------------*/
-	
-	// Page Options
-	if( themeblvd_supports( 'meta', 'page_options' ) )
-		//$tb_page_options = new ThemeBlvd_Meta_Box( themeblvd_page_meta() );
-	
-	// Post Options	
-	if( themeblvd_supports( 'meta', 'post_options' ) )
-		//$tb_post_options = new ThemeBlvd_Meta_Box( themeblvd_post_meta() );
-	
-	/*------------------------------------------------------*/
 	/* Admin Modules
 	/*------------------------------------------------------*/
 	
+	// Common Assets
+	define( 'THEMEBLVD_ADMIN_ASSETS_URL', TB_FRAMEWORK_URL . '/admin/assets/' );
+	define( 'THEMEBLVD_ADMIN_ASSETS_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/assets/');
+	
 	if( themeblvd_supports( 'admin', 'options' ) ) {
-		
-		// Common Assets
-		define( 'THEMEBLVD_ADMIN_ASSETS_URL', TB_FRAMEWORK_URL . '/admin/assets/' );
-		define( 'THEMEBLVD_ADMIN_ASSETS_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/assets/');
 		
 		// Options Framework Setup
 		define( 'OPTIONS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/options/' );

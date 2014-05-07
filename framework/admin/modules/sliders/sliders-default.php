@@ -60,8 +60,8 @@ function slider_blvd_recognized_sliders() {
 	 * the user can choose to include in a slide.
 	 */
 	
-	$standard_elements = array( 'image_link', 'headline', 'description', 'button', 'custom_content', TB_GETTEXT_DOMAIN );
-	$carrousel_elements = array( 'image_link', TB_GETTEXT_DOMAIN );
+	$standard_elements = array( 'image_link', 'headline', 'description', 'button', 'custom_content' );
+	$carrousel_elements = array( 'image_link' );
 	
 	/**
 	 * For each slider type, these are settings.

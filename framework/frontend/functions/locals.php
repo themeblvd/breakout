@@ -28,6 +28,7 @@ function themeblvd_get_local( $id ) {
 		'comments_newer'		=> __( 'Newer Comments &rarr;', TB_GETTEXT_DOMAIN ),
 		'comments_no_password'	=> __( 'This post is password protected. Enter the password to view any comments.', TB_GETTEXT_DOMAIN ),
 		'comments_older'		=> __( '&larr; Older Comments', TB_GETTEXT_DOMAIN ),
+		'contact_us'			=> __( 'Contact Us', TB_GETTEXT_DOMAIN ),
 		'crumb_404'				=> __( 'Error 404', TB_GETTEXT_DOMAIN ),
 		'crumb_author'			=> __( 'Articles posted by', TB_GETTEXT_DOMAIN ),
 		'crumb_search'			=> __( 'Search results for', TB_GETTEXT_DOMAIN ),

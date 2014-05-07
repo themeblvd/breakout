@@ -103,10 +103,18 @@ if( ! function_exists( 'themeblvd_carrousel_slider_js' ) ) {
 
 if( ! function_exists( 'themeblvd_standard_slider_default' ) ) {
 	function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
+		
+		// Configure additional CSS classes
+		$classes = themeblvd_get_classes( 'slider_standard', true );
+		$settings['nav_standard'] == '1' ? $classes .= ' show-nav_standard' : $classes .= ' hide-nav_standard';
+		$settings['nav_arrows'] == '1' ? $classes .= ' show-nav_arrows' : $classes .= ' hide-nav_arrows';
+		$settings['pause_play'] == '1' ? $classes .= ' show-pause_play' : $classes .= ' hide-pause_play';
+		
+		// Start output
 		themeblvd_standard_slider_js( $slider, $settings );
 		?>
 		<div id="tb-slider-<?php echo $slider; ?>" class="slider-wrapper standard-slider-wrapper">
-			<div class="slider-inner">	
+			<div class="slider-inner<?php echo $classes; ?>">	
 				<div class="slides-wrapper slides-wrapper-<?php echo $slider; ?>">
 					<div class="slides-inner">
 						<div class="slider standard-slider flexslider">
@@ -240,8 +248,9 @@ if( ! function_exists( 'themeblvd_standard_slider_default' ) ) {
 if( ! function_exists( 'themeblvd_carrousel_slider_default' ) ) {
 	function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 		themeblvd_carrousel_slider_js( $slider, $settings );
+		$classes = themeblvd_get_classes( 'slider_carrousel', true );
 		?>
-		<div id="tb-slider-<?php echo $slider; ?>" class="slider-wrapper carrousel-slider-wrapper">
+		<div id="tb-slider-<?php echo $slider; ?>" class="slider-wrapper carrousel-slider-wrapper<?php echo $classes; ?>">
 			<div class="tb-loader"></div>
 			<div class="slider-inner">
 				<?php if( $settings['nav_arrows'] ) : ?>

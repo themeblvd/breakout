@@ -504,13 +504,14 @@ function of_recognized_font_faces() {
 		'baskerville'	=> 'Baskerville',
 		'georgia'   	=> 'Georgia',
 		'helvetica' 	=> 'Helvetica*',
+		'lucida'  		=> 'Lucida Sans',
 		'palatino'  	=> 'Palatino',
 		'tahoma'    	=> 'Tahoma, Geneva',
 		'times'     	=> 'Times New Roman',
 		'trebuchet' 	=> 'Trebuchet',
 		'verdana'   	=> 'Verdana, Geneva',
 		'google'		=> 'Google Font'
-		);
+	);
 	return apply_filters( 'of_recognized_font_faces', $default );
 }
 
@@ -530,7 +531,7 @@ function of_recognized_font_styles() {
 		'italic'      => 'Italic',
 		'bold'        => 'Bold',
 		'bold italic' => 'Bold Italic'
-		);
+	);
 	return apply_filters( 'of_recognized_font_styles', $default );
 }
 

@@ -106,7 +106,7 @@
 			// Add media item's ID in the mix if this is for a slider (Mod by ThemeBlvd)
 			if( upload_type == 'slider' )
 			{
-				var id = $(html).find('img').attr('class'), id = id.split('wp-image-'), id = id[1];
+				var id = $(html).html(html).find('img').attr('class'), id = id.split('wp-image-'), id = id[1];
 				$('#' + formfield + '_id').val(id);	
 			}
 			

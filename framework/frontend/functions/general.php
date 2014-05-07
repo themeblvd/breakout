@@ -560,6 +560,7 @@ if( ! function_exists( 'themeblvd_font_stacks' ) ) {
 			'baskerville'	=> 'Baskerville, "Times New Roman", Times, serif',
 			'georgia'   	=> 'Georgia, Times, "Times New Roman", serif',
 			'helvetica' 	=> '"Helvetica Neue", Helvetica, Arial,sans-serif',
+			'lucida'  		=> '"Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;',
 			'palatino'  	=> 'Palatino, "Palatino Linotype", Georgia, Times, "Times New Roman", serif',
 			'tahoma'    	=> 'Tahoma, Geneva, Verdana, sans-serif',
 			'times'     	=> 'Times New Roman',
@@ -599,11 +600,10 @@ if( ! function_exists( 'themeblvd_sidebar_layout_class' ) ) {
 if( ! function_exists( 'themeblvd_get_part' ) ) {
 	function themeblvd_get_part( $type ) {
 		$part = null;
+		$post_format = null;
 		// Post format
-		if( is_archive() || is_single() || is_page() )
+		if( ! is_404() && ! is_search() )
 			$post_format = get_post_format();
-		else
-			$post_format = null;
 		// Parts
 		$parts = array(
 			'404'				=> '404',

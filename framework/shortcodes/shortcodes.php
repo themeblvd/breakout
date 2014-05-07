@@ -288,7 +288,7 @@ if( ! function_exists( 'themeblvd_shortcode_tabs' ) ) {
 				);
 				$i++;
 			}
-			$output = '<div class="element element-tabs">'.themeblvd_tabs( $id, $options ).'</div><!-- .element (end) -->';
+			$output = '<div class="element element-tabs'.themeblvd_get_classes( 'element_tabs', true ).'">'.themeblvd_tabs( $id, $options ).'</div><!-- .element (end) -->';
 		} else {
 			$output = '<p class="tb-warning">'.__( 'No tabs found', TB_GETTEXT_DOMAIN ).'</p>';
 		}
@@ -302,12 +302,14 @@ add_shortcode( 'tabs', 'themeblvd_shortcode_tabs' );
 /*-----------------------------------------------------------------------------------*/
 
 if( ! function_exists( 'themeblvd_shortcode_toggle' ) ) {
-	function themeblvd_shortcode_toggle( $atts, $content = null ) {
+	function themeblvd_shortcode_toggle( $atts, $content = null ) {		
+		$last = '';
+		if ( isset( $atts[0] ) && trim( $atts[0] ) == 'last') $last = ' tb-toggle-last';
 		$default = array(
             'title' => ''
 	    );
 	    extract( shortcode_atts( $default, $atts ) );
-		$output  = '<div class="tb-toggle">';
+		$output  = '<div class="tb-toggle'.$last.'">';
 		$output .= '<a href="#" title="'.$title.'" class="toggle-trigger"><span></span>'.$title.'</a>';
 		$output .= '<div class="toggle-content">'.$content.'</div>';
 		$output .= '</div>';
@@ -331,7 +333,7 @@ if( ! function_exists( 'themeblvd_shortcode_slider' ) ) {
 		// CSS classes for element
 		$slider_id = themeblvd_post_id_by_name( $id, 'tb_slider' );
 		$type = get_post_meta( $slider_id, 'type', true );
-		$classes = 'element element-slider element-slider-'.$type;
+		$classes = 'element element-slider element-slider-'.$type.themeblvd_get_classes( 'element_slider', true );
 		// Output
 		ob_start();
 		echo '<div class="'.$classes.'">';
@@ -416,7 +418,7 @@ if( ! function_exists( 'themeblvd_shortcode_post_grid_slider' ) ) {
 	    
 		// Output
 		ob_start();
-		echo '<div class="element element-post_grid_slider">';
+		echo '<div class="element element-post_grid_slider'.themeblvd_get_classes( 'element_post_grid_slider', true ).'">';
 		echo '<div class="element-inner">';
 		echo '<div class="element-inner-wrap">';
 		echo '<div class="grid-protection">';
@@ -500,7 +502,7 @@ if( ! function_exists( 'themeblvd_shortcode_post_list_slider' ) ) {
 	    
 		// Output
 		ob_start();
-		echo '<div class="element element-post_list_slider">';
+		echo '<div class="element element-post_list_slider'.themeblvd_get_classes( 'element_post_list_slider', true ).'">';
 		echo '<div class="element-inner">';
 		echo '<div class="element-inner-wrap">';
 		echo '<div class="grid-protection">';
@@ -570,7 +572,7 @@ if( ! function_exists( 'themeblvd_shortcode_post_grid' ) ) {
 	    
 		// Output
 		ob_start();
-		echo '<div class="element element-post_grid">';
+		echo '<div class="element element-post_grid'.themeblvd_get_classes( 'element_post_grid', true ).'">';
 		echo '<div class="element-inner">';
 		echo '<div class="element-inner-wrap">';
 		echo '<div class="grid-protection">';
@@ -637,7 +639,7 @@ if( ! function_exists( 'themeblvd_shortcode_post_list' ) ) {
 	    
 		// Output
 		ob_start();
-		echo '<div class="element element-post_list">';
+		echo '<div class="element element-post_list'.themeblvd_get_classes( 'element_post_list', true ).'">';
 		echo '<div class="element-inner">';
 		echo '<div class="element-inner-wrap">';
 		echo '<div class="grid-protection">';

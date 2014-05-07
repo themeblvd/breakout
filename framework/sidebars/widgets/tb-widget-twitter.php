@@ -103,6 +103,9 @@ class TB_Widget_Twitter extends WP_Widget {
         $instance['username'] = strip_tags($new_instance['username']);
         $instance['exclude_replies'] = $new_instance['exclude_replies'];
         $instance['time'] = $new_instance['time'];
+        // delete cache
+        if( isset( $_POST['id_base'] ) && isset( $_POST['widget_number'] ) )
+			delete_transient( $_POST['id_base'].'-'.$_POST['widget_number'].'-'.$instance['username'] );
         return $instance;
 	}
 	
@@ -112,10 +115,10 @@ class TB_Widget_Twitter extends WP_Widget {
 		extract($args, EXTR_SKIP);		
 		// Setup args
 		$title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
-		$count = empty($instance['count']) ? '' : apply_filters('widget_title', $instance['count']);
-		$username = empty($instance['username']) ? '' : apply_filters('widget_title', $instance['username']);
-		$exclude_replies = empty($instance['exclude_replies']) ? '' : apply_filters('widget_title', $instance['exclude_replies']);
-		$time = empty($instance['time']) ? 'no' : apply_filters('widget_title', $instance['time']);
+		$count = $instance['count'];
+		$username = $instance['username'];
+		$exclude_replies = $instance['exclude_replies'];
+		$time = $instance['time'];		
 		// Widget output
 		echo $before_widget;
 		if ( $title ) echo $before_title.$title.$after_title;

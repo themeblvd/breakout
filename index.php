@@ -14,8 +14,10 @@
  * @link		http://themeblvd.com
  * @package 	Theme Blvd WordPress Framework
  */
-
+global $_themeblvd_config;
+// echo '<pre>'; print_r($_themeblvd_config); echo "</pre>"; // Debug
 $homepage_content = themeblvd_get_option( 'homepage_content', null, 'posts' );
+$content = themeblvd_get_option( 'blog_content' );
 
 // In displaying the homepage, we need to first figure out if a custom layout
 // should show or we're going to list out posts. If the user were to apply a 
@@ -79,7 +81,6 @@ if( $homepage_content == 'custom_layout' ) {
 		/*------------------------------------------------------*/
 		
 		$query_string = themeblvd_query_string();
-		$size = 'small'; //default thumb size
 		$content = themeblvd_get_option( 'blog_content' );
 	
 	}
@@ -153,7 +154,7 @@ if( $homepage_content == 'custom_layout' ) {
 									<?php query_posts( $query_string ); ?>
 									<?php if ( have_posts() ) : ?>
 										<?php while ( have_posts() ) : the_post(); ?>
-											<?php get_template_part( 'content', $template_part ); ?>
+											<?php get_template_part( 'content', themeblvd_get_part( 'index' ) ); ?>
 										<?php endwhile; ?>
 									<?php else : ?>
 										<p><?php echo themeblvd_get_local( 'archive_no_posts' ); ?></p>

@@ -20,8 +20,6 @@ $fake_conditional = themeblvd_get_fake_conditional();
 
 // Setup query string
 $query_string = themeblvd_query_string();
-$size = themeblvd_get_option('blog_thumbs');
-if( ! $size ) $size = 'small'; // default thumb size
 $content = themeblvd_get_option( 'blog_content' );
 
 // Header
@@ -57,7 +55,7 @@ get_header();
 				<div id="content" role="main">
 					<div class="inner">
 						<?php themeblvd_content_top(); ?>
-						<div class="primary-post-list element-post_list_paginated post_list">
+						<div class="primary-post-list element-post_list_paginated post_list<?php echo themeblvd_get_classes( 'element_post_list_paginated', true ); ?>">
 							<?php query_posts( $query_string ); ?>
 							<?php if ( have_posts() ) : ?>
 								<?php while ( have_posts() ) : the_post(); ?>

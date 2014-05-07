@@ -30,16 +30,15 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 
 		// Set size if it wasn't already passed into the function
 		if( ! $size ) {
-
 			// Primary posts page, blog page template, single posts, archives, and search results
 			if( in_array( $fake_conditional, $conditionals ) ) {
 				// Get default size option
 				if( is_home() || is_page_template( 'template_list.php' ) )	
-					$thumb_size_option = themeblvd_get_option( 'blog_thumbs' );
+					$thumb_size_option = themeblvd_get_option( 'blog_thumbs', null, 'small' );
 				else if( is_search() || is_archive() )
-					$thumb_size_option = themeblvd_get_option( 'archive_thumbs' );
+					$thumb_size_option = themeblvd_get_option( 'archive_thumbs', null, 'small' );
 				else if( is_single() )
-					$thumb_size_option = themeblvd_get_option( 'single_thumbs' );
+					$thumb_size_option = themeblvd_get_option( 'single_thumbs', null, 'small' );
 				// Single post page override
 				if( is_single() ) {
 					$thumb_size_meta = get_post_meta( $post->ID, '_tb_thumb', true );
@@ -87,15 +86,15 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 						break;
 					case 'thumbnail' :
 						$link_url = wp_get_attachment_url( $attachment_id );
-						$link_target = ' rel="themeblvd_lightbox[gallery]"';
+						$link_target = ' rel="featured_themeblvd_lightbox[gallery]"';
 						break;
 					case 'image' :
 						$link_url = get_post_meta( $post->ID, '_tb_image_link', true );
-						$link_target = ' rel="themeblvd_lightbox[gallery]"';
+						$link_target = ' rel="featured_themeblvd_lightbox[gallery]"';
 						break;
 					case 'video' :
 						$link_url = get_post_meta( $post->ID, '_tb_video_link', true );
-						$link_target = ' rel="themeblvd_lightbox[gallery]"';
+						$link_target = ' rel="featured_themeblvd_lightbox[gallery]"';
 						break;
 					case 'external' :
 						$link_url = get_post_meta( $post->ID, '_tb_external_link', true );
@@ -437,9 +436,14 @@ if( ! function_exists( 'themeblvd_close_row' ) ) {
  */
 
 if( ! function_exists( 'themeblvd_oembed_result' ) ) {
-	function themeblvd_oembed_result( $input ) {
-		$output = '	<div class="themeblvd-video-wrapper">
-						<div class="video-inner">'
+	function themeblvd_oembed_result( $input, $url ) {
+		// Media Type (will use in future if we add audio player)
+		// $mp3 = strpos( $url, '.mp3' );
+		// $mp3 ? $media = 'audio' : $media = 'video';
+		$media = 'video'; // Temporary while video is only media type.
+		// Wrap output
+		$output = '	<div class="themeblvd-'.$media.'-wrapper">
+						<div class="'.$media.'-inner">'
 							.$input.
 						'</div><!-- .video-inner (end) -->
 					</div><!-- .themeblvd-video-wrapper (end) -->';
@@ -533,3 +537,46 @@ if( ! function_exists( 'themeblvd_text_color' ) ) {
 		return $text_color;
 	}
 }
+
+/**
+ * Get additional classes for elements.
+ *
+ * @since 2.0.3
+ *
+ * @param string $element Element to get classes for
+ * @param boolean $start_space Whether there should be a space at start
+ * @param boolean $end_space Whether there should be a space at end
+ * @return array $boxed_elements Elements that should have boxed-layout class
+ */
+ 
+if( ! function_exists( 'themeblvd_get_classes' ) ) {
+	function themeblvd_get_classes( $element, $start_space = false, $end_space = false ) {
+		$classes = '';
+		$all_classes = array(
+			'element_columns' 				=> '',
+			'element_content' 				=> '',
+			'element_divider' 				=> '',
+			'element_headline' 				=> '',
+			'element_post_grid_paginated' 	=> '',
+			'element_post_grid' 			=> '',
+			'element_post_grid_slider' 		=> '',
+			'element_post_list_paginated' 	=> '',
+			'element_post_list' 			=> '',
+			'element_post_list_slider' 		=> '',
+			'element_slider' 				=> '',
+			'element_slogan' 				=> '',
+			'element_tabs' 					=> '',
+			'element_tweet' 				=> '',
+			'slider_standard'				=> '',
+			'slider_carrousel'				=> '',
+		);
+		$all_classes = apply_filters( 'themeblvd_element_classes', $all_classes );
+		if( isset( $all_classes[$element] ) && $all_classes[$element] ) {
+			if( $start_space ) $classes .= ' ';
+			$classes .= $all_classes[$element];
+			if( $end_space ) $classes .= ' ';
+		}
+		return $classes;
+	}
+}
+

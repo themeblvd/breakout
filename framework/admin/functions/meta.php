@@ -160,20 +160,20 @@ function setup_themeblvd_post_meta() {
 			array(
 				'id' 		=> '_tb_thumb',
 				'name' 		=> __( 'Featured Image', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-				'desc' 		=> __( 'Select how you\'d like the featured image to show at the top of the post. This does not apply to when this post is listed in a post list or post grid format. This option only refers to this single post.', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Select how you\'d like the featured image to show at the top of the post. This does <em>not</em> apply to when this post is listed in a post list or post grid. This option only refers to this single post.', TB_GETTEXT_DOMAIN ),
 				'std' 		=> 'default',
 				'type' 		=> 'radio',
 				'options' 	=> array(
 					'default'	=> __( 'Use default post setting.', TB_GETTEXT_DOMAIN ),
 					'small'		=> __( 'Show small thumbnail.', TB_GETTEXT_DOMAIN ),
 					'full' 		=> __( 'Show full-width thumbnail.', TB_GETTEXT_DOMAIN ),
-					'hide' 		=> __( 'Hide thumbnail.', TB_GETTEXT_DOMAIN )
+					'hide' 		=> __( 'Hide featured image.', TB_GETTEXT_DOMAIN )
 				)
 			),
 			array(
 				'id'		=> '_tb_thumb_link',
 				'name' 		=> __( 'Featured Image Link', TB_GETTEXT_DOMAIN ),
-				'desc'		=> __( 'Here you can select how you\'d like this post\'s featured image to react when clicked.', TB_GETTEXT_DOMAIN ),
+				'desc'		=> __( 'Here you can select how you\'d like this post\'s featured image to react when clicked. This <em>does</em> apply to both this single post page and when this post is used in a post list or post grid.', TB_GETTEXT_DOMAIN ),
 				'type' 		=> 'radio',
 				'std'		=> 'inactive',
 				'class'		=> 'select-tb-thumb-link',
@@ -276,30 +276,34 @@ if( ! function_exists( 'themeblvd_add_meta_boxes' ) ) {
 	function themeblvd_add_meta_boxes() {
 
 		// Page meta box
-		$page_meta = setup_themeblvd_page_meta();
-		foreach( $page_meta['config']['page'] as $page ) {
-    		add_meta_box( 
-		        $page_meta['config']['id'],
-				$page_meta['config']['title'],
-				'display_themeblvd_page_meta',
-				$page,
-				$page_meta['config']['context'],
-				$page_meta['config']['priority']
-		    );
-    	}
+		if( themeblvd_supports( 'meta', 'page_options' ) ) {
+			$page_meta = setup_themeblvd_page_meta();
+			foreach( $page_meta['config']['page'] as $page ) {
+	    		add_meta_box( 
+			        $page_meta['config']['id'],
+					$page_meta['config']['title'],
+					'display_themeblvd_page_meta',
+					$page,
+					$page_meta['config']['context'],
+					$page_meta['config']['priority']
+			    );
+	    	}
+	    }
 	
 		// Post meta box
-		$post_meta = setup_themeblvd_post_meta();
-		foreach( $post_meta['config']['page'] as $page ) {
-    		add_meta_box( 
-		        $post_meta['config']['id'],
-				$post_meta['config']['title'],
-				'display_themeblvd_post_meta',
-				$page,
-				$post_meta['config']['context'],
-				$post_meta['config']['priority']
-		    );
-    	}
+		if( themeblvd_supports( 'meta', 'post_options' ) ) {
+			$post_meta = setup_themeblvd_post_meta();
+			foreach( $post_meta['config']['page'] as $page ) {
+	    		add_meta_box( 
+			        $post_meta['config']['id'],
+					$post_meta['config']['title'],
+					'display_themeblvd_post_meta',
+					$page,
+					$post_meta['config']['context'],
+					$post_meta['config']['priority']
+			    );
+	    	}
+	    }
 
 	}
 }
@@ -337,11 +341,19 @@ if( ! function_exists( 'themeblvd_save_meta_boxes' ) ) {
  *
  * @since 2.0.0
  */
-function themeblvd_page_attributes_meta_box($post) {
-	$post_type_object = get_post_type_object($post->post_type);
-	if ( $post_type_object->hierarchical ) {
-		$pages = wp_dropdown_pages(array('post_type' => $post->post_type, 'exclude_tree' => $post->ID, 'selected' => $post->post_parent, 'name' => 'parent_id', 'show_option_none' => __('(no parent)', TB_GETTEXT_DOMAIN), 'sort_column'=> 'menu_order, post_title', 'echo' => 0));
-		if ( ! empty($pages) ) {
+if( ! function_exists( 'themeblvd_page_attributes_meta_box' ) ) {
+	function themeblvd_page_attributes_meta_box($post) {
+		
+		// Kill it if disabled
+		if( ! themeblvd_supports( 'meta', 'hijack_atts' ) ) 
+			return false;
+		
+		// Continue on with everything copied from WordPress core
+		
+		$post_type_object = get_post_type_object($post->post_type);
+		if ( $post_type_object->hierarchical ) {
+			$pages = wp_dropdown_pages(array('post_type' => $post->post_type, 'exclude_tree' => $post->ID, 'selected' => $post->post_parent, 'name' => 'parent_id', 'show_option_none' => __('(no parent)', TB_GETTEXT_DOMAIN), 'sort_column'=> 'menu_order, post_title', 'echo' => 0));
+			if ( ! empty($pages) ) {
 ?>
 <p><strong><?php _e('Parent', TB_GETTEXT_DOMAIN) ?></strong></p>
 <label class="screen-reader-text" for="parent_id"><?php _e('Parent', TB_GETTEXT_DOMAIN) ?></label>
@@ -375,4 +387,5 @@ echo themeblvd_custom_layout_dropdown( $custom_layout );
 <p><label class="screen-reader-text" for="menu_order"><?php _e('Order', TB_GETTEXT_DOMAIN) ?></label><input name="menu_order" type="text" size="4" id="menu_order" value="<?php echo esc_attr($post->menu_order) ?>" /></p>
 <p><?php if ( 'page' == $post->post_type ) _e( 'Need help? Use the Help tab in the upper right of your screen.', TB_GETTEXT_DOMAIN ); ?></p>
 <?php
+	}
 }

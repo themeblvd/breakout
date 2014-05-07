@@ -1,5 +1,68 @@
 == Breakout Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+
+* Now when you turn off responsive design in your Theme Options, your site will have a fixed 960px width across all devices.
+* Edited some descriptions on Theme Options page to try and avoid confusion with some options.
+* Fixed bug with Slider Builder and needing text in "Link URL" field when hitting "Insert into Slider" button.
+* Added Lucida Sans to selectable web font in Theme Options.
+* Added new widget - "Theme Blvd Simple Contact"
+* On post list/post grid short code generator, link=true/false will now be inserted properly.
+* Compressed some CSS files in admin panel.
+* Improved caching with Twitter widget to avoid the error message that kept coming up, "No public Tweets." 
+* Fixed breadcrumbs options not working correctly on archives, 404, and search results pages.
+* Added first-element/last-element CSS classes to elements in custom layouts.
+* Added additional CSS classes to standard slider effected by options user selects.
+* Adjusted output of custom images you setup with rel="themeblvd_lightbox" so they aren't directly effected in the same way featured images are.
+* Adjusted how toggle shortcode works. Now use "last" in last toggle of set - [toggle title="Example" last]Toggle text.[/toggle]
+* Edited some wording of option descriptions for clarity under Post Options and Page Options meta boxes.
+* Under Appearance > Theme Options you can now see the current theme version, framework version, and a link to the latest update log.
+* Added several actions and filters for developers throughout different items of the framework.
+* Updated framework to version 2.0.4.
+
+Effected Files:
+/style.css
+/functions.php
+/includes/options.php
+/archive.php
+/footer.php
+/functions.php
+/header.php
+/index.php
+/page.php
+/single.php
+/template_grid.php
+/template_list.php
+/framework/themeblvd.php
+/framework/admin/assets/css/admin-style.css
+/framework/admin/assets/css/meta-box.css
+/framework/admin/modules/options/css/admin-style.css
+/framework/frontend/functions/locals.php
+/framework/frontend/functions/builder.php
+/framework/frontend/functions/parts.php
+/framework/frontend/functions/actions.php
+/framework/frontend/functions/sliders.php
+/framework/frontend/assets/js/themeblvd.js
+/framework/frontend/functions/helpers.php
+/framework/frontend/functions/display.php
+/framework/frontend/functions/general.php
+/framework/frontend/functions/meta.php
+/framework/frontend/functions/helpers.php
+/framework/admin/functions/meta.php
+/framework/admin/functions/general.php
+/framework/admin/modules/options/js/of-medialibrary-uploader.js
+/framework/admin/modules/options/options-framework.php
+/framework/admin/modules/options/options-sanitize.php
+/framework/admin/modules/sliders/sliders-ajax.php
+/framework/admin/modules/sliders/sliders-interface.php
+/framework/sidebars/widgets/tb-widget-contact.php (New file)
+/framework/sidebars/widgets/tb-widget-twitter.php
+/framework/shortcodes/shortcodes.php
+/framework/shortcodes/tinymce/shortcodes/tb_post_grid.js
+/framework/shortcodes/tinymce/shortcodes/tb_post_list.js
+
+
+
+= 1.0.0 =
 
 * This is the first release constructed from Theme Blvd Framework version 2.0.2.
