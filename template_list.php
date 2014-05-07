@@ -19,7 +19,26 @@
 $fake_conditional = themeblvd_get_fake_conditional();
 
 // Setup query string
-$query_string = themeblvd_query_string();
+$query_string = '';
+$custom_query_string = get_post_meta( $post->ID, 'query', true );
+if( $custom_query_string ) {
+	// Custom query string
+	$query_string = htmlspecialchars_decode($custom_query_string).'&';
+	if ( get_query_var('paged') )
+        $paged = get_query_var('paged');
+    else if ( get_query_var('page') )
+        $paged = get_query_var('page');
+	else
+        $paged = 1;
+	$query_string .= 'paged='.$paged;
+
+} else {
+	// Generated query string
+	$query_string = themeblvd_query_string();
+}
+
+// How to display blog content, carried into 
+// editable content file (default: content-list.php).
 $content = themeblvd_get_option( 'blog_content' );
 
 // Header
@@ -48,7 +67,7 @@ get_header();
 		<div class="sidebar_layout-inner">
 			<div class="grid-protection">
 
-				<?php themeblvd_fixed_sidebars( 'left' ); ?>
+				<?php themeblvd_sidebars( 'left' ); ?>
 				
 				<!-- CONTENT (start) -->
 	
@@ -57,9 +76,10 @@ get_header();
 						<?php themeblvd_content_top(); ?>
 						<div class="primary-post-list element-post_list_paginated post_list<?php echo themeblvd_get_classes( 'element_post_list_paginated', true ); ?>">
 							<?php query_posts( $query_string ); ?>
+							<?php global $more; $more = 0; ?>
 							<?php if ( have_posts() ) : ?>
 								<?php while ( have_posts() ) : the_post(); ?>
-									<?php get_template_part( 'content', themeblvd_get_part( 'blog' ) ); ?>
+									<?php get_template_part( 'content', themeblvd_get_part( 'list_paginated' ) ); ?>
 								<?php endwhile; ?>
 							<?php else : ?>
 								<p><?php echo themeblvd_get_local( 'archive_no_posts' ); ?></p>
@@ -71,7 +91,7 @@ get_header();
 					
 				<!-- CONTENT (end) -->
 				
-				<?php themeblvd_fixed_sidebars( 'right' ); ?>
+				<?php themeblvd_sidebars( 'right' ); ?>
 			
 			</div><!-- .grid-protection (end) -->
 		</div><!-- .sidebar_layout-inner (end) -->
@@ -81,6 +101,14 @@ get_header();
 	// End main area
 	themeblvd_main_bottom();
 	themeblvd_main_end();
+	
+	// Featured area (below)
+	if( themeblvd_config( 'featured_below' ) ) {
+		themeblvd_featured_below_start();
+		themeblvd_featured_below( 'page' );
+		themeblvd_featured_below( 'blog' );
+		themeblvd_featured_below_end();
+	}
 	
 // Footer
 get_footer();

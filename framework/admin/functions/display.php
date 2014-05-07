@@ -71,7 +71,7 @@ function themeblvd_post_table( $post_type, $columns ) {
 				switch( $column['type'] ) {
 					case 'title' :
 						$output .= '<td class="post-title page-title column-title">';
-						$output .= '<strong><a href="#'.$post->ID.'" class="title-link edit-'.$post_type.'" title="'.__( 'Edit' ).'">'.$post->post_title.'</strong></a>';
+						$output .= '<strong><a href="#'.$post->ID.'" class="title-link edit-'.$post_type.'" title="'.__( 'Edit' ).'">'.stripslashes($post->post_title).'</strong></a>';
 						$output .= '<div class="row-actions">';
 						$output .= '<span class="edit">';
 						$output .= '<a href="#'.$post->ID.'" class="edit-post edit-'.$post_type.'" title="'.__( 'Edit' ).'">'.__( 'Edit' ).'</a> | ';
@@ -147,100 +147,6 @@ function themeblvd_post_table( $post_type, $columns ) {
 	$output .= '</tbody>';
 	$output .= '</table>';
 	return $output;
-}
-
-/**
- * All color classes.
- *
- * @since 2.0.0
- *
- * @return $colors array all colors in framework filtered
- */
- 
-function themeblvd_colors() {
-	$colors = array(
-		'default'		=> __( 'Default Color', TB_GETTEXT_DOMAIN ),
-		'black' 		=> __( 'Black', TB_GETTEXT_DOMAIN ),
-		'blue' 			=> __( 'Blue', TB_GETTEXT_DOMAIN ),
-		'brown' 		=> __( 'Brown', TB_GETTEXT_DOMAIN ),
-		'dark_blue'		=> __( 'Dark Blue', TB_GETTEXT_DOMAIN ),
-		'dark_brown' 	=> __( 'Dark Brown', TB_GETTEXT_DOMAIN ),
-		'dark_green' 	=> __( 'Dark Green', TB_GETTEXT_DOMAIN ),
-		'green' 		=> __( 'Green', TB_GETTEXT_DOMAIN ),
-		'mauve' 		=> __( 'Mauve', TB_GETTEXT_DOMAIN ),
-		'orange'		=> __( 'Orange', TB_GETTEXT_DOMAIN ),
-		'pearl'			=> __( 'Pearl', TB_GETTEXT_DOMAIN ),
-		'pink'			=> __( 'Pink', TB_GETTEXT_DOMAIN ),
-		'purple'		=> __( 'Purple', TB_GETTEXT_DOMAIN ),
-		'red'			=> __( 'Red', TB_GETTEXT_DOMAIN ),
-		'slate_grey'	=> __( 'Slate Grey', TB_GETTEXT_DOMAIN ),
-		'silver'		=> __( 'Silver', TB_GETTEXT_DOMAIN ),
-		'steel_blue'	=> __( 'Steel Blue', TB_GETTEXT_DOMAIN ),
-		'teal'			=> __( 'Teal', TB_GETTEXT_DOMAIN ),
-		'yellow'		=> __( 'Yellow', TB_GETTEXT_DOMAIN ),
-		'wheat'			=> __( 'Wheat', TB_GETTEXT_DOMAIN ),
-		'white'			=> __( 'White', TB_GETTEXT_DOMAIN )
-	);
-	return apply_filters( 'themeblvd_colors', $colors );
-}
-
-/**
- * Generates array to be used in a select option 
- * type of the options framework.
- *
- * @since 2.0.0
- *
- * @param $type string type of select to return
- * @return $select array items for select
- */
- 
-function themeblvd_get_select( $type ) {
-	$select = array();
-	switch( $type ) {
-		
-		// Pages
-		case 'pages' :
-			$pages_select = array();
-			$pages = get_pages();
-			if( ! empty( $pages ) )
-				foreach( $pages as $page )
-					$select[$page->post_name] = $page->post_title;
-			else
-				$select['null'] = __( 'No pages exist.', TB_GETTEXT_DOMAIN );
-			break;
-		
-		// Categories
-		case 'categories' :
-			$select['all'] = __( '<strong>All Categories</strong>', TB_GETTEXT_DOMAIN );
-			$categories = get_categories();
-			foreach( $categories as $category )
-				$select[$category->slug] = $category->name;
-			break;
-		
-		// Sliders	
-		case 'sliders' : 
-			$sliders = get_posts( 'post_type=tb_slider&numberposts=-1' );
-			if( ! empty( $sliders ) )
-				foreach( $sliders as $slider )
-					$select[$slider->post_name] = $slider->post_title;
-			else
-				$select['null'] = __( 'You haven\'t created any custom sliders yet.', TB_GETTEXT_DOMAIN );
-			break;
-			
-		// Floating Sidebars
-		case 'sidebars' :
-			$sidebars = get_posts('post_type=tb_sidebar&numberposts=-1');
-			if( ! empty( $sidebars ) ) {
-				foreach( $sidebars as $sidebar ) {
-					$location = get_post_meta( $sidebar->ID, 'location', true );
-					if( $location == 'floating' )
-						$select[$sidebar->post_name] = $sidebar->post_title;
-				}
-			} // Handle error message for no sidebars outside of this function
-			break;
-		
-	}
-	return $select;
 }
 
 /**
@@ -441,7 +347,6 @@ function themeblvd_columns_option( $type, $id, $name, $val ) {
 	// Number of columns
 	if( $type == 'element' ) {
 		unset( $data_num[0] );
-		unset( $data_num[1] );
 	}
 	
 	$select_number = '<select class="column-num" name="'.esc_attr( $name.'['.$id.'][num]' ).'">';
@@ -454,17 +359,7 @@ function themeblvd_columns_option( $type, $id, $name, $val ) {
 		$select_number .= '<option value="'.$num['value'].'" '.selected( $current_value, $num['value'], false ).'>'.$num['name'].'</option>';
 
 	$select_number .= '</select>';
-	
-	// Columns widths
-	if( $type == 'element' ) {
-		unset( $data_widths['1-col'] );
-	}
-	
-	if( $type == 'element' )
-		$i = 2;
-	else
-		$i = 1;
-	
+	$i = 1;
 	$select_widths = '<div class="column-width column-width-0"><p class="inactive">'.__( 'Columns will be hidden.', TB_GETTEXT_DOMAIN ).'</p></div>';
 	foreach( $data_widths as $widths ) {
 		$select_widths .= '<select class="column-width column-width-'.$i.'" name= "'.esc_attr( $name.'['.$id.'][width]['.$i.']' ).'">';
@@ -648,7 +543,7 @@ function themeblvd_tabs_option( $id, $name, $val ) {
  */
 
 function themeblvd_content_option( $id, $name, $val, $options ) {
-	
+
 	/*------------------------------------------------------*/
 	/* Build <select> for type of content
 	/*------------------------------------------------------*/
@@ -751,8 +646,12 @@ function themeblvd_content_option( $id, $name, $val, $options ) {
 		else
 			$current_value = null;
 		
+		// Text area
 		$raw_content = '<textarea name="'.esc_attr( $name.'['.$id.'][raw]' ).'" class="of-input" cols="8" rows="8">'.$current_value.'</textarea>';
-	
+		
+		// Checkbox for the_content filter (added in v2.0.6)
+		isset( $val['raw_format'] ) && ! $val['raw_format'] ? $checked = '' : $checked = ' checked'; // Should be checked if selected OR option never existed. This is for legacy purposes.
+		$raw_content .= '<input class="checkbox of-input" type="checkbox" name="'.esc_attr( $name.'['.$id.'][raw_format]' ).'"'.$checked.'>'.__( 'Apply WordPress automatic formatting.', TB_GETTEXT_DOMAIN );
 	}
 		
 	/*------------------------------------------------------*/
@@ -974,9 +873,10 @@ function themeblvd_logo_option( $id, $name, $val ) {
 	/*------------------------------------------------------*/
 	
 	$types = array(
-		'title' 	=> __( 'Site Title', TB_GETTEXT_DOMAIN ),
-		'custom' 	=> __( 'Custom Text', TB_GETTEXT_DOMAIN ),
-		'image' 	=> __( 'Image', TB_GETTEXT_DOMAIN )
+		'title' 		=> __( 'Site Title', TB_GETTEXT_DOMAIN ),
+		'title_tagline' => __( 'Site Title + Tagline', TB_GETTEXT_DOMAIN ),
+		'custom' 		=> __( 'Custom Text', TB_GETTEXT_DOMAIN ),
+		'image' 		=> __( 'Image', TB_GETTEXT_DOMAIN )
 	);
 	
 	$select_type = '<select name="'.esc_attr( $name.'['.$id.'][type]' ).'">';
@@ -994,11 +894,23 @@ function themeblvd_logo_option( $id, $name, $val ) {
 	/* Site Title
 	/*------------------------------------------------------*/
 	
-	$site_title = '<p class="note">';
+	$site_title  = '<p class="note">';
 	$site_title .= __( 'Current Site Title', TB_GETTEXT_DOMAIN ).': <strong>';
-	$site_title .= get_bloginfo( 'name' ).'</strong><br>';
-	$site_title .= __( 'You can change your site title by going <a href="options-general.php" target="_blank">here</a>.', TB_GETTEXT_DOMAIN );
+	$site_title .= get_bloginfo( 'name' ).'</strong><br><br>';
+	$site_title .= __( 'You can change your site title and tagline by going <a href="options-general.php" target="_blank">here</a>.', TB_GETTEXT_DOMAIN );
 	$site_title .= '</p>';
+	
+	/*------------------------------------------------------*/
+	/* Site Title + Tagline
+	/*------------------------------------------------------*/
+	
+	$site_title_tagline  = '<p class="note">';
+	$site_title_tagline .= __( 'Current Site Title', TB_GETTEXT_DOMAIN ).': <strong>';
+	$site_title_tagline .= get_bloginfo( 'name' ).'</strong><br>';
+	$site_title_tagline .= __( 'Current Tagline', TB_GETTEXT_DOMAIN ).': <strong>';
+	$site_title_tagline .= get_bloginfo( 'description' ).'</strong><br><br>';
+	$site_title_tagline .= __( 'You can change your site title by going <a href="options-general.php" target="_blank">here</a>.', TB_GETTEXT_DOMAIN );
+	$site_title_tagline .= '</p>';
 	
 	/*------------------------------------------------------*/
 	/* Custom Text
@@ -1008,8 +920,16 @@ function themeblvd_logo_option( $id, $name, $val ) {
 		$current_value = $val['custom'];
 	else
 		$current_value = null;
-
-	$custom_text = '<input type="text" name="'.esc_attr( $name.'['.$id.'][custom]' ).'" value="'.esc_attr($current_value).'" />';
+		
+	if( is_array( $val ) && isset( $val['custom_tagline'] ) )
+		$current_tagline = $val['custom_tagline'];
+	else
+		$current_tagline = null;
+	
+	$custom_text  = '<p><label class="inner-label"><strong>'.__( 'Title', TB_GETTEXT_DOMAIN ).'</strong></label>';
+	$custom_text .= '<input type="text" name="'.esc_attr( $name.'['.$id.'][custom]' ).'" value="'.esc_attr($current_value).'" /></p>';
+	$custom_text .= '<p><label class="inner-label"><strong>'.__( 'Tagline', TB_GETTEXT_DOMAIN ).'</strong> ('.__( 'optional', TB_GETTEXT_DOMAIN ).')</label>';
+	$custom_text .= '<input type="text" name="'.esc_attr( $name.'['.$id.'][custom_tagline]' ).'" value="'.esc_attr($current_tagline).'" /></p>';
 	$custom_text .= '<p class="note">'.__( 'Insert your custom text.', TB_GETTEXT_DOMAIN ).'</p>';
 	
 	/*------------------------------------------------------*/
@@ -1028,11 +948,14 @@ function themeblvd_logo_option( $id, $name, $val ) {
 	/* Primary Output
 	/*------------------------------------------------------*/
 	
-	$output = '<div class="select-type">';
+	$output  = '<div class="select-type">';
 	$output .= $select_type;
 	$output .= '</div>';
 	$output .= '<div class="logo-item title">';
 	$output .= $site_title;
+	$output .= '</div>';
+	$output .= '<div class="logo-item title_tagline">';
+	$output .= $site_title_tagline;
 	$output .= '</div>';
 	$output .= '<div class="logo-item custom">';
 	$output .= $custom_text;
@@ -1081,6 +1004,7 @@ function themeblvd_social_media_option( $id, $name, $val ) {
 		'myspace' 		=> 'MySpace',
 		'paypal' 		=> 'PayPal',
 		'picasa' 		=> 'Picasa',
+		'pinterest' 	=> 'Pinterest',
 		'reddit' 		=> 'Reddit',
 		'scribd' 		=> 'Sribd',
 		'squidoo' 		=> 'Squidoo',

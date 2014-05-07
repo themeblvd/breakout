@@ -4,6 +4,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 // <head>
+function themeblvd_head() { do_action( 'themeblvd_head' ); }
 function themeblvd_title() { do_action( 'themeblvd_title' ); }
 
 // Before and after site
@@ -23,8 +24,13 @@ function themeblvd_header_after() { do_action( 'themeblvd_header_after' ); } // 
 
 // Featured area
 function themeblvd_featured_start() { do_action( 'themeblvd_featured_start' ); }
-function themeblvd_featured( $type ) { do_action( 'themeblvd_featured_'.$type ); } // No default hooked function
+function themeblvd_featured( $type ) { do_action( 'themeblvd_featured_'.$type ); } // Only default hooked action is themeblvd_featured_{blog}
 function themeblvd_featured_end() { do_action( 'themeblvd_featured_end' ); }
+
+// Featured area below
+function themeblvd_featured_below_start() { do_action( 'themeblvd_featured_below_start' ); }
+function themeblvd_featured_below( $type ) { do_action( 'themeblvd_featured_below_'.$type ); } // No default hooked function
+function themeblvd_featured_below_end() { do_action( 'themeblvd_featured_below_end' ); }
 
 // Main content area
 function themeblvd_main_start() { do_action( 'themeblvd_main_start' ); }
@@ -33,6 +39,7 @@ function themeblvd_main_bottom() { do_action( 'themeblvd_main_bottom' ); }
 function themeblvd_main_end() { do_action( 'themeblvd_main_end' ); }
 function themeblvd_breadcrumbs() { do_action( 'themeblvd_breadcrumbs' ); }
 function themeblvd_before_layout() { do_action( 'themeblvd_before_layout' ); } // No default hooked function
+function themeblvd_sidebars( $position ) { do_action( 'themeblvd_sidebars', $position ); }
 
 // Footer
 function themeblvd_footer_above() { do_action( 'themeblvd_footer_above' ); }  // No default hooked function
@@ -43,7 +50,7 @@ function themeblvd_footer_before() { do_action( 'themeblvd_footer_before' ); } /
 function themeblvd_footer_after() { do_action( 'themeblvd_footer_after' ); } // No default hooked function
 
 // Content
-function themeblvd_content_top() { do_action( 'themeblvd_content_top' ); } // No default hooked function
+function themeblvd_content_top() { do_action( 'themeblvd_content_top' ); }
 function themeblvd_blog_meta() { do_action( 'themeblvd_blog_meta' ); }
 function themeblvd_blog_tags() { do_action( 'themeblvd_blog_tags' ); }
 function themeblvd_the_post_thumbnail( $location = 'primary', $size = '', $link = true ) { do_action( 'themeblvd_the_post_thumbnail', $location, $size, $link ); }

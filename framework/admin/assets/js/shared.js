@@ -4,7 +4,7 @@
  */
 
 (function($){
-	
+
 	// Setup methods for themeblvd namespace
 	var themeblvd_shared = {
     	
@@ -73,6 +73,10 @@
 	    				else if (value == 'raw')
 	    				{
 	    					parent.find('.raw-content').show();
+	    				}
+	    				else if (value == 'widget_area')
+	    				{
+	    					parent.find('.widget_area-content').show();
 	    				}
 	    			});
 	    			
@@ -176,15 +180,24 @@
 	    				{
 	    					parent.find('.page-content').fadeOut('fast');
 	    					parent.find('.raw-content').fadeOut('fast');
+	    					parent.find('.widget_area-content').fadeOut('fast');
 	    				}
 	    				else if(value == 'external')
 	    				{
 	    					parent.find('.page-content').fadeIn('fast');
 	    					parent.find('.raw-content').hide();
+	    					parent.find('.widget_area-content').hide();
 	    				}
 	    				else if (value == 'raw')
 	    				{
 	    					parent.find('.raw-content').fadeIn('fast');
+	    					parent.find('.page-content').hide();
+	    					parent.find('.widget_area-content').hide();
+	    				}
+	    				else if (value == 'widget_area')
+	    				{
+	    					parent.find('.widget_area-content').fadeIn('fast');
+	    					parent.find('.raw-content').hide();
 	    					parent.find('.page-content').hide();
 	    				}
 	    			});
@@ -519,4 +532,25 @@
 		});
 	}
 
+})(jQuery);
+
+/**
+ * Media uploader for slider
+ */
+
+(function($){
+
+	$('#media-items .image-size .field').hover(
+		function () {
+			$(this).html('This has no effect when working with Sliders.');
+		}, 
+		function () {
+			//$(this).find("span:last").remove();
+		}
+	);
+	
+	$('#media-items .image-size .field').hover(function() {
+		alert('balls');
+	});
+	
 })(jQuery);

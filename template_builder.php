@@ -42,7 +42,7 @@ get_header();
 		<div class="sidebar_layout-inner">
 			<div class="grid-protection">
 
-				<?php themeblvd_fixed_sidebars( 'left' ); ?>
+				<?php themeblvd_sidebars( 'left' ); ?>
 				
 				<!-- CONTENT (start) -->
 
@@ -55,7 +55,7 @@ get_header();
 					
 				<!-- CONTENT (end) -->
 				
-				<?php themeblvd_fixed_sidebars( 'right' ); ?>
+				<?php themeblvd_sidebars( 'right' ); ?>
 			
 			</div><!-- .grid-protection (end) -->
 		</div><!-- .sidebar_layout-inner (end) -->
@@ -65,6 +65,14 @@ get_header();
 	// End main area
 	themeblvd_main_bottom();
 	themeblvd_main_end();
+	
+	// Featured area
+	if( themeblvd_config( 'featured_below' ) ) {
+		themeblvd_featured_below_start();
+		themeblvd_featured_below( 'page' );
+		themeblvd_elements( $layout, 'featured_below' );
+		themeblvd_featured_below_end();
+	}
 	
 // Footer
 get_footer();

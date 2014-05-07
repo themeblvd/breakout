@@ -1,481 +1,325 @@
 <?php
 /**
- * A unique identifier is defined to store the options in the database and reference them from the theme.
- * By default it uses the theme name, in lowercase and without spaces, but this can be changed if needed.
- * If the identifier changes, it'll appear as if the options have been reset.
- * 
+ * Use Options API to add options onto options already 
+ * present in framework. This is possible in Theme Blvd 
+ * Framework 2.1.0+.
  */
 
-if( ! function_exists( 'optionsframework_option_name' ) ) {
-	function optionsframework_option_name() {
-	
-		// This gets the theme name from the stylesheet (lowercase and without spaces)
-		$themename = get_theme_data(STYLESHEETPATH . '/style.css');
-		$themename = $themename['Name'];
-		$themename = preg_replace('/\W/', '', strtolower($themename) );
+if( ! function_exists( 'breakout_options' ) ) {
+	function breakout_options() {
 		
-		$optionsframework_settings = get_option('optionsframework');
-		$optionsframework_settings['id'] = $themename;
-		
-		update_option('optionsframework', $optionsframework_settings);
-		
-		// echo $themename;
-	}
-}
-
-/**
- * Defines an array of options that will be used to generate the settings page and be saved in the database.
- * When creating the 'id' fields, make sure to use all lowercase and no spaces.
- *  
- */
-
-if( ! function_exists( 'optionsframework_options' ) ) {
-	function optionsframework_options() {
-	
-		$options = array();
-	
-		// If using image radio buttons, define a directory path
-		$imagepath =  get_template_directory_uri() . '/framework/admin/assets/images/';
-	
-		// Generate sidebar layout options
-		$sidebar_layouts = array();
-		$layouts = themeblvd_sidebar_layouts();
-		foreach( $layouts as $layout )
-			$sidebar_layouts[$layout['id']] = $imagepath.'layout-'.$layout['id'].'.png';
-		
-		// Generate sliders options
-		$custom_sliders = array();
-		$sliders = get_posts('post_type=tb_slider&numberposts=-1');
-		if( ! empty( $sliders ) ) {
-			foreach( $sliders as $slider )
-				$custom_sliders[$slider->post_name] = $slider->post_title;
-		} else {
-			$custom_sliders['null'] = __( 'You haven\'t created any custom sliders yet.', TB_GETTEXT_DOMAIN );
-		}		
-		
-		// Pull all the categories into an array
-		$options_categories = array();  
-		$options_categories_obj = get_categories();
-		foreach ($options_categories_obj as $category) {
-	    	$options_categories[$category->cat_ID] = $category->cat_name;
+		// Textures
+		$texture_options = array( 'none' => __( 'None', TB_GETTEXT_DOMAIN ) );
+		$textures = themeblvd_get_textures();
+		foreach( $textures as $id => $atts ) {
+			$texture_options[$id] = $atts['name'];
 		}
 		
-		// Custom Layouts
-		$custom_layouts = array();
-		$custom_layout_posts = get_posts('post_type=tb_layout&numberposts=-1');
-		if( ! empty( $custom_layout_posts ) ) {
-			foreach( $custom_layout_posts as $layout )
-				$custom_layouts[$layout->post_name] = $layout->post_title;
-		} else {
-			$custom_layouts['null'] = __( 'You haven\'t created any custom layouts yet.', TB_GETTEXT_DOMAIN );
-		}
+		// Add Styles
+		themeblvd_add_option_tab( 'styles', __( 'Styles', TB_GETTEXT_DOMAIN ), true );
 		
-		/*-------------------------------------------------------*/
-		/* Styles
-		/*-------------------------------------------------------*/
+		// Add Styles > Main section
+		$main_options = array(
+			array(	
+				'name' 		=> __( 'Content Color', TB_GETTEXT_DOMAIN ),
+				'desc'		=> __( 'Select the primary color. This color makes up the background of the site.', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'content_color',
+				'std'		=> 'content_light',
+				'type' 		=> 'select',
+				'options'	=> array(
+					'content_dark' 			=> __( 'Dark', TB_GETTEXT_DOMAIN ),
+					'content_light' 		=> __( 'Light', TB_GETTEXT_DOMAIN ),
+					'content_tan' 			=> __( 'Tan', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
+				'name' 		=> __( 'Content Background Texture', TB_GETTEXT_DOMAIN ),
+				'desc'		=> __( 'This texture gets to the background in the main section of the theme.<br><br><em>Note: The "Light" textures tend to look nicer when combined with the "Light" content color selected in the previous option.</em>', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'content_texture',
+				'std'		=> 'diagnol_thin_light',
+				'type' 		=> 'select',
+				'options'	=> $texture_options
+			),
+			array( 
+				'name' 		=> __( 'Accent Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'This color gets applied to some minor items throughout the theme such as the default color of buttons and elements within sliders.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'accent_color',
+				'std' 		=> '#28313c',
+				'type' 		=> 'color'
+			),
+			array(
+				'name' 		=> __( 'Accent Color Brightness', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'In the previous option, did you choose a dark color or a light color? This will determine how text is styled in the areas with this background color.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'accent_text',
+				'std' 		=> 'accent_text_light',
+				'type' 		=> 'select',
+				'options'	=> array(
+					'accent_text_light' => __( 'I chose a dark color in the previous option.', TB_GETTEXT_DOMAIN ),
+					'accent_text_dark' => __( 'I chose a light color in the previous option.', TB_GETTEXT_DOMAIN )
+				)
+			)
+		);
+		themeblvd_add_option_section( 'styles', 'main_styles', __( 'Main', TB_GETTEXT_DOMAIN ), null, $main_options, false );
 		
-		$options[] = array( 'name' 		=> __( 'Styles', TB_GETTEXT_DOMAIN ),
-							'type' 		=> 'heading');
+		// Add Styles > Header section
+		$header_options = array(
+			array( 
+				'name' 		=> __( 'Header Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'This color gets applied to the background of the header.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'header_color',
+				'std' 		=> '#28313c',
+				'type' 		=> 'color'
+			),
+			array(
+				'name' 		=> __( 'Header Color Brightness', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'In the previous option, did you choose a dark color or a light color? This will determine how text is styled for the header.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'header_text',
+				'std' 		=> 'header_text_light',
+				'type' 		=> 'select',
+				'options'	=> array(
+					'header_text_light' => __( 'I chose a dark color in the previous option.', TB_GETTEXT_DOMAIN ),
+					'header_text_dark' => __( 'I chose a light color in the previous option.', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
+				'name' 		=> __( 'Header Background Texture', TB_GETTEXT_DOMAIN ),
+				'desc'		=> __( 'This texture gets applied over the background color of the header.', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'header_texture',
+				'std'		=> 'denim',
+				'type' 		=> 'select',
+				'options'	=> $texture_options
+			)
+		);
+		themeblvd_add_option_section( 'styles', 'header_styles', __( 'Header', TB_GETTEXT_DOMAIN ), null, $header_options, false );
 		
-		// Main Styles
+		// Add Styles > Footer section
+		$footer_options = array(
+			array( 
+				'name' 		=> __( 'Footer Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'This color gets applied to the background of the footer.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_color',
+				'std' 		=> '#28313c',
+				'type' 		=> 'color'
+			),
+			array(
+				'name' 		=> __( 'Footer Color Brightness', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'In the previous option, did you choose a dark color or a light color? This will determine how text is styled for the footer.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_text',
+				'std' 		=> 'footer_text_light',
+				'type' 		=> 'select',
+				'options'	=> array(
+					'footer_text_light' => __( 'I chose a dark color in the previous option.', TB_GETTEXT_DOMAIN ),
+					'footer_text_dark' => __( 'I chose a light color in the previous option.', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
+				'name' 		=> __( 'Footer Background Texture', TB_GETTEXT_DOMAIN ),
+				'desc'		=> __( 'This texture gets applied over the background color of the footer.', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'footer_texture',
+				'std'		=> 'denim',
+				'type' 		=> 'select',
+				'options'	=> $texture_options
+			)
+		);
+		themeblvd_add_option_section( 'styles', 'footer_styles', __( 'Footer', TB_GETTEXT_DOMAIN ), null, $footer_options, false );
+
+		// Add Styles > Links section
+		$links_options = array(
+			'link_color' => array( 
+				'name' 		=> __( 'Link Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose the color you\'d like applied to links.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'link_color',
+				'std' 		=> '#2a9ed4',
+				'type' 		=> 'color'
+			),
+			'link_hover_color' => array( 
+				'name' 		=> __( 'Link Hover Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose the color you\'d like applied to links when they are hovered over.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'link_hover_color',
+				'std' 		=> '#1a5a78',
+				'type' 		=> 'color'
+			),
+			array(
+				'name' 		=> __( 'Footer Link Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose the color you\'d like applied to links in the footer.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_link_color',
+				'std' 		=> '#ffffff',
+				'type' 		=> 'color'
+			),
+			array(
+				'name' 		=> __( 'Footer Link Hover Color', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose the color you\'d like applied to links in the footer when they are hovered over.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_link_hover_color',
+				'std' 		=> '#007bff',
+				'type' 		=> 'color'
+			)
+		);
+		themeblvd_add_option_section( 'styles', 'links', __( 'Links', TB_GETTEXT_DOMAIN ), null, $links_options, false );
 		
-		$options[] = array( 'name' 		=> __( 'Main', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'type' 		=> 'section_start');
+		// Add Styles > Typography section
+		$typography_options = array(
+			array( 
+				'name' 		=> __( 'Primary Font', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'This applies to most of the text on your site.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'typography_body',
+				'std' 		=> array('size' => '12px','face' => 'arial','color' => '', 'google' => ''),
+				'atts'		=> array('size', 'face'),
+				'type' 		=> 'typography'
+			),
+			array( 
+				'name' 		=> __( 'Header Font', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'This applies to all of the primary headers throughout your site (h1, h2, h3, h4, h5, h6). This would include header tags used in redundant areas like widgets and the content of posts and pages.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'typography_header',
+				'std' 		=> array('size' => '','face' => 'helvetica','color' => '', 'google' => ''),
+				'atts'		=> array('face'),
+				'type' 		=> 'typography'
+			),
+			array(
+				'name' 		=> __( 'Special Font', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'typography_special',
+				'std' 		=> array('size' => '','face' => 'google','color' => '', 'google' => 'Josefin Sans'),
+				'atts'		=> array('face'),
+				'type' 		=> 'typography'
+			)
+		);
+		themeblvd_add_option_section( 'styles', 'typography', __( 'Typography', TB_GETTEXT_DOMAIN ), null, $typography_options, false );
 		
-		$options[] = array(	'name' 		=> __( 'Content Color', TB_GETTEXT_DOMAIN ),
-							'desc'		=> __( 'Select the primary color. This color makes up the background of the site.', TB_GETTEXT_DOMAIN ),
-							'id'		=> 'content_color',
-							'std'		=> 'content_light',
-							'type' 		=> 'select',
-							'options'	=> array(
-								'content_dark' 			=> __( 'Dark', TB_GETTEXT_DOMAIN ),
-								'content_light' 		=> __( 'Light', TB_GETTEXT_DOMAIN ),
-								'content_tan' 			=> __( 'Tan', TB_GETTEXT_DOMAIN )
-							) );
+		// Add Styles > Custom section
+		$custom_options = array(
+			array( 
+				'name' 		=> __( 'Custom CSS', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'If you have some minor CSS changes, you can put them here to override the theme\'s default styles. However, if you plan to make a lot of CSS changes, it would be best to create a child theme.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'custom_styles',
+				'type'		=> 'textarea'
+			)
+		);
+		themeblvd_add_option_section( 'styles', 'custom', __( 'Custom', TB_GETTEXT_DOMAIN ), null, $custom_options, false );
 		
-		$options[] = array( 'name' 		=> __( 'Primary Color', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'This color gets applied to the background of the header and the footer, as well as being applied to a couple different highlighted areas of the theme.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'primary_color',
-							'std' 		=> '#28313c',
-							'type' 		=> 'color' );
+		// Add social media option to Layout > Header
+		$social_media = array( 
+			'name' 		=> __( 'Social Media Buttons', TB_GETTEXT_DOMAIN ),
+			'desc' 		=> __( 'Configure the social media buttons you\'d like to show in the header of your site. Check the buttons you\'d like to use and then input the full URL you\'d like the button to link to in the corresponding text field that appears.<br><br>Example: http://twitter.com/jasonbobich<br><br><em>Note: On the "Email" button, if you want it to link to an actual email address, you would input it like this:<br><br><strong>mailto:you@youremail.com</strong></em><br><br><em>Note: If you\'re using the RSS button, your default RSS feed URL is:<br><br><strong>'.get_feed_link( 'feed' ).'</strong></em>', TB_GETTEXT_DOMAIN ),
+			'id' 		=> 'social_media',
+			'std' 		=> array( 
+				'includes' =>  array( 'facebook', 'google', 'twitter', 'rss' ),
+				'facebook' => 'http://facebook.com/jasonbobich',
+				'google' => 'https://plus.google.com/116531311472104544767/posts',
+				'twitter' => 'http://twitter.com/jasonbobich',
+				'rss' => get_bloginfo('rss_url')
+			),
+			'type' 		=> 'social_media'
+		);
+		themeblvd_add_option( 'layout', 'header', 'social_media', $social_media );
 		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
+		// Add header text option to Layout > Header
+		$header_text = array( 
+			'name' 		=> __( 'Header Text', TB_GETTEXT_DOMAIN ),
+			'desc'		=> __( 'Enter a very brief piece of text you\'d like to show below the social icons.', TB_GETTEXT_DOMAIN ),
+			'id'		=> 'header_tagline',
+			'std'		=> '<strong>Call Now: 1-800-123-4567</strong>',
+			'type' 		=> 'text'
+		);
+		themeblvd_add_option( 'layout', 'header', 'header_tagline', $header_text );
 		
-		// Links
+		// Add meta option for archive posts
+		$archive_meta = array(
+			'name' 		=> __( 'Show meta info?', TB_GETTEXT_DOMAIN ),
+			'desc' 		=> __( 'Choose whether you want to show meta information under the title of each post.', TB_GETTEXT_DOMAIN ),
+			'id' 		=> 'archive_meta',
+			'std' 		=> 'show',
+			'type' 		=> 'radio',
+			'options' 	=> array(
+				'show'	=> __( 'Show meta info.', TB_GETTEXT_DOMAIN ),
+				'hide' 	=> __( 'Hide meta info.', TB_GETTEXT_DOMAIN )
+			)
+		);
+		themeblvd_add_option( 'content', 'archives', 'archive_meta', $archive_meta );
 		
-		$options[] = array( 'name' 		=> __( 'Links', TB_GETTEXT_DOMAIN ),
-							'type' 		=> 'section_start');
+		// Add tags option for archive posts
+		$archive_meta = array(
+			'name' 		=> __( 'Show tags?', TB_GETTEXT_DOMAIN ),
+			'desc' 		=> __( 'Choose whether you want to show tags under at the bottom of each post.', TB_GETTEXT_DOMAIN ),
+			'id' 		=> 'archive_tags',
+			'std' 		=> 'show',
+			'type' 		=> 'radio',
+			'options' 	=> array(
+				'show'	=> __( 'Show tags.', TB_GETTEXT_DOMAIN ),
+				'hide' 	=> __( 'Hide tags.', TB_GETTEXT_DOMAIN )
+			)
+		);
+		themeblvd_add_option( 'content', 'archives', 'archive_tags', $archive_meta );
 		
-		$options[] = array( 'name' 		=> __( 'Link Color', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'Choose the color you\'d like applied to links.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'link_color',
-							'std' 		=> '#205791',
-							'type' 		=> 'color' );
-							
-		$options[] = array( 'name' 		=> __( 'Link Hover Color', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'Choose the color you\'d like applied to links when they are hovered over.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'link_hover_color',
-							'std' 		=> '#007bff',
-							'type' 		=> 'color' );
-							
-		$options[] = array( 'name' 		=> __( 'Footer Link Color', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'Choose the color you\'d like applied to links in the footer.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_link_color',
-							'std' 		=> '#ffffff',
-							'type' 		=> 'color' );
-							
-		$options[] = array( 'name' 		=> __( 'Footer Link Hover Color', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'Choose the color you\'d like applied to links in the footer when they are hovered over.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_link_hover_color',
-							'std' 		=> '#007bff',
-							'type' 		=> 'color' );
-		
-		$options[] = array( 'type'		=> 'section_end');
-		
-		// Typography
-		
-		$options[] = array( 'name' 		=> __( 'Typography', TB_GETTEXT_DOMAIN ),
-							'type' 		=> 'section_start');
-							
-		$options[] = array( 'name' 		=> __( 'Primary Font', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'This applies to most of the text on your site.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'typography_body',
-							'std' 		=> array('size' => '12px','face' => 'arial','color' => '', 'google' => ''),
-							'atts'		=> array('size', 'face'),
-							'type' 		=> 'typography');
-							
-		$options[] = array( 'name' 		=> __( 'Header Font', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'This applies to all of the primary headers throughout your site (h1, h2, h3, h4, h5, h6). This would include header tags used in redundant areas like widgets and the content of posts and pages.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'typography_header',
-							'std' 		=> array('size' => '','face' => 'helvetica','color' => '', 'google' => ''),
-							'atts'		=> array('face'),
-							'type' 		=> 'typography' );
-							
-		$options[] = array( 'name' 		=> __( 'Special Font', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'typography_special',
-							'std' 		=> array('size' => '','face' => 'google','color' => '', 'google' => 'Josefin Sans'),
-							'atts'		=> array('face'),
-							'type' 		=> 'typography' );
-		
-		$options[] = array( 'type'		=> 'section_end');
-		
-		// Custom
-							
-		$options[] = array( 'name' 		=> __( 'Custom', TB_GETTEXT_DOMAIN ),
-							'type' 		=> 'section_start');
-		
-		$options[] = array( 'name' 		=> __( 'Custom CSS', TB_GETTEXT_DOMAIN ),
-							'desc' 		=> __( 'If you have some minor CSS changes, you can put them here to override the theme\'s default styles. However, if you plan to make a lot of CSS changes, it would be best to create a child theme.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'custom_styles',
-							'type'		=> 'textarea');
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */	
-		
-		/*-------------------------------------------------------*/
-		/* Layout
-		/*-------------------------------------------------------*/
-		
-		$options[] = array( 'name' 		=> 'Layout', /* Required by Framework */
-							'type' 		=> 'heading');
-		
-		// Header
-		
-		$options[] = array( 'name' 		=> 'Header', /* Required by Framework */	
-							'type' 		=> 'section_start');
-		
-		$options[] = array( 'name' 		=> 'Logo', /* Required by Framework */
-							'desc' 		=> __( 'Configure the primary branding logo for the header of your site.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'logo',
-							'std' 		=> array( 'type' => 'image', 'image' => 'http://themeblvd.com/demo/assets/breakout/logo.png' ),
-							'type' 		=> 'logo');
-							
-		$options[] = array( 'name' 		=> 'Social Media Buttons',
-							'desc' 		=> __( 'Configure the social media buttons you\'d like to show in the header of your site. Check the buttons you\'d like to use and then input the full URL you\'d like the button to link to in the corresponding text field that appears.<br><br>Example: http://twitter.com/jasonbobich<br><br><em>Note: On the "Email" button, if you want it to link to an actual email address, you would input it like this:<br><br><strong>mailto:you@youremail.com</strong></em><br><br><em>Note: If you\'re using the RSS button, your default RSS feed URL is:<br><br><strong>'.get_feed_link( 'feed' ).'</strong></em>', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'social_media',
-							'std' 		=> array( 'twitter' => 'http://twitter.com/jasonbobich', 'facebook' => 'http://facebook.com/jasonbobich', 'google' => 'https://plus.google.com/116531311472104544767/posts', 'rss' => get_bloginfo('rss_url') ),
-							'type' 		=> 'social_media');
-							
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-		
-		// Main
-		
-		$options[] = array( 'name' 		=> __( 'Main', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'type' 		=> 'section_start');
-		
-		$options[] = array(	'name' 		=> __( 'Breadcrumbs', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Select whether you\'d like breadcrumbs to show throughout the site or not.', TB_GETTEXT_DOMAIN ),
-							'id'		=> 'breadcrumbs',
-							'std'		=> 'show',
-							'type' 		=> 'select',
-							'options'	=> array(
-								'show' => __( 'Yes, show breadcrumbs.', TB_GETTEXT_DOMAIN ),
-								'hide' => __( 'No, hide breadcrumbs.', TB_GETTEXT_DOMAIN )
-							) );
-	
-		
-		$options[] = array( 'name' 		=> __( 'Default Sidebar Layout', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Choose the default sidebar layout for the main content area of your site.<br><br><em>Note: This will be the default sidebar layout throughout your site, but you can be override this setting for any specific page or custom layout.</em>', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'sidebar_layout',
-							'std' 		=> 'sidebar_right',
-							'type' 		=> 'images',
-							'options' 	=> $sidebar_layouts);	
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-		
-		// Footer
+		// Add post list options 
+		$post_list_description = __( 'These options apply to posts when they are shown from within any post list throughout your site. This includes the Primary Posts Display described above, as well.<br><br>Note: It may be confusing why these options are not present when editing a specific post list. The reason is because the options when working with a specific post list are incorporated into the actual theme framework, while these settings have been added to this particular theme design for your conveniance.', TB_GETTEXT_DOMAIN );
+		$post_list = array(
+			array(
+				'name' 		=> __( 'Show meta info?', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose whether you want to show meta information under the title of each post.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'post_list_meta',
+				'std' 		=> 'show',
+				'type' 		=> 'radio',
+				'options' 	=> array(
+					'show'	=> __( 'Show meta info.', TB_GETTEXT_DOMAIN ),
+					'hide' 	=> __( 'Hide meta info.', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
+				'name' 		=> __( 'Show tags?', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose whether you want to show tags under at the bottom of each post.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'post_list_tags',
+				'std' 		=> 'show',
+				'type' 		=> 'radio',
+				'options' 	=> array(
+					'show'	=> __( 'Show tags.', TB_GETTEXT_DOMAIN ),
+					'hide' 	=> __( 'Hide tags.', TB_GETTEXT_DOMAIN )
+				)
+			)
 					
-		$options[] = array( 'name' 		=> __( 'Footer', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'type' 		=> 'section_start');
-			
-		$options[] = array( 'type'		=> 'subgroup_start', /* Required by Framework */
-		    				'class'		=> 'columns');
-	
-		$options[] = array( 'name'		=> __( 'Setup Columns', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Choose the number of columns along with the corresponding width configurations.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_setup',
-							'type'		=> 'columns',
-							'options'	=> 'standard');
-			
-		$options[] = array( 'name'		=> __( 'Footer Column #1', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Configure the content for the first column.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_col_1',
-							'type'		=> 'content',
-							'class'		=> 'col_1',
-							'options'	=> array( 'widget', 'page', 'raw' ) );
+		);
+		themeblvd_add_option_section( 'content', 'post_list', __( 'Post Lists', TB_GETTEXT_DOMAIN ), $post_list_description, $post_list );
+
+		// Add post grid options 
+		$post_grid_description = __( 'These options apply to posts when they are shown from within any post grid throughout your site.<br><br>Note: It may be confusing why these options are not present when editing a specific post grid. The reason is because the options when working with a specific post grid are incorporated into the actual theme framework, while these settings have been added to this particular theme design for your conveniance.', TB_GETTEXT_DOMAIN );
+		$post_grid = array(
+			array(
+				'name' 		=> __( 'Show title?', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose whether or not you want to show the title below each featured image in post grids.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'post_grid_title',
+				'std' 		=> 'show',
+				'type' 		=> 'radio',
+				'options' 	=> array(
+					'show'	=> __( 'Show titles.', TB_GETTEXT_DOMAIN ),
+					'hide' 	=> __( 'Hide titles.', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
+				'name' 		=> __( 'Show excerpts?', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose whether or not you want to show the excerpt on each post.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'post_grid_excerpt',
+				'std' 		=> 'hide',
+				'type' 		=> 'radio',
+				'options' 	=> array(
+					'show'	=> __( 'Show excerpts.', TB_GETTEXT_DOMAIN ),
+					'hide' 	=> __( 'Hide excerpts.', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
+				'name' 		=> __( 'Show buttons?', TB_GETTEXT_DOMAIN ),
+				'desc' 		=> __( 'Choose whether or not you want to show a button that links to the single post.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'post_grid_button',
+				'std' 		=> 'hide',
+				'type' 		=> 'radio',
+				'options' 	=> array(
+					'show'	=> __( 'Show buttons.', TB_GETTEXT_DOMAIN ),
+					'hide' 	=> __( 'Hide buttons.', TB_GETTEXT_DOMAIN )
+				)
+			)
+		);
+		themeblvd_add_option_section( 'content', 'post_grid', __( 'Post Grids', TB_GETTEXT_DOMAIN ), $post_grid_description, $post_grid, false );
 		
-		$options[] = array( 'name'		=> __( 'Footer Column #2', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Configure the content for the second column.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_col_2',
-							'type'		=> 'content',
-							'class'		=> 'col_2',
-							'options'	=> array( 'widget', 'page', 'raw' ) );
-		
-		$options[] = array( 'name'		=> __( 'Footer Column #3', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Configure the content for the third column.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_col_3',
-							'type'		=> 'content',
-							'class'		=> 'col_3',
-							'options'	=> array( 'widget', 'page', 'raw' ) );
-		
-		$options[] = array( 'name'		=> __( 'Footer Column #4', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Configure the content for the fourth column.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_col_4',
-							'type'		=> 'content',
-							'class'		=> 'col_4',
-							'options'	=> array( 'widget', 'page', 'raw' ) );
-		
-		$options[] = array( 'name'		=> __( 'Footer Column #5', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Configure the content for the fifth column.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_col_5',
-							'type'		=> 'content',
-							'class'		=> 'col_5',
-							'options'	=> array( 'widget', 'page', 'raw' ) );
-		
-		$options[] = array( 'type'		=> 'subgroup_end'); /* Required by Framework */
-	
-		$options[] = array( 'name' 		=> __( 'Footer Copyright Text', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Enter the copyright text you\'d like to show in the footer of your site.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'footer_copyright',
-							'std' 		=> '(c) '.date('Y').' '.get_bloginfo('site_title').' - Web Design by <a href="http://www.jasonbobich.com" target="_blank">Jason Bobich</a>',
-							'type' 		=> 'text');
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-		
-		/*-------------------------------------------------------*/
-		/* Content
-		/*-------------------------------------------------------*/
-							
-		$options[] = array( 'name' 		=> __( 'Content', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'type' 		=> 'heading');
-		
-		// Homepage
-		
-		$options[] = array( 'name' 		=> __( 'Homepage', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'type' 		=> 'section_start');
-		
-		
-		$options[] = array( 'name' 		=> __( 'Homepage Content', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Select the content you\'d like to show on your homepage. Note that for this setting to take effect, you must go to Settings > Reading > Frontpage displays, and select "your latest posts."', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'homepage_content',
-							'std' 		=> 'posts',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'posts'			=> __( 'Posts', TB_GETTEXT_DOMAIN ),
-								'custom_layout' => __( 'Custom Layout', TB_GETTEXT_DOMAIN )
-							) );
-							
-		$options[] = array( 'name' 		=> __( 'Select Custom Layout', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Select from the custom layouts you\'ve built under the <a href="admin.php?page=builder_blvd">Builder</a> section.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'homepage_custom_layout',
-							'std' 		=> '',
-							'type' 		=> 'select',
-							'options' 	=> $custom_layouts);
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-		
-		// Single Posts
-		
-		$options[] = array( 'name' 		=> __( 'Single Posts', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'type' 		=> 'section_start');
-		
-		$options[] = array( 'name' 		=> __( 'Show meta information at top of posts?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Select if you\'d like the meta information (date posted, author, etc) to show at the top of the post. If you\'re going for a portfolio-type setup, you may want to hide the meta info.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'single_meta',
-							'std' 		=> 'show',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'show'		=> __( 'Show meta info.', TB_GETTEXT_DOMAIN ),
-								'hide' 		=> __( 'Hide meta info.', TB_GETTEXT_DOMAIN )
-							) );
-							
-		$options[] = array( 'name' 		=> __( 'Show featured images at top of posts?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Choose how you want your featured images to show at the top of the posts. It can be useful to turn this off if you want to have featured images over on your blogroll or post grid sections, but you don\'t want them to show on the actual posts themeselves.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'single_thumbs',
-							'std' 		=> 'small',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'small'		=> __( 'Show small thumbnails.', TB_GETTEXT_DOMAIN ),
-								'full' 		=> __( 'Show full-width thumbnails.', TB_GETTEXT_DOMAIN ),
-								'hide' 		=> __( 'Hide thumbnails.', TB_GETTEXT_DOMAIN )
-							) );
-							
-		$options[] = array( 'name' 		=> __( 'Show comments below posts?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Select if you\'d like to completely hide comments or not below the post.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'single_comments',
-							'std' 		=> 'show',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'show'		=> __( 'Show comments.', TB_GETTEXT_DOMAIN ),
-								'hide' 		=> __( 'Hide comments.', TB_GETTEXT_DOMAIN )
-							) );
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-		
-		// Blog
-		
-		$options[] = array( 'name' 		=> __( 'Primary Posts Display', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'These settings apply to your primary posts page that you\'ve selected under Settings > Reading and <strong>all</strong> instances of the "Post List" page template. Note that if you want to use the post list page template for multiple pages with different categories on each, you can accomplish this on each specific page with custom fields - <a href="http://vimeo.com/32754998">Learn More</a>.', TB_GETTEXT_DOMAIN ),
-							'type' 		=> 'section_start');
-		
-		$options[] = array( 'name' 		=> __( 'Featured Images', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Select the size of the blog\'s post thumbnail or whether you\'d like to hide them all together when posts are listed.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'blog_thumbs',
-							'std' 		=> 'small',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'small'		=> __( 'Show small thumbnails.', TB_GETTEXT_DOMAIN ),
-								'full' 		=> __( 'Show full-width thumbnails.', TB_GETTEXT_DOMAIN ),
-								'hide' 		=> __( 'Hide thumbnails.', TB_GETTEXT_DOMAIN )
-							) );
-		
-		$options[] = array( 'name' 		=> __( 'Show excerpts or full content?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Choose whether you want to show full content or post excerpts only.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'blog_content',
-							'std' 		=> 'excerpt',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'content'	=> __( 'Show full content.', TB_GETTEXT_DOMAIN ),
-								'excerpt' 	=> __( 'Show excerpt only.', TB_GETTEXT_DOMAIN )
-							) );
-		
-		$options[] = array( 'name' 		=> __( 'Exclude Categories', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Select any categories you\'d like to be excluded from your blog.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'blog_categories',
-							'type' 		=> 'multicheck',
-							'options' 	=> $options_categories);
-							
-		$options[] = array( 'type'		=> 'subgroup_start', /* Required by Framework */
-	    					'class'		=> 'show-hide');
-		
-		$options[] = array( 'name'		=> __( 'Featured Area', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'Show slider above blog?', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'blog_featured',
-							'type'		=> 'checkbox',
-							'class'		=> 'trigger');
-								
-		$options[] = array( 'name'		=> __( 'Featured Slider', TB_GETTEXT_DOMAIN ),
-							'desc'		=> __( 'Select a slider from you custom-made sliders. Sliders are created <a href="admin.php?page=slider_blvd" target="_blank">here</a>.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'blog_slider',
-							'type'		=> 'select',
-							'options'	=> $custom_sliders,
-							'class'		=> 'hide receiver');	
-			
-		$options[] = array( 'type'		=> 'subgroup_end'); /* Required by Framework */
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-		
-		// Archives
-		
-		$options[] = array( 'name' 		=> __( 'Archives', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc'		=> __( 'These settings apply any time you\'re viewing search results or posts specific to a category, tag, date, author, etc.', TB_GETTEXT_DOMAIN ),
-							'type' 		=> 'section_start');
-							
-		$options[] = array( 'name' 		=> __( 'Show title on archive pages?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Choose whether or not you want the title to show on tag archives, category archives, date archives, author archives and search result pages.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'archive_title',
-							'std' 		=> 'false',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'true'	=> __( 'Yes, show main title at the top of archive pages.', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-								'false' => __( 'No, hide the title.', TB_GETTEXT_DOMAIN )
-							) );
-		
-		$options[] = array( 'name' 		=> __( 'Show featured images on archive pages?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Choose whether or not you want featured images to show on tag archives, category archives, date archives, author archives and search result pages.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'archive_thumbs',
-							'std' 		=> 'hide',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'small'		=> __( 'Show small thumbnails.', TB_GETTEXT_DOMAIN ),
-								'full' 		=> __( 'Show full-width thumbnails.', TB_GETTEXT_DOMAIN ),
-								'hide' 		=> __( 'Hide thumbnails.', TB_GETTEXT_DOMAIN )
-							) );
-	
-		$options[] = array( 'name' 		=> __( 'Show excerpts or full content?', TB_GETTEXT_DOMAIN ), /* Required by Framework */
-							'desc' 		=> __( 'Choose whether you want to show full content or post excerpts only.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'archive_content',
-							'std' 		=> 'excerpt',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'content'	=> __( 'Show full content.', TB_GETTEXT_DOMAIN ),
-								'excerpt' 	=> __( 'Show excerpt only.', TB_GETTEXT_DOMAIN )
-							) );
-							
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */	
-		
-		/*-------------------------------------------------------*/
-		/* Configuration
-		/*-------------------------------------------------------*/
-							
-		$options[] = array( 'name'		=> 'Configuration',
-							'type' 		=> 'heading');
-		
-		$options[] = array( 'name' 		=> __( 'Responsiveness', TB_GETTEXT_DOMAIN ), /* Required by Framework */	
-							'type' 		=> 'section_start');
-								
-		$options[] = array( 'name' 		=> __( 'Tablets and Mobile Devices', TB_GETTEXT_DOMAIN ), /* Required by Framework */	
-							'desc' 		=> __( 'This theme comes with a special stylesheet that will target the screen resolution of your website vistors and show them a slightly modified design if their screen resolution matches common sizes for a tablet or a mobile device.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'responsive_css',
-							'std' 		=> 'true',
-							'type' 		=> 'radio',
-							'options' 	=> array(
-								'true'		=> __( 'Yes, apply special styles to tablets and mobile devices.', TB_GETTEXT_DOMAIN ),
-								'false' 	=> __( 'No, allow website to show normally on tablets and mobile devices.', TB_GETTEXT_DOMAIN )
-							) );
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */
-						
-		$options[] = array( 'name' 		=> __( 'Analytics', TB_GETTEXT_DOMAIN ), /* Required by Framework */	
-							'type' 		=> 'section_start');
-							
-		$options[] = array( 'name' 		=> __( 'Analytics Code', TB_GETTEXT_DOMAIN ), /* Required by Framework */	
-							'desc' 		=> __( 'Paste in the code provided by your Analytics service.<br><br>If you\'re looking for a free analytics service, definitely check out <a href="http://www.google.com/analytics/">Google Analytics</a>.', TB_GETTEXT_DOMAIN ),
-							'id' 		=> 'analytics',
-							'type' 		=> 'textarea');
-		
-		$options[] = array( 'type'		=> 'section_end'); /* Required by Framework */	
-		
-		return $options;
+		// Modify framework options
+		themeblvd_edit_option( 'content', 'blog', 'blog_content', 'std', 'excerpt' );
 	}
 }
+add_action( 'after_setup_theme', 'breakout_options' );

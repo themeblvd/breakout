@@ -15,9 +15,10 @@
  * @package 	Theme Blvd WordPress Framework
  */
 ?>
+		<?php themeblvd_footer_before(); ?>
+		
 		<!-- FOOTER (start) -->
 		
-		<?php themeblvd_footer_before(); ?>
 		<div id="bottom">
 			<footer id="colophon" role="contentinfo">
 				<div class="content">
@@ -32,9 +33,10 @@
 				</div><!-- .content (end) -->
 			</footer><!-- #colophon (end) -->
 		</div><!-- #bottom (end) -->
-		<?php themeblvd_footer_after(); ?>
 		
 		<!-- FOOTER (end) -->
+		
+		<?php themeblvd_footer_after(); ?>
 	
 	</div><!-- #container (end) -->
 </div><!-- #wrapper (end) -->

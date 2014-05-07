@@ -15,6 +15,17 @@ if( is_single() ) {
 	else if( get_post_meta( $post->ID, '_tb_comments', true ) == 'show' )
 		$show_comments = true;
 }
+// Setup $args for wp_list_comments.
+$comment_list_args = array( 
+	'avatar_size' => 48,
+	'style' => 'ul',
+	'type' => 'all',
+	'reply_text' => themeblvd_get_local( 'reply' ),
+	'login_text' => themeblvd_get_local( 'login_text' ),
+	'callback' => null,
+	'reverse_top_level' => null,
+	'reverse_children' => false
+);
 ?>
 
 <?php if( $show_comments ) : ?>
@@ -45,7 +56,7 @@ if( is_single() ) {
 			</nav>
 			<?php endif; // check for comment navigation ?>
 			<ol class="commentlist">
-				<?php wp_list_comments( array( 'avatar_size' => 48 ) ); ?>
+				<?php wp_list_comments( apply_filters( 'themeblvd_comment_list', $comment_list_args ) ); ?>
 			</ol>
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
 			<nav id="comment-nav-below">

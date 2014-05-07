@@ -3,12 +3,15 @@
 /* Run Sidebar Blvd - An addon to Options Framework
 /*-----------------------------------------------------------------------------------*/
 
-/* If the user can't edit theme options, no use running this plugin */
-
-add_action( 'init', 'sidebar_blvd_rolescheck' );
+/**
+ * We check the user-role before running the 
+ * sidebars framework.
+ *
+ * @since 2.0.0
+ */
 
 function sidebar_blvd_rolescheck () {
-	if ( current_user_can( 'edit_theme_options' ) ) {
+	if ( themeblvd_supports( 'admin', 'sidebars' ) && current_user_can( themeblvd_admin_module_cap( 'sidebars' ) ) ) {
 		// If the user can edit theme options, let the fun begin!
 		add_action( 'admin_menu', 'sidebar_blvd_add_page' );
 		add_action( 'admin_init', 'sidebar_blvd_hijack_submenu' );
@@ -16,27 +19,44 @@ function sidebar_blvd_rolescheck () {
 		add_action( 'widgets_admin_page', 'sidebar_blvd_widgets_admin_page' );
 	}
 }
+add_action( 'init', 'sidebar_blvd_rolescheck' );
 
-/* Initiate sidebars framework */
+/**
+ * Initiate sidebars framework 
+ *
+ * @since 2.0.0
+ */
 
-function sidebar_blvd_init() {
-
-	// Include the required files
-	require_once dirname( __FILE__ ) . '/sidebars-interface.php';
-	require_once dirname( __FILE__ ) . '/sidebars-ajax.php';
+if( ! function_exists( 'sidebar_blvd_init' ) ) {	
+	function sidebar_blvd_init() {
+	
+		// Include the required files
+		require_once dirname( __FILE__ ) . '/sidebars-interface.php';
+		require_once dirname( __FILE__ ) . '/sidebars-ajax.php';
+	}
 }
 
-/* Get the get_option id used for storing sidebars */
+/** 
+ * Get the get_option id used for storing sidebars 
+ *
+ * @since 2.0.0
+ */
 
-function sidebar_blvd_get_option_id() {
-	$of_settings = get_option( 'optionsframework' );
-	$id = null;
-	if( isset( $of_settings['id'] ) )
-		$id = $of_settings['id'].'_sidebars';
-	return $id;
+if( ! function_exists( 'sidebar_blvd_get_option_id' ) ) {
+	function sidebar_blvd_get_option_id() {
+		$of_settings = get_option( 'optionsframework' );
+		$id = null;
+		if( isset( $of_settings['id'] ) )
+			$id = $of_settings['id'].'_sidebars';
+		return $id;
+	}
 }
 
-/* Add a subpages for Sidebas to the appearance menu. */
+/**
+ * Add a subpages for Sidebas to the appearance menu.
+ *
+ * @since 2.0.0
+ */
 
 if ( ! function_exists( 'sidebar_blvd_add_page' ) ) {
 	function sidebar_blvd_add_page() {
@@ -55,7 +75,12 @@ if ( ! function_exists( 'sidebar_blvd_add_page' ) ) {
 	}
 }
 
-/* Hack the appearance submenu a to get "Widget Areas" to show up just below "Widgets". */
+/**
+ * Hack the appearance submenu a to get "Widget Areas" to 
+ * show up just below "Widgets".
+ *
+ * @since 2.0.0
+ */
 
 if ( ! function_exists( 'sidebar_blvd_hijack_submenu' ) ) {
 	function sidebar_blvd_hijack_submenu() {
@@ -86,23 +111,39 @@ if ( ! function_exists( 'sidebar_blvd_hijack_submenu' ) ) {
 	}
 }
 
-/* Loads the CSS */
+/**
+ * Loads the CSS 
+ *
+ * @since 2.0.0
+ */
 
-function sidebar_blvd_load_styles() {
-	wp_enqueue_style('sharedframework-style', THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'css/admin-style.css');
-	// wp_enqueue_style('sidebarsframework-style', SIDEBARS_FRAMEWORK_DIRECTORY . 'css/sidebars-style.css');
-}	
-
-/* Loads the javascript */
-
-function sidebar_blvd_load_scripts() {
-	wp_enqueue_script('jquery-ui-sortable');
-	wp_enqueue_script('sharedframework-scripts', THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'js/shared.min.js', array('jquery'));
-	wp_enqueue_script('sidebarsframework-scripts', SIDEBARS_FRAMEWORK_DIRECTORY . 'js/sidebars-custom.js', array('jquery'));
-	wp_localize_script('sharedframework-scripts', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
+if ( ! function_exists( 'sidebar_blvd_load_styles' ) ) {
+	function sidebar_blvd_load_styles() {
+		wp_enqueue_style('sharedframework-style', THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'css/admin-style.css');
+		// wp_enqueue_style('sidebarsframework-style', SIDEBARS_FRAMEWORK_DIRECTORY . 'css/sidebars-style.css');
+	}	
 }
 
-/* Message for Widgets page. */
+/**
+ * Loads the javascript 
+ *
+ * @since 2.0.0
+ */
+
+if ( ! function_exists( 'sidebar_blvd_load_scripts' ) ) {
+	function sidebar_blvd_load_scripts() {
+		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('sharedframework-scripts', THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'js/shared.min.js', array('jquery'));
+		wp_enqueue_script('sidebarsframework-scripts', SIDEBARS_FRAMEWORK_DIRECTORY . 'js/sidebars-custom.js', array('jquery'));
+		wp_localize_script('sharedframework-scripts', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
+	}
+}
+
+/**
+ * Message for Widgets page.
+ *
+ * @since 2.0.0 
+ */
 
 if ( ! function_exists( 'sidebar_blvd_widgets_admin_page' ) ) {
 	function sidebar_blvd_widgets_admin_page() {
@@ -115,13 +156,20 @@ if ( ! function_exists( 'sidebar_blvd_widgets_admin_page' ) ) {
 	}
 } 
 
-/* Builds out the header for all sidebars pages. */
+/**
+ * Builds out the header for all sidebars pages. 
+ *
+ * @since 2.0.0
+ */
 
 if ( ! function_exists( 'sidebar_blvd_page_header' ) ) {
 	function sidebar_blvd_page_header() {
 		?>
 		<div id="sidebar_blvd">
 			<div id="optionsframework" class="wrap">
+			    <div class="admin-module-header">
+			    	<?php do_action( 'themeblvd_admin_module_header', 'sidebars' ); ?>
+			    </div>
 			    <?php screen_icon( 'themes' ); ?>
 			    <h2 class="nav-tab-wrapper">
 			        <a href="#manage_sidebars" id="manage_sidebars-tab" class="nav-tab" title="<?php _e( 'Custom Widget Areas', TB_GETTEXT_DOMAIN ); ?>"><?php _e( 'Custom Widget Areas', TB_GETTEXT_DOMAIN ); ?></a>
@@ -132,18 +180,29 @@ if ( ! function_exists( 'sidebar_blvd_page_header' ) ) {
 	}	
 }
 
-/* Builds out the footer for all sidebars pages. */
+/**
+ * Builds out the footer for all sidebars pages. 
+ *
+ * @since 2.0.0
+ */
 
 if ( ! function_exists( 'sidebar_blvd_page_footer' ) ) {
 	function sidebar_blvd_page_footer() {
 		?>
+				<div class="admin-module-footer">
+					<?php do_action( 'themeblvd_admin_module_footer', 'sidebars' ); ?>
+				</div>
 			</div> <!-- #optionsframework (end) -->
 		</div><!-- #sidebar_blvd (end) -->
 	    <?php
 	}	
 }
 
-/* Builds out the full admin page. */
+/**
+ * Builds out the full admin page.
+ *
+ * @since 2.0.0 
+ */
 
 if ( ! function_exists( 'sidebar_blvd_page' ) ) {
 	function sidebar_blvd_page() {

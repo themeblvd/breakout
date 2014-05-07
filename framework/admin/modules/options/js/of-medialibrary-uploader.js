@@ -78,7 +78,11 @@
 		// Change "insert into post" to "Use this Button" // ... Altered for different upload types (Mod by ThemeBlvd)
 		if( upload_type == 'slider' )
 		{
-			tbframe_interval = setInterval(function() {jQuery('#TB_iframeContent').contents().find('.savesend .button').val('Insert into Slider');}, 2000);
+			tbframe_interval = setInterval(function()
+			{
+				jQuery('#TB_iframeContent').contents().find('.savesend .button').val('Insert into Slider');
+				jQuery('#TB_iframeContent').contents().find('.slidetoggle tr.image_alt, .slidetoggle tr.post_excerpt, .slidetoggle tr.post_content, .slidetoggle tr.url, .slidetoggle tr.align, .slidetoggle tr.image-size').hide();
+			}, 2000);
         }
         else if( upload_type == 'logo' )
         {

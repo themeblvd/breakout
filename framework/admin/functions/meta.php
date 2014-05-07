@@ -150,7 +150,7 @@ function setup_themeblvd_post_meta() {
 				'id'		=> '_tb_breadcrumbs',
 				'name' 		=> __( 'Breadcrumbs', TB_GETTEXT_DOMAIN ),
 				'desc'		=> __( 'Select whether you\'d like breadcrumbs to show on this post or not.', TB_GETTEXT_DOMAIN ),
-				'type' 		=> 'select',
+				'type' 		=> 'radio',
 				'options'	=> array(
 					'default' => __( 'Use default setting.', TB_GETTEXT_DOMAIN ),
 					'show' => __( 'Yes, show breadcrumbs.', TB_GETTEXT_DOMAIN ),
@@ -206,6 +206,18 @@ function setup_themeblvd_post_meta() {
 				'desc'		=> __( 'Enter the full URL of where the featured image will link.<br><br>Ex: http://google.com', TB_GETTEXT_DOMAIN ),
 				'class'		=> 'tb-thumb-link tb-thumb-link-external',
 				'type' 		=> 'text'
+			),
+			array(
+				'id'		=> '_tb_external_link_target',
+				'name' 		=> __( 'Featured Image - External Link Target', TB_GETTEXT_DOMAIN ),
+				'desc'		=> __( 'Select whether you\'d like the external link to open in a new window or not.', TB_GETTEXT_DOMAIN ),
+				'class'		=> 'tb-thumb-link tb-thumb-link-external',
+				'type' 		=> 'radio',
+				'std'		=> '_blank',
+				'options'	=> array(
+					'_blank'	=> __( 'Open link in new window.', TB_GETTEXT_DOMAIN ),
+					'_self' 	=> __( 'Open link in same window.', TB_GETTEXT_DOMAIN )
+				)
 			),
 			array( 
 				'id' 		=> '_tb_sidebar_layout',

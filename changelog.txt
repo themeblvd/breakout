@@ -1,6 +1,32 @@
-== Breakout Changelog ==
+Breakout Changelog
+==================
 
-= 1.0.3 =
+1.1.0
+-----
+
+* Added many new styling theme options. -- *Make sure to visit your theme options after updating.*
+* Tweaked theme design a bit with header and footer.
+* Added option for text string under social icons in header.
+* Improved drop down menus on mobile for "graphic" style menu.
+* Added display options for post lists, archives, and post grids.
+* Adjusted sidebar layouts to have less space in between columns and more space on content areas; this is most noticeable on double-sidebar layouts.
+* Increased font size on mobile devices and tablets. 
+* Added option to switch main navigation into simple select menu on mobile devices.
+* Adjusted slider design so if nav arrows and nav buttons are hidden, nav area will be hidden.
+* Increased font size on mobile devices and tablets.
+* Added basic print CSS styles.
+* Adjusted some background images that were too light with Tan content color.
+* Styled featured images of post grids to look nicer on wider mobile devices like iPhone landscape mode. 
+* **Updated framework to version 2.1.0.** [Learn More](http://www.wpjumpstart.com/framework-updates/theme-blvd-2-1-0-framework-update/)
+
+### Effected Files ###
+
+* *All files and folders have been modified.*
+
+--------------------------------------------------------------
+
+1.0.3
+-----
 
 * Adjusted Post List and Post Grid page templates so that the title will show according to option selected under Page Options.
 * Removed most old IE transparency filters.
@@ -24,38 +50,46 @@
 * Re-generated localization file.
 * Updated framework to version 2.0.5.
 
-Effected Files:
-/style.css
-/comments.php
-/functions.php
-/header.php
-/assets/css/colors.css
-/assets/css/colors.min.css
-/assets/css/theme.css
-/assets/css/theme.min.css
-/framework/themeblvd.php
-/framework/admin/modules/options/options-framework.php
-/framework/frontend/assets/css/themeblvd.css
-/framework/frontend/functions/display.php
-/framework/frontend/functions/helpers.php
-/framework/frontend/functions/locals.php
-/framework/frontend/functions/builder.php
-/framework/frontend/assets/js/flexslider.js
-/framework/frontend/functions/general.php
-/framework/shortcodes/tinymce/shortcodes/tb_icon.js
-/framework/frontend/assets/images/textures/ (new directory)
-/framework/shortcodes/shortcodes.php
+### Effected Files ###
+
+* /style.css
+* /comments.php
+* /functions.php
+* /header.php
+* /assets/css/colors.css
+* /assets/css/colors.min.css
+* /assets/css/theme.css
+* /assets/css/theme.min.css
+* /framework/themeblvd.php
+* /framework/admin/modules/options/options-framework.php
+* /framework/frontend/assets/css/themeblvd.css
+* /framework/frontend/functions/display.php
+* /framework/frontend/functions/helpers.php
+* /framework/frontend/functions/locals.php
+* /framework/frontend/functions/builder.php
+* /framework/frontend/assets/js/flexslider.js
+* /framework/frontend/functions/general.php
+* /framework/shortcodes/tinymce/shortcodes/tb_icon.js
+* /framework/frontend/assets/images/textures/ (new directory)
+* /framework/shortcodes/shortcodes.php
 /lang/breakout.po
 
-= 1.0.2 =
+--------------------------------------------------------------
+
+1.0.2
+-----
 
 * Fixed initial bug with "Theme Blvd Simple Contact" widget where the field titled "Link #5 URL" was not saving properly.
 
-Effected Files:
-/style.css
-/framework/sidebars/widgets/tb-widget-contact.php
+### Effected Files ###
 
-= 1.0.1 =
+* /style.css
+* /framework/sidebars/widgets/tb-widget-contact.php
+
+--------------------------------------------------------------
+
+1.0.1
+-----
 
 * Now when you turn off responsive design in your Theme Options, your site will have a fixed 960px width across all devices.
 * Edited some descriptions on Theme Options page to try and avoid confusion with some options.
@@ -75,49 +109,51 @@ Effected Files:
 * Added several actions and filters for developers throughout different items of the framework.
 * Updated framework to version 2.0.4.
 
-Effected Files:
-/style.css
-/functions.php
-/includes/options.php
-/archive.php
-/footer.php
-/functions.php
-/header.php
-/index.php
-/page.php
-/single.php
-/template_grid.php
-/template_list.php
-/framework/themeblvd.php
-/framework/admin/assets/css/admin-style.css
-/framework/admin/assets/css/meta-box.css
-/framework/admin/modules/options/css/admin-style.css
-/framework/frontend/functions/locals.php
-/framework/frontend/functions/builder.php
-/framework/frontend/functions/parts.php
-/framework/frontend/functions/actions.php
-/framework/frontend/functions/sliders.php
-/framework/frontend/assets/js/themeblvd.js
-/framework/frontend/functions/helpers.php
-/framework/frontend/functions/display.php
-/framework/frontend/functions/general.php
-/framework/frontend/functions/meta.php
-/framework/frontend/functions/helpers.php
-/framework/admin/functions/meta.php
-/framework/admin/functions/general.php
-/framework/admin/modules/options/js/of-medialibrary-uploader.js
-/framework/admin/modules/options/options-framework.php
-/framework/admin/modules/options/options-sanitize.php
-/framework/admin/modules/sliders/sliders-ajax.php
-/framework/admin/modules/sliders/sliders-interface.php
-/framework/sidebars/widgets/tb-widget-contact.php (New file)
-/framework/sidebars/widgets/tb-widget-twitter.php
-/framework/shortcodes/shortcodes.php
-/framework/shortcodes/tinymce/shortcodes/tb_post_grid.js
-/framework/shortcodes/tinymce/shortcodes/tb_post_list.js
+### Effected Files ###
 
+* /style.css
+* /functions.php
+* /includes/options.php
+* /archive.php
+* /footer.php
+* /functions.php
+* /header.php
+* /index.php
+* /page.php
+* /single.php
+* /template_grid.php
+* /template_list.php
+* /framework/themeblvd.php
+* /framework/admin/assets/css/admin-style.css
+* /framework/admin/assets/css/meta-box.css
+* /framework/admin/modules/options/css/admin-style.css
+* /framework/frontend/functions/locals.php
+* /framework/frontend/functions/builder.php
+* /framework/frontend/functions/parts.php
+* /framework/frontend/functions/actions.php
+* /framework/frontend/functions/sliders.php
+* /framework/frontend/assets/js/themeblvd.js
+* /framework/frontend/functions/helpers.php
+* /framework/frontend/functions/display.php
+* /framework/frontend/functions/general.php
+* /framework/frontend/functions/meta.php
+* /framework/frontend/functions/helpers.php
+* /framework/admin/functions/meta.php
+* /framework/admin/functions/general.php
+* /framework/admin/modules/options/js/of-medialibrary-uploader.js
+* /framework/admin/modules/options/options-framework.php
+* /framework/admin/modules/options/options-sanitize.php
+* /framework/admin/modules/sliders/sliders-ajax.php
+* /framework/admin/modules/sliders/sliders-interface.php
+* /framework/sidebars/widgets/tb-widget-contact.php (New file)
+* /framework/sidebars/widgets/tb-widget-twitter.php
+* /framework/shortcodes/shortcodes.php
+* /framework/shortcodes/tinymce/shortcodes/tb_post_grid.js
+* /framework/shortcodes/tinymce/shortcodes/tb_post_list.js
 
+--------------------------------------------------------------
 
-= 1.0.0 =
+1.0.0
+-----
 
 * This is the first release constructed from Theme Blvd Framework version 2.0.2.

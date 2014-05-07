@@ -9,7 +9,8 @@
  * Contrib: Darin Richardson
  */
 
-/* controlContainer bug fix on line 45 by ThemeBlvd */
+/* Removed css3 transitions for chrome/safari fix on line 40 by ThemeBlvd */
+/* controlContainer bug fix on line 46 by ThemeBlvd */
 
 ;(function ($) {
   
@@ -36,7 +37,7 @@
       slider.args = {};
       
       //Test for webbkit CSS3 Animations
-      slider.transitions = "webkitTransition" in document.body.style;
+      // slider.transitions = "webkitTransition" in document.body.style; // Commented out by Theme Blvd to fix css3 transition bugs in chrome/safari with videos in slider
       if (slider.transitions) slider.prop = "-webkit-transform";
       
       //Test for controlsContainer

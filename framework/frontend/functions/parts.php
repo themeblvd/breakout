@@ -7,22 +7,31 @@
  * Contact button bar 
  *
  * @since 2.0.0
+ *
+ * @param array $buttons icons to use - array( 'twitter' => 'http://twitter.com/whatever', 'facebook' => 'http://facebook.com/whatever' )
+ * @param string $style Style of buttons - dark, grey, light
  */
 
 if( ! function_exists( 'themeblvd_contact_bar' ) ) {
-	function themeblvd_contact_bar() {
-		// Theme may or may not give user an option to 
-		// change style. If the option doesn't exist, 
-		// this style class will just be null.
-		$style = themeblvd_get_option( 'social_media_style' );
-		// Set it up
-		$buttons = themeblvd_get_option( 'social_media' );
+	function themeblvd_contact_bar( $buttons = array(), $style = null ) {
+		// Set up buttons
+		if( ! $buttons )
+			$buttons = themeblvd_get_option( 'social_media' );
+		// If buttons haven't been sanitized return nothing
+		if( is_array( $buttons ) && isset( $buttons['includes'] ) )
+			return null;
+		// Set up style
+		if( ! $style )
+			$style = themeblvd_get_option( 'social_media_style', null, 'grey' );
+		// Start output
 		$output = null;
 		if( is_array( $buttons ) && ! empty ( $buttons ) ) {
 			$output = '<div class="themeblvd-contact-bar">';
 			$output .= '<ul class="'.$style.'">';
 			foreach( $buttons as $id => $url ) {
-				$output .= '<li><a href="'.$url.'" title="'.ucfirst( $id ).'" class="'.$id.'" target="_blank">'.ucfirst( $id ).'</a></li>';
+				$mailto = strpos($url, 'mailto:');
+				$mailto ? $target = '_blank' : $target = '_self'; // Change target if URL has 'mailto:'
+				$output .= '<li><a href="'.$url.'" title="'.ucfirst( $id ).'" class="'.$id.'" target="'.$target.'">'.ucfirst( $id ).'</a></li>';
 			}
 			$output .= '</ul>';
 			$output .= '<div class="clear"></div>';
@@ -43,6 +52,7 @@ if( ! function_exists( 'themeblvd_contact_bar' ) ) {
  * @param string $target Anchor tag's target, _self, _blank, or lightbox
  * @param string $size Size of button - small, medium, or large
  * @param string $classes CSS classes to attach onto button
+ * @param string $title Title for anchor tag
  * @return $output string HTML to output for button
  */
 
@@ -230,9 +240,7 @@ if( ! function_exists( 'themeblvd_get_breadcrumbs' ) ) {
 		  $output .= $atts['before'].themeblvd_get_local('crumb_404').$atts['after'];
 		}
 		if ( get_query_var('paged') ) {
-			if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $output .= ' (';
-			$output .= themeblvd_get_local('page').' '.get_query_var('paged');
-			if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $output .= ')';
+			$output .= ' ('.themeblvd_get_local('page').' '.get_query_var('paged').')';
 		}
 		$output .= '</div><!-- .breadcrumbs-content (end) -->';
 		$output .= '</div><!-- .breadcrumbs-inner (end) -->';
@@ -242,85 +250,96 @@ if( ! function_exists( 'themeblvd_get_breadcrumbs' ) ) {
 }
 
 /**
- * Recent Tweets
+ * Get Recent Tweets
  *
  * @since 2.0.0
  *
  * @param string $count Number of tweets to display
  * @param string $username Twitter username to pull tweets from
- * @param string $widget_id Unique ID for widget
+ * @param string $time Display time of tweets, yes or no
+ * @param string $exclude_replies Exclude replies, yes or no
+ * @return string $output Final list of tweets
+ */
+
+if( ! function_exists( 'themeblvd_get_twitter' ) ) {
+	function themeblvd_get_twitter( $count, $username, $time = 'yes', $exclude_replies = 'yes' ) {		
+
+		$filtered_message = null;
+		$output = null;
+		$iterations = 0;
+		$tweets = array();
+		
+		// Use WordPress's SimplePie integration to retrieve Tweets
+		$rss = fetch_feed( themeblvd_get_twitter_rss_url( $username ) );
+		
+		// Proceed if we could retrieve the RSS feed
+		if ( ! is_wp_error( $rss ) ) {
+		
+			// Setup items from fetched feed
+			$maxitems = $rss->get_item_quantity();
+			$rss_items = $rss->get_items(0, $maxitems);
+			
+			// Build Tweets array for display
+			if( $rss_items ) {
+				foreach ( $rss_items as $item ) {
+					// Only continue if we haven't reached the max number of tweets
+					if( $iterations == $count ) break;
+					// Set text of tweet
+					$text = (string) $item->get_title();
+					// Take "Exclude @ replies" option into account before adding 
+					// tweet and increasing current number of tweets.
+					if( $exclude_replies == 'no' || ( $exclude_replies == 'yes' && $text[0] != "@") ) {
+					    $iterations++;
+					    $tweets[] = array(
+					    	'link' => $item->get_permalink(),
+					    	'text' => apply_filters( 'themeblvd_tweet_filter', $text, $username ),
+					    	'date' => $item->get_date( get_option('date_format') )
+					    );
+					}
+				}
+			}
+			
+			// Start output of tweets
+			if( $tweets ) {	
+				foreach( $tweets as $tweet) {	
+					$output .= '<li class="tweet">';
+					$output .= '<div class="tweet-wrap">';
+					$output .= '<div class="tweet-text">'.$tweet['text'].'</div>';
+					if( $time == 'yes' ) $output .= '<div class="tweet-time"><a href="'.$tweet['link'].'" target="_blank">'.$tweet['date'].'</a></div>';
+					$output .= '</div><!-- .tweet-wrap (end) -->';
+					$output .= '</li>';
+				}
+			}
+			
+			// Finish up output
+			if( $output )
+				$output = '<ul class="tweets">'.$output.'</ul>';
+			else
+				$output = '<ul class="tweets"><li>'.__( 'No public Tweets found', TB_GETTEXT_DOMAIN ).'</li></ul>';
+			
+		} else {
+			// Received error with fetch_feed()
+			$output = '<ul class="tweets"><li>'.__( 'Could not fetch Twitter RSS feed.', TB_GETTEXT_DOMAIN ).'</li></ul>';
+		}
+		return $output;
+	}
+}
+
+/**
+ * Display Recent Tweets
+ *
+ * @since 2.1.0
+ *
+ * @param string $count Number of tweets to display
+ * @param string $username Twitter username to pull tweets from
  * @param string $time Display time of tweets, yes or no
  * @param string $exclude_replies Exclude replies, yes or no
  * @return string $filtered_tweet Final list of tweets
  */
 
 if( ! function_exists( 'themeblvd_twitter' ) ) {
-	function themeblvd_twitter( $count, $username, $widget_id, $time = 'yes', $exclude_replies = 'yes' ) {		
-
-			$filtered_message = null;
-			$output = null;
-			$iterations = 0;
-
-			// Check for cached tweets
-			$tweets = get_transient( $widget_id.'-'.$username );
-
-			// If cache is set, use it, but if not, grab from Twitter.
-			if( ! $tweets ) {
-				// Grab response from Twitter if no cache
-				$raw_response = wp_remote_get( 'http://api.twitter.com/1/statuses/user_timeline.xml?screen_name='.$username );
-				if ( ! is_wp_error( $raw_response ) ) {
-					// Parse it.
-					$twitter_response = simplexml_load_string( $raw_response['body'] );
-					// Setup the tweets.
-					if( empty( $twitter_response->error ) ) {
-				    	if ( isset( $twitter_response->status[0] ) ) {
-				    	    $tweets = array();
-				    	    foreach ( $twitter_response->status as $tweet ) {
-				    	    	if( $iterations == $count ) break;
-				    	    	$text = (string) $tweet->text;
-				    	    	if( $exclude_replies == 'no' || ( $exclude_replies == 'yes' && $text[0] != "@") ) {
-				    	    		$iterations++;
-				    	    		$tweets[] = array(
-				    	    			'id' => (string)$tweet->id,
-				    	    			'text' => themeblvd_twitter_filter( $text ),
-				    	    			'created' =>  strtotime( $tweet->created_at ),
-				    	    			'user' => array(
-				    	    				'name' 			=> (string)$tweet->user->name,
-				    	    				'screen_name' 	=> (string)$tweet->user->screen_name,
-				    	    				'image' 		=> (string)$tweet->user->profile_image_url,
-				    	    				'utc_offset' 	=> (int) $tweet->user->utc_offset[0],
-				    	    				'follower' 		=> (int) $tweet->user->followers_count
-			    	    				)
-				    	    		);
-				    			}
-				    		}
-							// Cache it for next time.
-							set_transient( $widget_id.'-'.$username, $tweets, 60*60*3 ); // 3 hour cache
-				    	}
-				    }
-				}
-			}
-			
-			// Start output of tweets
-		    if( isset( $tweets[0] ) ) {	
-		    	foreach( $tweets as $tweet) {	
-		    		$output .= '<li class="tweet">';
-		    		$output .= '<div class="tweet-wrap">';
-		    		$output .= '<div class="tweet-text">'.$tweet['text'].'</div>';
-		    		if( $time == 'yes' ) $output .= '<div class="tweet-time"><a href="http://twitter.com/'.$tweet['user']['screen_name'].'/status/'.$tweet['id'].'" target="_blank">'.date_i18n( get_option('date_format')." - ".get_option('time_format'), $tweet['created'] + $tweet['user']['utc_offset']).'</a></div>';
-		    		$output .= '</div><!-- .tweet-wrap (end) -->';
-		    		$output .= '</li>';
-				}
-		    }
-		    
-			// Filter output
-			if( $output )
-				$filtered_tweet = '<ul class="tweets">'.$output.'</ul>';
-			else
-				$filtered_tweet = '<ul class="tweets"><li>'.__( 'No public Tweets found', TB_GETTEXT_DOMAIN ).'</li></ul>';
-			
-			// Return the output!
-			return $filtered_tweet;
+	function themeblvd_twitter( $count, $username, $time = 'yes', $exclude_replies = 'yes' ) {	
+		echo themeblvd_get_twitter( $count, $username, $time, $exclude_replies );
 	}
 }
 
@@ -357,11 +376,12 @@ if( ! function_exists( 'themeblvd_nav_menu_select' ) ) {
 }
 
 /** 
- * Simple Contact module (primary meant for simple contact widget)
+ * Get Simple Contact module (primary meant for simple contact widget)
  *
  * @since 2.0.3
  *
  * @param array $args Arguments to be used for the elements
+ * @return $module HTML to output
  */
 
 if( ! function_exists( 'themeblvd_get_simple_contact' ) ) {
@@ -404,5 +424,196 @@ if( ! function_exists( 'themeblvd_get_simple_contact' ) ) {
 		}
 		$module .= '</ul>';
 		return $module;
+	}
+}
+
+/** 
+ * Display Simple Contact module
+ *
+ * @since 2.1.0
+ *
+ * @param array $args Arguments to be used for the elements
+ */
+
+if( ! function_exists( 'themeblvd_simple_contact' ) ) {
+	function themeblvd_simple_contact( $args ) {
+		echo themeblvd_get_simple_contact( $args );
+	}
+}
+
+/** 
+ * Get Mini Post List 
+ *
+ * @since 2.1.0
+ *
+ * @param string $query Options for many post list
+ * @param string $thumb Thumbnail sizes - small, smaller, or smallest
+ * @param boolean $meta Show date posted or not
+ * @return string $output HTML to output
+ */
+
+if( ! function_exists( 'themeblvd_get_mini_post_list' ) ) {
+	function themeblvd_get_mini_post_list( $query = '', $thumb = 'smaller', $meta = true ) {
+		global $post;
+		$output = '';
+		// CSS classes
+		$classes = '';
+		if( ! $thumb )
+			$classes .= 'hide-thumbs';
+		else
+			$classes .= $thumb.'-thumbs';
+		if( ! $meta )
+			$classes .= ' hide-meta';
+		// Get posts
+		$posts = get_posts( html_entity_decode( $query ) );
+		// Start output
+		if( $posts ) {
+			$output  = '<div class="themeblvd-mini-post-list">';
+			$output .= '<ul class="'.$classes.'">';
+			foreach( $posts as $post ) {
+				setup_postdata( $post );
+				$image = '';
+				// Setup post thumbnail if user wants them to show
+				if( $thumb ) {
+					$image = themeblvd_get_post_thumbnail( 'primary', 'square_'.$thumb, true, false );
+					// If post thumbnail isn't set, pull default thumbnail 
+					// based on post format. If theme doesn't support post 
+					// formats, format will always be "standard".
+					if( ! $image ) {
+						$default_img_directory = apply_filters( 'themeblvd_thumbnail_directory', get_template_directory_uri() . '/framework/frontend/assets/images/thumbs/' );
+						$post_format = get_post_format();
+						if ( ! $post_format ) 
+							$post_format = 'standard';
+						$image .= '<div class="featured-image-wrapper '.$classes.'">';
+						$image .= '<div class="featured-image">';
+						$image .= '<div class="featured-image-inner">';
+						$image .= '<img src="'.$default_img_directory.$thumb.'_'.$post_format.'.png" class="wp-post-image" />';
+						$image .= '</div><!-- .featured-image-inner (end) -->';
+						$image .= '</div><!-- .featured-image (end) -->';
+						$image .= '</div><!-- .featured-image-wrapper (end) -->';
+					}
+				}
+				$output .= '<li>';
+				if( $image ) $output .= $image;
+				$output .= '<div class="mini-post-list-content">';
+				$output .= '<h4><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h4>';
+				if( $meta ) $output .= '<span class="mini-meta">'.get_the_time(get_option('date_format')).'</span>';
+				$output .= '</div>';
+				$output .= '</li>';
+			}
+			wp_reset_postdata();
+			$output .= '<ul>';
+			$output .= '</div><!-- .themeblvd-mini-post-list (end) -->';
+		} else {
+			$output = themeblvd_get_local( 'archive_no_posts' );
+		}
+		return $output;
+	}
+}
+
+/** 
+ * Display Mini Post List 
+ *
+ * @since 2.1.0
+ *
+ * @param array $options Options for many post list
+ */
+
+if( ! function_exists( 'themeblvd_mini_post_list' ) ) {
+	function themeblvd_mini_post_list( $options ) {
+		echo themeblvd_get_mini_post_list( $options );
+	}
+}
+
+/** 
+ * Get Mini Post Grid 
+ *
+ * @since 2.1.0
+ *
+ * @param array $options Options for many post grid
+ * @return string $output HTML to output
+ */
+
+if( ! function_exists( 'themeblvd_get_mini_post_grid' ) ) {
+	function themeblvd_get_mini_post_grid( $query = '', $align = 'left', $thumb = 'smaller', $gallery = '' ) {
+		global $post;
+		$output = '';
+		// CSS classes
+		$classes = $thumb.'-thumbs';
+		$classes .= ' grid-align-'.$align;
+		if( $gallery )
+			$classes .= ' gallery-override';
+		// Check for gallery override
+		if( $gallery )
+			$query = 'post_type=attachment&post_parent='.$gallery.'&numberposts=-1';
+		// Get posts
+		$posts = get_posts( html_entity_decode( $query ) );	
+		// Start output
+		if( $posts ) {
+			$output  = '<div class="themeblvd-mini-post-grid">';
+			$output .= '<ul class="'.$classes.'">';
+			foreach( $posts as $post ) {
+				setup_postdata( $post );
+				$output .= '<li>';
+				if( $gallery ) {
+					// Gallery image output to simulate featured images
+					$thumbnail = wp_get_attachment_image_src( $post->ID, 'square_'.$thumb );
+					$image = wp_get_attachment_image_src( $post->ID, 'full' );
+					$output .= '<div class="featured-image-wrapper">';
+					$output .= '<div class="featured-image">';
+					$output .= '<div class="featured-image-inner">';
+					$output .= '<a href="'.$image[0].'" title="" class="image" rel="themeblvd_lightbox[gallery_'.$gallery.']">';
+					$output .= '<img src="'.$thumbnail[0].'" alt="'.$post->post_title.'" />';
+					$output .= apply_filters( 'themeblvd_image_overlay', '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>' );
+					$output .= '</a>';
+					$output .= '</div><!-- .featured-image-inner (end) -->';
+					$output .= '</div><!-- .featured-image (end) -->';
+					$output .= '</div><!-- .featured-image-wrapper (end) -->';
+				} else {
+					// Standard featured image output
+					$image = '';
+					$image = themeblvd_get_post_thumbnail( 'primary', 'square_'.$thumb, true, false );
+					// If post thumbnail isn't set, pull default thumbnail 
+					// based on post format. If theme doesn't support post 
+					// formats, format will always be "standard".
+					if( ! $image ) {
+						$default_img_directory = apply_filters( 'themeblvd_thumbnail_directory', get_template_directory_uri() . '/framework/frontend/assets/images/thumbs/' );
+						$post_format = get_post_format();
+						if ( ! $post_format ) 
+							$post_format = 'standard';
+						$image .= '<div class="featured-image-wrapper '.$classes.'">';
+						$image .= '<div class="featured-image">';
+						$image .= '<div class="featured-image-inner">';
+						$image .= '<img src="'.$default_img_directory.$thumb.'_'.$post_format.'.png" class="wp-post-image" />';
+						$image .= '</div><!-- .featured-image-inner (end) -->';
+						$image .= '</div><!-- .featured-image (end) -->';
+						$image .= '</div><!-- .featured-image-wrapper (end) -->';
+					}
+					$output .= $image;	
+				}		
+				$output .= '</li>';
+			}
+			wp_reset_postdata();
+			$output .= '<ul>';
+			$output .= '<div class="clear"></div>';
+			$output .= '</div><!-- .themeblvd-mini-post-list (end) -->';
+		} else {
+			$output = themeblvd_get_local( 'archive_no_posts' );
+		}
+		return $output;
+	}
+}
+
+/** 
+ * Display Mini Post Grid 
+ *
+ * @since 2.1.0
+ *
+ * @param array $options Options for many post grid
+ */
+
+if( ! function_exists( 'themeblvd_mini_post_grid' ) ) {
+	function themeblvd_mini_post_grid( $query = '', $align = 'left', $thumb = 'smaller', $gallery = '' ) {
+		echo themeblvd_get_mini_post_grid( $query, $align, $thumb, $gallery );
 	}
 }

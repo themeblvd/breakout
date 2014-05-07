@@ -5,6 +5,7 @@
 function of_sanitize_text($input) {
 	$allowedtags = themeblvd_allowed_tags( false );
 	$output = wp_kses( $input, $allowedtags);
+	$output = str_replace( "\r\n", "\n", $output );
 	return $output;
 }
 
@@ -15,6 +16,7 @@ add_filter( 'of_sanitize_text', 'of_sanitize_text' );
 function of_sanitize_textarea($input) {
 	$allowedtags = themeblvd_allowed_tags( true );
 	$output = wp_kses( $input, $allowedtags);
+	$output = str_replace( "\r\n", "\n", $output );
 	return $output;
 }
 
@@ -221,17 +223,16 @@ function of_sanitize_columns( $input ) {
 	// Verify widths
 	foreach( $input['width'] as $key => $width ) {
 		$valid = false;
-		foreach( $width_options[$key.'-col'] as $width_option ) {
+		foreach( $width_options[$key.'-col'] as $width_option )
 			if( $width == $width_option['value'] )
 				$valid = true;
-		}
 		if( $valid )
 			$output['width'][$key] = $width;
 		else
 			$output['width'][$key] = null;
 	}
 	
-	return $output;	
+	return $output;
 }
 
 add_filter( 'of_sanitize_columns', 'of_sanitize_columns' );
@@ -293,6 +294,8 @@ function of_sanitize_content( $input ) {
 			break;
 		case 'raw' :
 			$output['raw'] = wp_kses( $input['raw'], $allowedtags );
+			$output['raw'] = str_replace( "\r\n", "\n", $output['raw'] );
+			isset( $input['raw_format'] ) ? $output['raw_format'] = '1' : $output['raw_format'] = '0';
 			break;
 	}
 	
@@ -316,6 +319,8 @@ function of_sanitize_logo( $input ) {
 			case 'custom' :
 				if( isset( $input['custom'] ) )
 					$output['custom'] = sanitize_text_field( $input['custom'] );
+				if( isset( $input['custom_tagline'] ) )
+					$output['custom_tagline'] = sanitize_text_field( $input['custom_tagline'] );
 				break;
 			case 'image' :
 				$filetype = wp_check_filetype( $input['image'] );
@@ -498,6 +503,7 @@ function of_recognized_font_sizes() {
  * @return   array
  *
  */
+ 
 function of_recognized_font_faces() {
 	$default = array(
 		'arial'     	=> 'Arial',
@@ -525,6 +531,7 @@ function of_recognized_font_faces() {
  * @return   array
  *
  */
+
 function of_recognized_font_styles() {
 	$default = array(
 		'normal'      => 'Normal',

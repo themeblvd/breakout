@@ -29,7 +29,7 @@ if( $template_part == 'grid' || $template_part == 'index_grid' ) {
 	$columns = themeblvd_get_option( 'archive_grid_columns' );
 	if( ! $columns ) $columns = apply_filters( 'themeblvd_default_grid_columns', 3 );
 	// Rows
-	$rows = themeblvd_get_option( 'iarchive_grid_rows' );
+	$rows = themeblvd_get_option( 'archive_grid_rows' );
 	if( ! $rows ) $rows = apply_filters( 'themeblvd_default_grid_columns', 4 );
 	// Thumbnail size
 	$size = themeblvd_grid_class( $columns );
@@ -68,7 +68,7 @@ get_header();
 		<div class="sidebar_layout-inner">
 			<div class="grid-protection">
 
-				<?php themeblvd_fixed_sidebars( 'left' ); ?>
+				<?php themeblvd_sidebars( 'left' ); ?>
 				
 				<!-- CONTENT (start) -->
 
@@ -128,7 +128,7 @@ get_header();
 			
 				<!-- CONTENT (end) -->		
 				
-				<?php themeblvd_fixed_sidebars( 'right' ); ?>
+				<?php themeblvd_sidebars( 'right' ); ?>
 			
 			</div><!-- .grid-protection (end) -->
 		</div><!-- .sidebar_layout-inner (end) -->
@@ -138,6 +138,13 @@ get_header();
 	// End main area
 	themeblvd_main_bottom();
 	themeblvd_main_end();
+	
+	// Featured area (below)
+	if( themeblvd_config( 'featured_below' ) ) {
+		themeblvd_featured_below_start();
+		themeblvd_featured_below( 'archive' );
+		themeblvd_featured_below_end();
+	}
 	
 // Footer
 get_footer();

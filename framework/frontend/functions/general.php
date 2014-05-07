@@ -12,14 +12,19 @@
 if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 	function themeblvd_frontend_init() {
 
-		global $_themeblvd_theme_options;
+		global $_themeblvd_theme_settings;
+		global $_themeblvd_user_stylesheets;
 		global $_themeblvd_config;
 		global $post;
-
+		
+		// Initiate vars
+		$builder = false;
+		$sidebar_layout = '';
+		
 		// Setup global theme options
 		$config = get_option( 'optionsframework' );
 		if ( isset( $config['id'] ) )
-			$_themeblvd_theme_options = get_option( $config['id'] );
+			$_themeblvd_theme_settings = get_option( $config['id'] );
 		
 		/*------------------------------------------------------*/
 		/* Primary Post ID
@@ -54,8 +59,6 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 		// we can make appropriate edits anywhere to content outside of the 
 		// template_builder.php file if we need to.
 		
-		$builder = false;
-		
 		// Custom Layout on static page
 		if( is_page_template( 'template_builder.php' ) ) {
 			$layout_id = get_post_meta( $post->ID, '_tb_custom_layout', true );
@@ -71,7 +74,7 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 		
 		// Custom Layout on homepage
 		if( is_home() ) {
-			$homepage_content = themeblvd_get_option( 'homepage_content', null, 'post_list' );
+			$homepage_content = themeblvd_get_option( 'homepage_content', null, 'posts' );
 			if( $homepage_content == 'custom_layout' ) {
 				$layout_id = themeblvd_get_option( 'homepage_custom_layout' );
 				if( $layout_id ) {
@@ -97,69 +100,52 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 		// markup or not when rendering a page from any template file.
 		
 		$featured = array();
+		$featured_below = array();
 		if( $builder ) {
 			$layout_post_id = themeblvd_post_id_by_name( $builder, 'tb_layout' );
 			$elements = get_post_meta( $layout_post_id, 'elements', true );
-			// Set classes for featured area
-			if( is_array( $elements ) && isset( $elements['featured'] ) && ! empty( $elements['featured'] ) ){
-				$featured[] = 'has_builder';
-				foreach( $elements['featured'] as $element ) {
-					switch( $element['type'] ){
-						case 'slider' :
-							$featured[] = 'has_slider';
-							break;
-						case 'post_grid_slider' :
-							$featured[] = 'has_slider';
-							$featured[] = 'has_grid';
-							$featured[] = 'has_post_grid_slider';
-							break;
-						case 'post_list_slider' :
-							$featured[] = 'has_slider';
-							$featured[] = 'has_post_list_slider';
-							break;
-						case 'post_grid' :
-							$featured[] = 'has_grid';
-							break;
-					}
-				}
-				// First element classes
-				$first_element = array_shift( array_values( $elements['featured'] ) );
-				$first_element = $first_element['type'];
-				if( $first_element == 'slider' || $first_element == 'post_grid_slider' || $first_element == 'post_list_slider'  )
-					$featured[] = 'slider_is_first';
-				if( $first_element == 'post_grid' || $first_element == 'post_grid_slider'  )
-					$featured[] = 'grid_is_first';
-				if( $first_element == 'slogan'  )
-					$featured[] = 'slogan_is_first';
-				// Last element classes
-				$last_element = end( $elements['featured'] );
-				$last_element = $last_element['type'];
-				if( $last_element == 'slider' || $last_element == 'post_grid_slider' || $last_element == 'post_list_slider'  )
-					$featured[] = 'slider_is_last';
-				if( $last_element == 'post_grid' || $last_element == 'post_grid_slider'  )
-					$featured[] = 'grid_is_last';
-				if( $last_element == 'slogan'  )
-					$featured[] = 'slogan_is_last';
-			}
+			$featured = themeblvd_featured_builder_classes( $elements, 'featured' );
+			$featured_below = themeblvd_featured_builder_classes( $elements, 'featured_below' );	
 		}
 		if( is_home() ) {
 			$homepage_content = themeblvd_get_option( 'homepage_content', null, 'posts' );
-			if( $homepage_content != 'custom_layout' )
+			if( $homepage_content != 'custom_layout' ) {
 				if( themeblvd_get_option( 'blog_featured' ) || themeblvd_supports( 'featured', 'blog' ) )
 					$featured[] = 'has_blog_featured';
+				if( themeblvd_supports( 'featured_below', 'blog' ) )
+					$featured_below[] = 'has_blog_featured_below';
+			}
 		}
 		if( is_page_template( 'template_list.php' ) ) {
 			if( themeblvd_get_option( 'blog_featured' ) || themeblvd_supports( 'featured', 'blog' ) )
 				$featured[] = 'has_blog_featured';
+			if( themeblvd_supports( 'featured_below', 'blog' ) )
+				$featured_below[] = 'has_blog_featured_below';
+		}
+		if( is_page_template( 'template_grid.php' ) ) {
+			if( themeblvd_supports( 'featured', 'grid' ) )
+				$featured[] = 'has_grid_featured';
+			if( themeblvd_supports( 'featured_below', 'grid' ) )
+				$featured_below[] = 'has_grid_featured_below';
 		}
 		if( is_archive() || is_search() ){
 			if( themeblvd_supports( 'featured', 'archive' ) )
 				$featured[] = 'has_archive_featured';
+			if( themeblvd_supports( 'featured_below', 'archive' ) )
+				$featured_below[] = 'has_archive_featured_below';
 		}
-		if( is_page() && ! is_page_template( 'template_builder.php' ) && themeblvd_supports( 'featured', 'page' ) )
-			$featured[] = 'has_page_featured';
-		if( is_single() && themeblvd_supports( 'featured', 'single' ) )
-			$featured[] = 'has_single_featured';
+		if( is_page() && ! is_page_template( 'template_builder.php' ) ) {
+			if( themeblvd_supports( 'featured', 'page' ) )
+				$featured[] = 'has_page_featured';
+			if( themeblvd_supports( 'featured_below', 'page' ) )
+				$featured_below[] = 'has_page_featured_below';
+		}
+		if( is_single() ) {
+			if( themeblvd_supports( 'featured', 'single' ) )
+				$featured[] = 'has_single_featured';
+			if( themeblvd_supports( 'featured_below', 'single' ) )
+				$featured_below[] = 'has_single_featured_below';
+		}
 
 		/*------------------------------------------------------*/
 		/* Sidebar Layout (ID of sidebar layout)
@@ -173,16 +159,14 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 		// because the framework gives the user so many choices, the sidebars 
 		// cannot be placed purely with CSS, and that's why this is necessary.
 		
-		if( ! isset( $sidebar_layout ) || ! $sidebar_layout ) {
+		if( ! $sidebar_layout ) {
 			if( is_page() || is_single() )
 				$sidebar_layout = get_post_meta( $post->ID, '_tb_sidebar_layout', true );
 		}
-		if( ! isset( $sidebar_layout ) || ! $sidebar_layout || 'default' == $sidebar_layout ) {
-			if( themeblvd_get_option( 'sidebar_layout' ) )
-				$sidebar_layout = themeblvd_get_option( 'sidebar_layout' );
-			else
-				$sidebar_layout = 'sidebar_right'; // absolute default sidebar layout
+		if( ! $sidebar_layout || 'default' == $sidebar_layout ) {
+			$sidebar_layout = themeblvd_get_option( 'sidebar_layout', null, apply_filters( 'themeblvd_default_sidebar_layout', 'sidebar_right' ) );
 		}
+		$sidebar_layout = apply_filters( 'themeblvd_sidebar_layout', $sidebar_layout );
 		
 		/*------------------------------------------------------*/
 		/* Sidebar ID's
@@ -241,10 +225,69 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
     		'fake_conditional'	=> $fake_conditional,	// Fake conditional tag
     		'sidebar_layout' 	=> $sidebar_layout, 	// Sidebar layout
     		'builder'			=> $builder,			// ID of current custom layout if not false
-    		'featured'			=> $featured,			// Classes for featured areas, if empty featured area won't show
+    		'featured'			=> $featured,			// Classes for featured area, if empty area won't show
+    		'featured_below'	=> $featured_below,		// Classes for featured below area, if empty area won't show
     		'sidebars'			=> $sidebars			// Array of sidbar ID's for all corresponding locations
     	);
     	$_themeblvd_config = apply_filters( 'themeblvd_frontend_config', $config );
+	}
+}
+
+/**
+ * Get classes for featured areas depending on what elements 
+ * exist in a custom layout.
+ *
+ * @since 2.1.0
+ *
+ * @param array $elements All elements for current custom layout
+ * @param array $area Area to use, featured or featured_below
+ * @return array $classes Classes to use
+ */
+
+if( ! function_exists( 'themeblvd_featured_builder_classes' ) ) {
+	function themeblvd_featured_builder_classes( $elements, $area ) {
+		$classes = array();
+		if( is_array( $elements ) && isset( $elements[$area] ) && ! empty( $elements[$area] ) ) {
+			$classes[] = 'has_builder';
+			foreach( $elements[$area] as $element ) {
+				switch( $element['type'] ){
+					case 'slider' :
+						$classes[] = 'has_slider';
+						break;
+					case 'post_grid_slider' :
+						$classes[] = 'has_slider';
+						$classes[] = 'has_grid';
+						$classes[] = 'has_post_grid_slider';
+						break;
+					case 'post_list_slider' :
+						$classes[] = 'has_slider';
+						$classes[] = 'has_post_list_slider';
+						break;
+					case 'post_grid' :
+						$classes[] = 'has_grid';
+						break;
+				}
+			}
+			// First element classes
+			$first_element = array_shift( array_values( $elements[$area] ) );
+			$first_element = $first_element['type'];
+			if( $first_element == 'slider' || $first_element == 'post_grid_slider' || $first_element == 'post_list_slider'  )
+				$classes[] = 'slider_is_first';
+			if( $first_element == 'post_grid' || $first_element == 'post_grid_slider' )
+				$classes[] = 'grid_is_first';
+			if( $first_element == 'slogan'  )
+				$classes[] = 'slogan_is_first';
+			// Last element classes
+			$last_element = end( $elements[$area] );
+			$last_element = $last_element['type'];
+			if( $last_element == 'slider' || $last_element == 'post_grid_slider' || $last_element == 'post_list_slider'  )
+				$classes[] = 'slider_is_last';
+			if( $last_element == 'post_grid' || $last_element == 'post_grid_slider'  )
+				$classes[] = 'grid_is_last';
+			if( $last_element == 'slogan'  )
+				$classes[] = 'slogan_is_last';
+		}
+		return $classes;
 	}
 }
 
@@ -265,11 +308,19 @@ if( ! function_exists( 'themeblvd_body_class' ) ) {
 			$classes[] = 'show-featured-area';
 		else
 			$classes[] = 'hide-featured-area';
+			
+		// Featured Area (below)
+		if( themeblvd_config( 'featured_below' ) )
+			$classes[] = 'show-featured-area-below';
+		else
+			$classes[] = 'hide-featured-area-above';
 
 		// Custom Layout
 		$custom_layout = themeblvd_config( 'builder' );
-		if( $custom_layout )
+		if( $custom_layout ) {
 			$classes[] = 'custom-layout-'.$custom_layout;
+			$classes[] = 'has_custom_layout';
+		}
 			
 		// Sidebar Layout
 		$classes[] = 'sidebar-layout-'.themeblvd_config( 'sidebar_layout' );
@@ -392,12 +443,13 @@ function themeblvd_get_assigned_id( $assignments ) {
 			if( $assignment['type'] != 'top' ) {				
 				// Posts in Category
 				if( $assignment['type'] == 'posts_in_category' ) {
-					if( in_category( $assignment['id'] ) )		
+					if( is_single() && in_category( $assignment['id'] ) )		
 						$id = $assignment['post_slug'];
 				}			
 			}
 		}
 	}
+	
 	// Tier III conditionals
 	if( ! isset( $id ) && ! empty( $assignments ) ) {
 		foreach( $assignments as $assignment ) {
@@ -479,11 +531,13 @@ function themeblvd_get_assigned_id( $assignments ) {
 if( ! function_exists( 'themeblvd_include_scripts' ) ) {
 	function themeblvd_include_scripts() {
 		// Register scripts
-		wp_register_script( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/plugins/prettyphoto/js/jquery.prettyPhoto.js', array('jquery'), '3.1.3' );
+		// wp_register_script( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/plugins/prettyphoto/js/jquery.prettyPhoto.js', array('jquery'), '3.1.3' );
+		wp_register_script( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/prettyphoto.js', array('jquery'), '3.1.3' ); // Modified version of prettyPhoto by Jason Bobich
 		wp_register_script( 'superfish', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/superfish.js', array('jquery'), '1.4.8' );
 		wp_register_script( 'flexslider', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/flexslider.js', array('jquery'), '1.8' );
 		wp_register_script( 'roundabout', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/roundabout.js', array('jquery'), '1.1' );
 		wp_register_script( 'themeblvd', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/themeblvd.js', array('jquery'), '1.0' );
+		wp_register_script( 'ios-orientationchange-fix', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/js/ios-orientationchange-fix.js' );
 		// Enqueue 'em
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'prettyPhoto' );
@@ -491,6 +545,8 @@ if( ! function_exists( 'themeblvd_include_scripts' ) ) {
 		wp_enqueue_script( 'flexslider' );
 		wp_enqueue_script( 'roundabout' );
 		wp_enqueue_script( 'themeblvd' );
+		if( themeblvd_get_option( 'responsive_css', null, 'true' ) != 'false' ) 
+			wp_enqueue_script( 'ios-orientationchange-fix' );
 	}
 }
 
@@ -507,14 +563,18 @@ if( ! function_exists( 'themeblvd_include_scripts' ) ) {
 
 if( ! function_exists( 'themeblvd_include_styles' ) ) {
 	function themeblvd_include_styles() {
+		// Level 1 user styles
+		themeblvd_user_stylesheets( 1 );
 		// Register framework styles
-		wp_register_style( 'prettyPhoto', 			TB_FRAMEWORK_DIRECTORY . '/frontend/assets/plugins/prettyphoto/css/prettyPhoto.css' );
-		wp_register_style( 'themeblvd_plugins', 	TB_FRAMEWORK_DIRECTORY . '/frontend/assets/css/plugins.css' );
-		wp_register_style( 'themeblvd', 			TB_FRAMEWORK_DIRECTORY . '/frontend/assets/css/themeblvd.css' );
+		wp_register_style( 'prettyPhoto', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/plugins/prettyphoto/css/prettyPhoto.css' );
+		wp_register_style( 'themeblvd_plugins', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/css/plugins.css' );
+		wp_register_style( 'themeblvd', TB_FRAMEWORK_DIRECTORY . '/frontend/assets/css/themeblvd.css' );
 		// Enqueue framework styles
 		wp_enqueue_style( 'prettyPhoto' );
 		wp_enqueue_style( 'themeblvd_plugins' );
 		wp_enqueue_style( 'themeblvd' );
+		// Level 2 user styles
+		themeblvd_user_stylesheets( 2 );
 	}
 }
 
@@ -606,22 +666,24 @@ if( ! function_exists( 'themeblvd_sidebar_layout_class' ) ) {
 if( ! function_exists( 'themeblvd_get_part' ) ) {
 	function themeblvd_get_part( $type ) {
 		$part = null;
-		$post_format = null;
-		// Post format
-		if( ! is_404() && ! is_search() )
-			$post_format = get_post_format();
+		// Post format example (this is what you'd do if you were applying via a filter)
+		// $post_format = null;
+		// if( !temp is_404() && ! is_search() ) $post_format = get_post_format();
 		// Parts
 		$parts = array(
 			'404'				=> '404',
-			'archive'			=> 'archive',		// Note: If working with magazine theme, can change to 'archive_grid' to be compatible with archive.php
-			'blog' 				=> $post_format,	// Note: This could be changed to a new part of magazine theme to be separate from default.
+			'archive'			=> 'archive',		// Note: If working with magazine theme, can change to 'archive_grid' or 'grid' to be compatible with archive.php
 			'grid' 				=> 'grid',
-			'index' 			=> $post_format,	// Note: If working with magazine theme, can change to 'index_grid' to be compatible with archive.php
-			'page' 				=> 'page',
-			'portfolio' 		=> 'grid',			
+			'grid_paginated' 	=> 'grid',
+			'grid_slider' 		=> 'grid',
+			'index' 			=> 'list',			// Note: If working with magazine theme, can change to 'index_grid' or 'grid' to be compatible with index.php
+			'list'				=> 'list',
+			'list_paginated'	=> 'list',
+			'list_slider'		=> 'list',
+			'page' 				=> 'page',			
 			'search'			=> 'search',		// Note: This is for displaying content when no search results were found.
 			'search_results'	=> 'archive',
-			'single'			=> 'single'			// Note: For blog style theme, this could be changed to $post_format to match blogroll
+			'single'			=> ''				// Note: For blog style theme, this could be changed to match "list"
 		);
 		$parts = apply_filters( 'themeblvd_template_parts', $parts );
 		// Set and part if exists
@@ -629,5 +691,46 @@ if( ! function_exists( 'themeblvd_get_part' ) ) {
 			$part = $parts[$type];
 		// Return part	
 		return $part;
+	}
+}
+
+/**
+ * Generate styles to be inserted after everything.
+ *
+ * @since 2.1.0
+ *
+ * @param int $level Level to apply stylesheet - 1, 2, 3, 4
+ */
+
+if( ! function_exists( 'themeblvd_user_stylesheets' ) ) {
+	function themeblvd_user_stylesheets( $level ) {
+		global $_themeblvd_user_stylesheets;
+		// Add styles
+		if( $level == 4 ) {
+			// Manually insert level 4 stylesheet
+			if( $_themeblvd_user_stylesheets[4] )
+				foreach( $_themeblvd_user_stylesheets[4] as $stylesheet )
+					echo "<link rel='stylesheet' id='".$stylesheet['handle']."' href='".$stylesheet['src']."' type='text/css' media='".$stylesheet['media']."' />";
+		} else {
+			// Use WordPress's enqueue system
+			if( $_themeblvd_user_stylesheets[$level] )
+				foreach( $_themeblvd_user_stylesheets[$level] as $stylesheet )
+					wp_enqueue_style( $stylesheet['handle'], $stylesheet['src'], array(), $stylesheet['ver'], $stylesheet['media'] );
+		}
+	}
+}
+
+
+/**
+ * Generate styles to be inserted after everything.
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_closing_styles' ) ) {
+	function themeblvd_closing_styles() {
+		// Show user stylesheets after 
+		// ALL styles if any exist.
+		themeblvd_user_stylesheets( 4 );
 	}
 }

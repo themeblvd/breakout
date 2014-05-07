@@ -17,7 +17,7 @@
 
 // Determine if meta info should show
 $show_meta = true;
-if( themeblvd_get_option( 'single_meta' ) == 'hide' )
+if( themeblvd_get_option( 'single_meta', null, 'show' ) == 'hide' )
 	$show_meta = false;
 if( get_post_meta( $post->ID, '_tb_meta', true ) == 'hide' )
 	$show_meta = false;
@@ -49,12 +49,13 @@ get_header();
 		<div class="sidebar_layout-inner">
 			<div class="grid-protection">
 
-				<?php themeblvd_fixed_sidebars( 'left' ); ?>
+				<?php themeblvd_sidebars( 'left' ); ?>
 				
 				<!-- CONTENT (start) -->
 				
 				<div id="content" role="main">
-					<div class="inner">			
+					<div class="inner">
+						<?php themeblvd_content_top(); ?>	
 						<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 							<?php get_template_part( 'content', themeblvd_get_part( 'single' ) ); ?>
 							<?php themeblvd_single_footer(); ?>
@@ -65,7 +66,7 @@ get_header();
 					
 				<!-- CONTENT (end) -->	
 				
-				<?php themeblvd_fixed_sidebars( 'right' ); ?>
+				<?php themeblvd_sidebars( 'right' ); ?>
 			
 			</div><!-- .grid-protection (end) -->
 		</div><!-- .sidebar_layout-inner (end) -->
@@ -75,6 +76,13 @@ get_header();
 	// End main area
 	themeblvd_main_bottom();
 	themeblvd_main_end();
+	
+	// Featured area
+	if( themeblvd_config( 'featured_below' ) ) {
+		themeblvd_featured_below_start();
+		themeblvd_featured_below( 'single' );
+		themeblvd_featured_below_end();
+	}
 	
 // Footer
 get_footer();

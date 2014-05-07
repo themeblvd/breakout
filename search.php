@@ -42,7 +42,7 @@ get_header();
 		<div class="sidebar_layout-inner">
 			<div class="grid-protection">
 
-				<?php themeblvd_fixed_sidebars( 'left' ); ?>
+				<?php themeblvd_sidebars( 'left' ); ?>
 				
 				<!-- CONTENT (start) -->
 	
@@ -57,13 +57,14 @@ get_header();
 							<?php else : ?>
 								<?php get_template_part( 'content', themeblvd_get_part( 'search' ) ); ?>
 							<?php endif; ?>
+							<?php themeblvd_pagination(); ?>
 						</div><!-- .post_list (end) -->
 					</div><!-- .inner (end) -->
 				</div><!-- #content (end) -->
 			
 				<!-- CONTENT (end) -->	
 				
-				<?php themeblvd_fixed_sidebars( 'right' ); ?>
+				<?php themeblvd_sidebars( 'right' ); ?>
 			
 			</div><!-- .grid-protection (end) -->
 		</div><!-- .sidebar_layout-inner (end) -->
@@ -73,6 +74,13 @@ get_header();
 	// End main area
 	themeblvd_main_bottom();
 	themeblvd_main_end();
+	
+	// Featured area (below)
+	if( themeblvd_config( 'featured_below' ) ) {
+		themeblvd_featured_below_start();
+		themeblvd_featured_below( 'archive' );
+		themeblvd_featured_below_end();
+	}
 	
 // Footer
 get_footer();

@@ -4,8 +4,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 /**
- * Initialize the entire admin panel, only showing 
- * supported features.
+ * Initialize anything needed for admin panel to run.
  *
  * @since 2.0.0
  */
@@ -20,35 +19,22 @@ function themeblvd_admin_init() {
 	define( 'THEMEBLVD_ADMIN_ASSETS_URL', TB_FRAMEWORK_URL . '/admin/assets/' );
 	define( 'THEMEBLVD_ADMIN_ASSETS_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/assets/');
 	
-	if( themeblvd_supports( 'admin', 'options' ) ) {
-		
-		// Options Framework Setup
-		define( 'OPTIONS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/options/' );
-		define( 'OPTIONS_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/options/');
-		include( OPTIONS_FRAMEWORK_URL . 'options-framework.php');
-		
-		// Sliders Framework Setup (Dependent on Options Framework)
-		if( themeblvd_supports( 'admin', 'sliders' ) ) {
-			define( 'SLIDERS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/sliders/' );
-			define( 'SLIDERS_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/sliders/');
-			include( SLIDERS_FRAMEWORK_URL . 'sliders-framework.php' );
-		}
-		
-		// Builder Framework Setup (Dependent on Options Framework)
-		if( themeblvd_supports( 'admin', 'builder' ) ) {
-			define( 'BUILDER_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/builder/' );
-			define( 'BUILDER_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/builder/');
-			include( BUILDER_FRAMEWORK_URL . 'builder-framework.php' );
-		}
-		
-		// Sidebar Framework Setup (Dependent on Options Framework)
-		if( themeblvd_supports( 'admin', 'sidebars' ) ) {
-			define( 'SIDEBARS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/sidebars/' );
-			define( 'SIDEBARS_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/sidebars/');
-			include( SIDEBARS_FRAMEWORK_URL . 'sidebars-framework.php' );
-		}
+	// Options Framework
+	define( 'OPTIONS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/options/' );
+	define( 'OPTIONS_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/options/');
 	
-	}
+	// Sliders Framework
+	define( 'SLIDERS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/sliders/' );
+	define( 'SLIDERS_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/sliders/');
+	
+	// Builder Framework
+	define( 'BUILDER_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/builder/' );
+	define( 'BUILDER_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/builder/');
+			
+	// Sidebar Framework
+	define( 'SIDEBARS_FRAMEWORK_URL', TB_FRAMEWORK_URL . '/admin/modules/sidebars/' );
+	define( 'SIDEBARS_FRAMEWORK_DIRECTORY', TB_FRAMEWORK_DIRECTORY . '/admin/modules/sidebars/');
+	
 }
 
 /**
@@ -159,7 +145,9 @@ function themeblvd_allowed_tags( $extended = false ) {
 			'title' => array(),
 			'class' => array(),
 			'id'	=> array(),
-			'style' => array()
+			'style' => array(),
+			'rel' => array(),
+			'target' => array()
 		),
 		'img' => array(
 			'alt' => array(),
@@ -167,13 +155,14 @@ function themeblvd_allowed_tags( $extended = false ) {
 			'class' => array(),
 			'id'	=> array(),
 			'style' => array()
-		)
+		),
+		'br' => array()
 	);
+	$addons = apply_filters( 'themeblvd_allowed_tags_basic', $addons );
 	
 	// Add in extended HTML tags
 	if( $extended ) {
 		$extended_addons = array(
-			'br' => array(),
 			'h1' => array(
 				'class' => array(),
 				'id'	=> array(),
@@ -205,7 +194,8 @@ function themeblvd_allowed_tags( $extended = false ) {
 				'style' => array()
 			),
 			'script' => array(
-				'type' => array()
+				'type' => array(),
+				'src' => array()
 			),
 			'div' => array(
 				'class' => array(),
@@ -238,6 +228,7 @@ function themeblvd_allowed_tags( $extended = false ) {
 				'mozallowfullscreen' => array()
 			)
 		);
+		$extended_addons = apply_filters( 'themeblvd_allowed_tags_extended', $extended_addons );
 		$addons = array_merge( $addons, $extended_addons );
 	}
 	

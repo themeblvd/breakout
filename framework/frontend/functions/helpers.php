@@ -8,14 +8,16 @@
  *
  * @since 2.0.0
  *
+ * @param string $location Whether the thumbnail is currently in the featured area or not, not always applicable
  * @param string $size Size of post thumbnail
  * @param string $link Where link will go if it's active
  * @param string $link_url URL where link will go if applicable
+ * @param boolean $allow_filters Whether to allow filters to be applied or not
  * @return string $output HTML to output thumbnail
  */
 
 if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
-	function themeblvd_get_post_thumbnail( $location = 'primary', $size = '', $link = true ) {
+	function themeblvd_get_post_thumbnail( $location = 'primary', $size = '', $link = true, $allow_filters = true ) {
 		global $post;
 		$attachment_id = get_post_thumbnail_id( $post->ID );
 		$conditionals = apply_filters( 'thumbnail_conditionals', array( 'home', 'template_list.php', 'single', 'search', 'archive' ) );
@@ -33,14 +35,14 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 			// Primary posts page, blog page template, single posts, archives, and search results
 			if( in_array( $fake_conditional, $conditionals ) ) {
 				// Get default size option
-				if( is_home() || is_page_template( 'template_list.php' ) )	
+				if( $fake_conditional == 'home' || $fake_conditional == 'template_list.php' )	
 					$thumb_size_option = themeblvd_get_option( 'blog_thumbs', null, 'small' );
-				else if( is_search() || is_archive() )
+				else if( $fake_conditional == 'search' || $fake_conditional == 'archive' )
 					$thumb_size_option = themeblvd_get_option( 'archive_thumbs', null, 'small' );
-				else if( is_single() )
+				else if( $fake_conditional == 'single' )
 					$thumb_size_option = themeblvd_get_option( 'single_thumbs', null, 'small' );
 				// Single post page override
-				if( is_single() ) {
+				if( $fake_conditional == 'single' ) {
 					$thumb_size_meta = get_post_meta( $post->ID, '_tb_thumb', true );
 					if( $thumb_size_meta == 'full' || $thumb_size_meta == 'small' || $thumb_size_meta == 'hide' ) {
 						$thumb_size_option = $thumb_size_meta;
@@ -98,7 +100,10 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 						break;
 					case 'external' :
 						$link_url = get_post_meta( $post->ID, '_tb_external_link', true );
-						$link_target = ' target="_blank"';
+						$target = get_post_meta( $post->ID, '_tb_external_link_target', true );
+						if( ! $target )
+							$target = '_blank';
+						$link_target = ' target="'.$target.'"';
 						break;
 				}
 				if( is_single() ) $link_target = str_replace('[gallery]', '', $link_target );
@@ -118,14 +123,18 @@ if( ! function_exists( 'themeblvd_get_post_thumbnail' ) ) {
 			$output .= '<div class="featured-image-wrapper '.$classes.'">';
 			$output .= '<div class="featured-image">';
 			$output .= '<div class="featured-image-inner">';
-			if( $link ) $output .= '<a href="'.$link_url.'"'.$link_target.'" class="'.$thumb_link_meta.'"'.$title.'>';	
-			$output .= '<img src="'.$image[0].'" alt="'.get_the_title($post->ID).'" />';
+			if( $link ) $output .= '<a href="'.$link_url.'"'.$link_target.' class="'.$thumb_link_meta.'"'.$title.'>';	
+			$output .= get_the_post_thumbnail( $post->ID, $size, array( 'class' => '' ) );
 			if( $link ) $output .= $end_link.'</a>';
 			$output .= '</div><!-- .featured-image-inner (end) -->';
 			$output .= '</div><!-- .featured-image (end) -->';
 			$output .= '</div><!-- .featured-image-wrapper (end) -->';
 		}
-		return apply_filters( 'themeblvd_post_thumbnail', $output, $location, $size, $link );
+		// Apply filters if allowed
+		if( $allow_filters )
+			$output = apply_filters( 'themeblvd_post_thumbnail', $output, $location, $size, $link );
+		// Return final output
+		return $output;
 	}
 }
 
@@ -296,7 +305,7 @@ if( ! function_exists( 'themeblvd_query_string' ) ) {
 		$_themeblvd_paged = $paged; // Set global variable for pagination compatiblity on static frontpage
 		$query_string .= 'paged='.$paged;
 		// Return query string
-		return $query_string;
+		return apply_filters( 'themeblvd_query_string', $query_string );
 	}
 }
 
@@ -439,56 +448,115 @@ if( ! function_exists( 'themeblvd_close_row' ) ) {
 
 if( ! function_exists( 'themeblvd_oembed_result' ) ) {
 	function themeblvd_oembed_result( $input, $url ) {
+		
+		// Since the framework applies this filter in two 
+		// spots, we must first check if the filter has 
+		// been applied or not. The reason for this is 
+		// because WP has issues with caching the oembed 
+		// result, and oembed_result doesn't always get 
+		// applied when it's supposed to.
+		$filter_applied = strpos( $input, 'themeblvd' );
+		if( $filter_applied ) return $input;
+		
 		// Media Type (will use in future if we add audio player)
 		// $mp3 = strpos( $url, '.mp3' );
 		// $mp3 ? $media = 'audio' : $media = 'video';
 		$media = 'video'; // Temporary while video is only media type.
+		
+		// Apply YouTube wmode fix
+		if( strpos( $url, 'youtube' ) || strpos( $url, 'youtu.be' ) ) {
+			if( ! strpos( $input, 'wmode=transparent' ) )
+				$input = str_replace('feature=oembed', 'feature=oembed&wmode=transparent', $input);
+		}
+		
 		// Wrap output
-		$output = '	<div class="themeblvd-'.$media.'-wrapper">
-						<div class="'.$media.'-inner">'
-							.$input.
-						'</div><!-- .video-inner (end) -->
-					</div><!-- .themeblvd-video-wrapper (end) -->';
+		$output  = '<div class="themeblvd-'.$media.'-wrapper">';
+		$output .= '<div class="'.$media.'-inner">';
+		$output .= $input;
+		$output .= '</div><!-- .video-inner (end) -->';
+		$output .= '</div><!-- .themeblvd-video-wrapper (end) -->';
+		
 		return $output;
 	}
 }
 
 /**
- * Add wmode=transparent to youtube videos... 
- * Oh, oh when is WordPress or YouTube going to fix this rediculous bug.
- *
- * @since 2.0.0
- */
- 
-if( ! function_exists( 'themeblvd_youtube_wmode_transparent' ) ) {
-	function themeblvd_youtube_wmode_transparent( $html, $url ) {
-		if( strpos( $url, 'youtube' ) )
-			return str_replace('&feature=oembed', '&feature=oembed&wmode=transparent', $html);
-		else
-			return $html;
-	}
-}
-
-/**
  * Filter Tweets
+ * 
  * Special thanks to Allen Shaw & webmancers.com & Michael Voigt
  * The only mods from Allen and Michael I made are changing the 
  * links to open in new windows.
  *
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @param string $text Tweet to filter
  * @return string $text Filtered tweet 
  */
 
-if( ! function_exists( 'themeblvd_twitter_filter' ) ) {
-	function themeblvd_twitter_filter( $text ) {
-	    $text = preg_replace('/\b([a-zA-Z]+:\/\/[\w_.\-]+\.[a-zA-Z]{2,6}[\/\w\-~.?=&%#+$*!]*)\b/i',"<a href=\"$1\" class=\"twitter-link\">$1</a>", $text);
-	    $text = preg_replace('/\b(?<!:\/\/)(www\.[\w_.\-]+\.[a-zA-Z]{2,6}[\/\w\-~.?=&%#+$*!]*)\b/i',"<a href=\"http://$1\" class=\"twitter-link\">$1</a>", $text);    
-	    $text = preg_replace("/\b([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})\b/i","<a href=\"mailto://$1\" class=\"twitter-link\">$1</a>", $text);
-	    $text = preg_replace("/#(\w+)/", "<a class=\"twitter-link\" href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $text);
-	    $text = preg_replace("/@(\w+)/", "<a class=\"twitter-link\" href=\"http://twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
+if( ! function_exists( 'themeblvd_tweet_filter_default' ) ) {
+	function themeblvd_tweet_filter_default( $text, $username ) {
+		
+		// Remove "UserName: " from Twitter API RSS on start of every tweet
+		$text = str_ireplace( $username.': ', '', $text );
+		
+		// Format URL's to be links - http://whatever.com
+		$text = preg_replace('/\b([a-zA-Z]+:\/\/[\w_.\-]+\.[a-zA-Z]{2,6}[\/\w\-~.?=&%#+$*!]*)\b/i',"<a href=\"$1\" class=\"twitter-link\" target=\"_blank\">$1</a>", $text);
+		
+		// Format URL's to be links - http://www.whatever.com
+		$text = preg_replace('/\b(?<!:\/\/)(www\.[\w_.\-]+\.[a-zA-Z]{2,6}[\/\w\-~.?=&%#+$*!]*)\b/i',"<a href=\"http://$1\" class=\"twitter-link\" target=\"_blank\">$1</a>", $text);    
+		
+		// Format emails - you@yourmail.com
+		$text = preg_replace("/\b([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})\b/i","<a href=\"mailto://$1\" class=\"twitter-link\">$1</a>", $text);
+		
+		// Format hash tags as links - #whatever
+		$text = preg_replace("/#(\w+)/", "<a class=\"twitter-link\" href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $text);
+		
+		// Format @username as links
+		$text = preg_replace("/@(\w+)/", "<a class=\"twitter-link\" href=\"http://twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
+	    
 	    return $text;
+	}
+}
+
+/**
+ * This adjusts WordPress's transient lifetime for fetch_feed() 
+ * from 12 hours to 2 hours. This was primarily implemented to 
+ * work with the framework's retrieval of Twitter feeds. 
+ *
+ * This function is used to filter: wp_feed_cache_transient_lifetime
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_feed_transient' ) ) {
+	function themeblvd_feed_transient( $seconds ) {
+		// Change the default feed cache recreation period to 2 hours
+		return 7200;
+	}
+}
+
+/**
+ * Get the Twitter RSS URL
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_get_twitter_rss_url' ) ) {
+	function themeblvd_get_twitter_rss_url( $username ) {
+		
+		// Non API version, but tweets expire eventually. Can safely use this 
+		// without transients working on server, because Twitter never cuts 
+		// you off with this one.
+		// $url = 'http://search.twitter.com/search.atom?q=from:'.$username;
+		
+		// Use API, tweets never expire, but transients must work properly 
+		// on server. Sometimes there's issues with transients when using 
+		// W3 Total Cache.
+		$url = 'http://api.twitter.com/1/statuses/user_timeline.rss?screen_name='.$username; 
+		
+		// Return with filter applied so it's possible to change your 
+		// RSS method from a Child theme or plugin.
+		return apply_filters( 'themeblvd_twitter_rss', $url, $username );
 	}
 }
 
@@ -588,11 +656,13 @@ if( ! function_exists( 'themeblvd_adjust_color' ) ) {
  * @param string $element Element to get classes for
  * @param boolean $start_space Whether there should be a space at start
  * @param boolean $end_space Whether there should be a space at end
- * @return array $boxed_elements Elements that should have boxed-layout class
+ * @param string $type Type of element (only relevant if there is a filter added utilizing it)
+ * @param array $options Options for element (only relevant if there is a filter added utilizing it)
+ * @return array $classes Classes for element.
  */
  
 if( ! function_exists( 'themeblvd_get_classes' ) ) {
-	function themeblvd_get_classes( $element, $start_space = false, $end_space = false ) {
+	function themeblvd_get_classes( $element, $start_space = false, $end_space = false, $type = null, $options = array() ) {
 		$classes = '';
 		$all_classes = array(
 			'element_columns' 				=> '',
@@ -612,7 +682,7 @@ if( ! function_exists( 'themeblvd_get_classes' ) ) {
 			'slider_standard'				=> '',
 			'slider_carrousel'				=> '',
 		);
-		$all_classes = apply_filters( 'themeblvd_element_classes', $all_classes );
+		$all_classes = apply_filters( 'themeblvd_element_classes', $all_classes, $type, $options );
 		if( isset( $all_classes[$element] ) && $all_classes[$element] ) {
 			if( $start_space ) $classes .= ' ';
 			$classes .= $all_classes[$element];
@@ -622,3 +692,58 @@ if( ! function_exists( 'themeblvd_get_classes' ) ) {
 	}
 }
 
+/**
+ * Get the class to be used for resposive visibility.
+ * 
+ * hide_on_standard
+ * hide_on_standard_and_tablet
+ * hide_on_standard_and_tablet_and_mobile
+ * hide_on_standard_and_mobile
+ * hide_on_tablet
+ * hide_on_tablet_and_mobile
+ * hide_on_mobile
+ *
+ * @since 2.1.0 
+ *
+ * @param array $devices Devices to be hidden on
+ * @param boolean $start_space Whether there should be a space at start
+ * @param boolean $end_space Whether there should be a space at end
+ * @return var $class CSS class to use
+ */
+ 
+if( ! function_exists( 'themeblvd_responsive_visibility_class' ) ) {
+	function themeblvd_responsive_visibility_class( $devices, $start_space = false, $end_space = false ) {
+		// Build class
+		$class = '';
+		if( is_array( $devices ) && $devices ) {
+			$class = 'hide_on_';
+			if( $devices['hide_on_standard'] ) {
+				// Standard Devices
+				$class .= 'standard';
+				if( $devices['hide_on_tablet'] )
+					$class .= '_and_tablet';
+				if( $devices['hide_on_mobile'] )
+					$class .= '_and_mobile';
+			} else if( $devices['hide_on_tablet'] ) {
+				// Tablets
+				$class .= 'tablet';
+				if( $devices['hide_on_mobile'] )
+					$class .= '_and_mobile';
+			} else if( $devices['hide_on_mobile'] ) {
+				// Mobile
+				$class .= 'mobile';
+			}
+		}
+		// Apply filter
+		$class = apply_filters( 'themeblvd_responsive_visibility_class', $class, $devices );
+		// Start/End spaces
+		if( $class ) {
+			if( $start_space )
+				$class = ' '.$class;
+			if( $end_space )
+				$class .= ' ';
+		}
+		// Return class
+		return $class;
+	}
+}

@@ -23,10 +23,6 @@
 /* =General
 -------------------------------------------------------------- */
 
-.content_dark #featured .slider-wrapper .design-1,
-.content_tan #featured .slider-wrapper .design-1 {
-    background-image: url(../images/slider-design-1-heavy.png);
-}
 .content_dark #featured .slider-wrapper .design-2,
 .content_dark #featured .slider-wrapper .design-3,
 .content_tan #featured .slider-wrapper .design-2,
@@ -41,23 +37,29 @@
 /* =Dark
 -------------------------------------------------------------- */
 
-.content_dark #featured .featured-inner,
-.content_dark #main .main-inner {
-	background-image: none;
-	border-top-width: 1px;
-	border-top-style: solid;
-}
 .content_dark .article-wrap,
 .content_dark .comment-form-wrapper,
 .content_dark .element-content,
 .content_dark .element-post_grid,
 .content_dark .element-post_list,
+.content_dark #featured .element-columns,
+.content_dark #featured .element-post_grid_slider,
+.content_dark #featured .element-post_list_slider,
+.content_dark #featured .element-slogan,
+.content_dark #featured .element-slider-standard,
+.content_dark #featured .element-tweet,
 .content_dark #content .element-columns,
 .content_dark #content .element-post_grid_slider,
 .content_dark #content .element-post_list_slider,
 .content_dark #content .element-slider-standard,
 .content_dark #content .element-slogan,
 .content_dark #content .element-tweet,
+.content_dark #featured_below .element-columns,
+.content_dark #featured_below .element-post_grid_slider,
+.content_dark #featured_below .element-post_list_slider,
+.content_dark #featured_below .element-slider-standard,
+.content_dark #featured_below .element-slogan,
+.content_dark #featured_below .element-tweet,
 .content_dark #comments li {
 	background-image: url(../images/article-shadow-heavy.png);
 }
@@ -72,20 +74,11 @@
 }
 
 /* Areas Surrounding Content */
-.content_dark #featured,
-.content_dark #main {
-	background-image: url(../images/colors/dark/main-bg.png); 
+.content_dark #top {
+	border-bottom: 1px solid #000000;
 }
 .content_dark #featured {
 	border-bottom: none;
-}
-.content_dark #featured .featured-inner,
-.content_dark #main .main-inner {
-	background-image: none;
-}
-.content_dark #featured .slider_is_last .secondary-bg,
-.content_dark #featured .has_blog_featured .secondary-bg {
-	background-image: url(../images/colors/dark/featured-secondary-bg.png);
 }
 .content_dark #featured .standard-slider-wrapper .flex-control-nav li a {
 	background-image: url(../images/colors/dark/slider-nav.png);
@@ -93,17 +86,16 @@
 .content_dark #main #breadcrumbs .home-link {
 	background-image: url(../images/home-ffffff.png);
 }
-.content_dark #access li a > .sf-sub-indicator {
+.content_dark #access li li a > .sf-sub-indicator {
 	background-image:url(../images/sf-arrows-ffffff.png);
 }
 .content_dark #featured .standard-slider-wrapper .prev, 
 .content_dark #featured .standard-slider-wrapper .next, 
 .content_dark #featured .standard-slider-wrapper .pause, 
 .content_dark #featured .standard-slider-wrapper .play { 
-	background-image: url(../../framework/frontend/assets/images/elements/arrows-ffffff.png);
+	background-image: url(../images/colors/dark/slider-arrows.png);
 }
-.content_dark #featured,
-.content_dark #main,
+.content_dark #wrapper,
 .content_dark .pagination a,
 .content_dark #access ul ul,
 .content_dark #featured .standard-slider-wrapper .slider-inner {
@@ -120,9 +112,11 @@
 }
 .content_dark #featured .featured-inner,
 .content_dark #main .main-inner,
+.content_dark #featured_below .featured_below-inner,
 .content_dark #access ul ul,
 .content_dark #featured .standard-slider-wrapper .slides-inner,
 .content_dark #main,
+.content_dark #featured_below,
 .content_dark #main #breadcrumbs a,
 .content_dark #bottom,
 .content_dark #bottom .copyright,
@@ -138,12 +132,24 @@
 .content_dark .element-post_grid .element-inner,
 .content_dark .element-post_list .element-inner,
 .content_dark #featured .element-post_grid_slider .post_grid .featured-image,
+.content_dark #featured .element-columns .element-inner,
+.content_dark #featured .element-post_grid_slider .element-inner,
+.content_dark #featured .element-post_list_slider .element-inner,
+.content_dark #featured .element-slogan .element-inner,
+.content_dark #featured .element-slider-standard .element-inner,
+.content_dark #featured .element-tweet .element-inner,
 .content_dark #content .element-columns .element-inner,
 .content_dark #content .element-post_grid_slider .element-inner,
 .content_dark #content .element-post_list_slider .element-inner,
 .content_dark #content .element-slider-standard .element-inner,
 .content_dark #content .element-slogan .element-inner,
 .content_dark #content .element-tweet .element-inner,
+.content_dark #featured_below .element-columns .element-inner,
+.content_dark #featured_below .element-post_grid_slider .element-inner,
+.content_dark #featured_below .element-post_list_slider .element-inner,
+.content_dark #featured_below .element-slider-standard .element-inner,
+.content_dark #featured_below .element-slogan .element-inner,
+.content_dark #featured_below .element-tweet .element-inner,
 .content_dark #comments .comment-body,
 .content_dark .pagination a,
 .content_dark .pagination .current,
@@ -151,10 +157,11 @@
 .content_dark #commentform input[type="submit"],
 .content_dark .default {
 	/* Border Color */
-	border-color: #000000;
+	border-color: #1e1e1e;
 }
 .content_dark #featured,
 .content_dark #main,
+.content_dark #featured_below,
 .content_dark .pagination a,
 .content_dark .pagination a:hover,
 .content_dark #commentform input[type="submit"],
@@ -186,7 +193,8 @@
 }
 
 /* Content Areas */
-.content_dark #content .standard-slider-wrapper .flex-control-nav li a {
+.content_dark #content .standard-slider-wrapper .flex-control-nav li a,
+.content_dark #featured_below .standard-slider-wrapper .flex-control-nav li a {
 	background-image: url(../images/colors/dark/slider-nav.png);
 }
 .content_dark .tags {
@@ -199,7 +207,11 @@
 .content_dark #content .standard-slider-wrapper .prev, 
 .content_dark #content .standard-slider-wrapper .next, 
 .content_dark #content .standard-slider-wrapper .pause, 
-.content_dark #content .standard-slider-wrapper .play { 
+.content_dark #content .standard-slider-wrapper .play,
+.content_dark #featured_below .standard-slider-wrapper .prev, 
+.content_dark #featured_below .standard-slider-wrapper .next, 
+.content_dark #featured_below .standard-slider-wrapper .pause, 
+.content_dark #featured_below .standard-slider-wrapper .play { 
 	background-image: url(../../framework/frontend/assets/images/elements/arrows-ffffff.png);
 }
 .content_dark .element-tweet .tweet-icon {
@@ -214,12 +226,24 @@
 .content_dark .element-content .element-inner,
 .content_dark .element-post_grid .element-inner,
 .content_dark .element-post_list .element-inner,
+.content_dark #featured .element-columns .element-inner,
+.content_dark #featured .element-post_grid_slider .element-inner,
+.content_dark #featured .element-post_list_slider .element-inner,
+.content_dark #featured .element-slogan .element-inner,
+.content_dark #featured .element-slider-standard .element-inner,
+.content_dark #featured .element-tweet .element-inner,
 .content_dark #content .element-columns .element-inner,
 .content_dark #content .element-post_grid_slider .element-inner,
 .content_dark #content .element-post_list_slider .element-inner,
 .content_dark #content .element-slider-standard .element-inner,
 .content_dark #content .element-slogan .element-inner,
 .content_dark #content .element-tweet .element-inner,
+.content_dark #featured_below .element-columns .element-inner,
+.content_dark #featured_below .element-post_grid_slider .element-inner,
+.content_dark #featured_below .element-post_list_slider .element-inner,
+.content_dark #featured_below .element-slider-standard .element-inner,
+.content_dark #featured_below .element-slogan .element-inner,
+.content_dark #featured_below .element-tweet .element-inner,
 .content_dark #comments .comment-body,
 .content_dark .tb-tabs-framed .tab-nav ul li a,
 .content_dark .tb-tabs-open .tab-content,
@@ -248,6 +272,8 @@
 .content_dark #wrapper .gallery a img,
 .content_dark #content .element .element .element-inner,
 .content_dark #content article .element .element-inner,
+.content_dark #featured_below .element .element .element-inner,
+.content_dark #featured_below article .element .element-inner,
 .content_dark .entry-meta,
 .content_dark .wp-caption,
 .content_dark .entry-content td,
@@ -255,6 +281,9 @@
 .content_dark #content .element-slider-standard .slides,
 .content_dark #content .element-post_grid_slider .slides,
 .content_dark #content .element-post_list_slider .slides,
+.content_dark #featured_below .element-slider-standard .slides,
+.content_dark #featured_below .element-post_grid_slider .slides,
+.content_dark #featured_below .element-post_list_slider .slides,
 .content_dark .element .element .divider-dashed,
 .content_dark .element .element .divider-solid,
 .content_dark .tb-tabs-open .tab-content,
@@ -274,7 +303,7 @@
 .content_dark .widget-area-fixed .themeblvd-search fieldset,
 .content_dark #comments .comment-body .reply a {
 	/* Border Color */
-	border-color: #000000;
+	border-color: #1e1e1e;
 }
 .content_dark .entry-meta,
 .content_dark .lead-link:hover,
@@ -291,12 +320,24 @@
 .content_dark .element-content .element-inner,
 .content_dark .element-post_grid .element-inner,
 .content_dark .element-post_list .element-inner,
+.content_dark #featured .element-columns .element-inner,
+.content_dark #featured .element-post_grid_slider .element-inner,
+.content_dark #featured .element-post_list_slider .element-inner,
+.content_dark #featured .element-slogan .element-inner,
+.content_dark #featured .element-slider-standard .element-inner,
+.content_dark #featured .element-tweet .element-inner,
 .content_dark #content .element-columns .element-inner,
 .content_dark #content .element-post_grid_slider .element-inner,
 .content_dark #content .element-post_list_slider .element-inner,
 .content_dark #content .element-slider-standard .element-inner,
 .content_dark #content .element-slogan .element-inner,
 .content_dark #content .element-tweet .element-inner,
+.content_dark #featured_below .element-columns .element-inner,
+.content_dark #featured_below .element-post_grid_slider .element-inner,
+.content_dark #featured_below .element-post_list_slider .element-inner,
+.content_dark #featured_below .element-slider-standard .element-inner,
+.content_dark #featured_below .element-slogan .element-inner,
+.content_dark #featured_below .element-tweet .element-inner,
 .content_dark .tb-tabs-framed .tab-content,
 .content_dark .tb-tabs-framed .tab-nav ul li.active a,
 .content_dark article .tb-tabs-open .tab-nav ul li.active a,
@@ -306,6 +347,8 @@
 .content_dark article .entry-title a,
 .content_dark #content .element-post_grid_slider article .entry-title,
 .content_dark #content .element-post_grid_slider article .entry-title a,
+.content_dark #featured_below .element-post_grid_slider article .entry-title,
+.content_dark #featured_below .element-post_grid_slider article .entry-title a,
 .content_dark .tb-tabs-open .tab-content,
 .content_dark .entry-meta a,
 .content_dark .lead-link,
@@ -326,17 +369,10 @@
 -------------------------------------------------------------- */
 
 /* Areas Surrounding Content */
-.content_tan #featured,
-.content_tan #main {
-	background-image: url(../images/colors/tan/main-bg.png); 
-}
 .content_tan #featured .featured-inner,
-.content_tan #main .main-inner {
+.content_tan #main .main-inner,
+.content_tan #featured_below .featured_below-inner {
 	background-image: none;
-}
-.content_tan #featured .slider_is_last .secondary-bg,
-.content_tan #featured .has_blog_featured .secondary-bg {
-	background-image: url(../images/colors/tan/featured-secondary-bg.png);
 }
 .content_tan #featured .standard-slider-wrapper .flex-control-nav li a {
 	background-image: url(../images/colors/tan/slider-nav.png);
@@ -353,8 +389,7 @@
 .content_tan #featured .standard-slider-wrapper .play { 
 	background-image: url(../../framework/frontend/assets/images/elements/arrows-505050.png);
 }
-.content_tan #featured,
-.content_tan #main,
+.content_tan #wrapper,
 .content_tan .pagination a,
 .content_tan #access ul ul,
 .content_tan #featured .standard-slider-wrapper .slider-inner {
@@ -373,6 +408,7 @@
 .content_tan #access ul ul,
 .content_tan #featured .standard-slider-wrapper .slides-inner,
 .content_tan #main,
+.content_tan #featured_below,
 .content_tan #main #breadcrumbs a,
 .content_tan #bottom,
 .content_tan #bottom .copyright,
@@ -388,12 +424,24 @@
 .content_tan .element-post_grid .element-inner,
 .content_tan .element-post_list .element-inner,
 .content_tan #featured .element-post_grid_slider .post_grid .featured-image,
+.content_tan #featured .element-columns .element-inner,
+.content_tan #featured .element-post_grid_slider .element-inner,
+.content_tan #featured .element-post_list_slider .element-inner,
+.content_tan #featured .element-slogan .element-inner,
+.content_tan #featured .element-slider-standard .element-inner,
+.content_tan #featured .element-tweet .element-inner,
 .content_tan #content .element-columns .element-inner,
 .content_tan #content .element-post_grid_slider .element-inner,
 .content_tan #content .element-post_list_slider .element-inner,
 .content_tan #content .element-slider-standard .element-inner,
 .content_tan #content .element-slogan .element-inner,
 .content_tan #content .element-tweet .element-inner,
+.content_tan #featured_below .element-columns .element-inner,
+.content_tan #featured_below .element-post_grid_slider .element-inner,
+.content_tan #featured_below .element-post_list_slider .element-inner,
+.content_tan #featured_below .element-slider-standard .element-inner,
+.content_tan #featured_below .element-slogan .element-inner,
+.content_tan #featured_below .element-tweet .element-inner,
 .content_tan #comments .comment-body,
 .content_tan .pagination a,
 .content_tan .pagination .current,
@@ -405,6 +453,7 @@
 }
 .content_tan #featured,
 .content_tan #main,
+.content_tan #featured_below,
 .content_tan .pagination a,
 .content_tan .pagination a:hover,
 .content_tan #commentform input[type="submit"],
@@ -426,7 +475,8 @@
 }
 
 /* Content Areas */
-.content_tan #content .standard-slider-wrapper .flex-control-nav li a {
+.content_tan #content .standard-slider-wrapper .flex-control-nav li a,
+.content_tan #featured_below .standard-slider-wrapper .flex-control-nav li a {
 	background-image: url(../images/colors/tan/slider-nav.png);
 }
 .content_tan .tags {
@@ -434,19 +484,23 @@
 }
 .content_tan .entry-content .themeblvd-search input[type="submit"],
 .content_tan .widget-area-fixed .themeblvd-search input[type="submit"] {
-	background-image: url(../../framework/frontend/assets/images/parts/search-ffffff.png);
+	background-image: url(../../framework/frontend/assets/images/parts/search-505050.png);
 }
 .content_tan #content .standard-slider-wrapper .prev, 
 .content_tan #content .standard-slider-wrapper .next, 
 .content_tan #content .standard-slider-wrapper .pause, 
-.content_tan #content .standard-slider-wrapper .play { 
-	background-image: url(../../framework/frontend/assets/images/elements/arrows-ffffff.png);
+.content_tan #content .standard-slider-wrapper .play,
+.content_tan #featured_below .standard-slider-wrapper .prev, 
+.content_tan #featured_below .standard-slider-wrapper .next, 
+.content_tan #featured_below .standard-slider-wrapper .pause, 
+.content_tan #featured_below .standard-slider-wrapper .play { 
+	background-image: url(../../framework/frontend/assets/images/elements/arrows-505050.png);
 }
 .content_tan .element-tweet .tweet-icon {
-	background-image: url(../../framework/frontend/assets/images/elements/tweet-light.png);
+	background-image: url(../../framework/frontend/assets/images/elements/tweet-dark.png);
 }
 .content_tan .tb-toggle a.toggle-trigger span {
-	background-image: url(../../framework/frontend/assets/images/elements/toggle-ffffff.png);
+	background-image: url(../../framework/frontend/assets/images/elements/toggle-505050.png);
 }
 .content_tan article,
 .content_tan .comment-form-wrapper .comment-form-inner,
@@ -454,12 +508,25 @@
 .content_tan .element-content .element-inner,
 .content_tan .element-post_grid .element-inner,
 .content_tan .element-post_list .element-inner,
+.content_tan #featured .element-post_grid_slider .post_grid .featured-image,
+.content_tan #featured .element-columns .element-inner,
+.content_tan #featured .element-post_grid_slider .element-inner,
+.content_tan #featured .element-post_list_slider .element-inner,
+.content_tan #featured .element-slogan .element-inner,
+.content_tan #featured .element-slider-standard .element-inner,
+.content_tan #featured .element-tweet .element-inner,
 .content_tan #content .element-columns .element-inner,
 .content_tan #content .element-post_grid_slider .element-inner,
 .content_tan #content .element-post_list_slider .element-inner,
 .content_tan #content .element-slider-standard .element-inner,
 .content_tan #content .element-slogan .element-inner,
 .content_tan #content .element-tweet .element-inner,
+.content_tan #featured_below .element-columns .element-inner,
+.content_tan #featured_below .element-post_grid_slider .element-inner,
+.content_tan #featured_below .element-post_list_slider .element-inner,
+.content_tan #featured_below .element-slider-standard .element-inner,
+.content_tan #featured_below .element-slogan .element-inner,
+.content_tan #featured_below .element-tweet .element-inner,
 .content_tan #comments .comment-body,
 .content_tan .tb-tabs-framed .tab-nav ul li a,
 .content_tan .tb-tabs-open .tab-content,
@@ -488,6 +555,8 @@
 .content_tan #wrapper .gallery a img,
 .content_tan #content .element .element .element-inner,
 .content_tan #content article .element .element-inner,
+.content_tan #featured_below .element .element .element-inner,
+.content_tan #featured_below article .element .element-inner,
 .content_tan .entry-meta,
 .content_tan .wp-caption,
 .content_tan .entry-content td,
@@ -495,6 +564,9 @@
 .content_tan #content .element-slider-standard .slides,
 .content_tan #content .element-post_grid_slider .slides,
 .content_tan #content .element-post_list_slider .slides,
+.content_tan #featured_below .element-slider-standard .slides,
+.content_tan #featured_below .element-post_grid_slider .slides,
+.content_tan #featured_below .element-post_list_slider .slides,
 .content_tan .element .element .divider-dashed,
 .content_tan .element .element .divider-solid,
 .content_tan .tb-tabs-open .tab-content,
@@ -531,12 +603,25 @@
 .content_tan .element-content .element-inner,
 .content_tan .element-post_grid .element-inner,
 .content_tan .element-post_list .element-inner,
+.content_tan #featured .element-post_grid_slider .post_grid .featured-image,
+.content_tan #featured .element-columns .element-inner,
+.content_tan #featured .element-post_grid_slider .element-inner,
+.content_tan #featured .element-post_list_slider .element-inner,
+.content_tan #featured .element-slogan .element-inner,
+.content_tan #featured .element-slider-standard .element-inner,
+.content_tan #featured .element-tweet .element-inner,
 .content_tan #content .element-columns .element-inner,
 .content_tan #content .element-post_grid_slider .element-inner,
 .content_tan #content .element-post_list_slider .element-inner,
 .content_tan #content .element-slider-standard .element-inner,
 .content_tan #content .element-slogan .element-inner,
 .content_tan #content .element-tweet .element-inner,
+.content_tan #featured_below .element-columns .element-inner,
+.content_tan #featured_below .element-post_grid_slider .element-inner,
+.content_tan #featured_below .element-post_list_slider .element-inner,
+.content_tan #featured_below .element-slider-standard .element-inner,
+.content_tan #featured_below .element-slogan .element-inner,
+.content_tan #featured_below .element-tweet .element-inner,
 .content_tan .tb-tabs-framed .tab-content,
 .content_tan .tb-tabs-framed .tab-nav ul li.active a,
 .content_tan article .tb-tabs-open .tab-nav ul li.active a,
@@ -546,6 +631,8 @@
 .content_tan article .entry-title a,
 .content_tan #content .element-post_grid_slider article .entry-title,
 .content_tan #content .element-post_grid_slider article .entry-title a,
+.content_tan #featured_below .element-post_grid_slider article .entry-title,
+.content_tan #featured_below .element-post_grid_slider article .entry-title a,
 .content_tan .tb-tabs-open .tab-content,
 .content_tan .entry-meta a,
 .content_tan .lead-link,
