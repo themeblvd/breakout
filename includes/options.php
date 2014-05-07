@@ -317,6 +317,24 @@ function breakout_options() {
 	);
 	themeblvd_add_option_section( 'content', 'post_grid', __( 'Post Grids', 'themeblvd' ), $post_grid_description, $post_grid, false );
 
+	// Add Configuration tab, if it doesn't exist.
+	themeblvd_add_option_tab( 'config', __( 'Configuration', 'themeblvd' ) );
+
+	$responsiveness = array(
+		'responsive_css' => array(
+			'name' 		=> __( 'Tablets and Mobile Devices', 'themeblvd' ),
+			'desc' 		=> __( 'This theme comes with a special stylesheet that will target the screen resolution of your website vistors and show them a modified design if their screen resolution matches common sizes for a tablet or a mobile device.', 'themeblvd' ),
+			'id' 		=> 'responsive_css',
+			'std' 		=> 'true',
+			'type' 		=> 'radio',
+			'options' 	=> array(
+				'true'		=> __( 'Yes, apply special styles to tablets and mobile devices.', 'themeblvd' ),
+				'false' 	=> __( 'No, allow website to show normally on tablets and mobile devices.', 'themeblvd' )
+			)
+		)
+	);
+	themeblvd_add_option_section( 'config', 'responsiveness', __( 'Responsiveness', 'themeblvd' ), '', $responsiveness, true );
+
 	// Edit default values
 	themeblvd_edit_option( 'content', 'blog', 'blog_thumbs', 'std', 'small' );
 	themeblvd_edit_option( 'content', 'blog', 'blog_content', 'std', 'excerpt' );
