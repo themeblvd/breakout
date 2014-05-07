@@ -1,0 +1,5 @@
+== Breakout Changelog ==
+
+= 1.0 =
+
+* This is the first release constructed from Theme Blvd Framework version 2.0.2.
