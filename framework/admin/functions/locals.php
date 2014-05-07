@@ -16,9 +16,11 @@
 function themeblvd_get_admin_locals( $type ) {
 	$locals = array();
 	switch( $type ) {
-		// Javascript strings
+		// General JS strings
 		case ( 'js' ) :
 			$locals = array ( 
+				'clear'				=> __( 'By doing this, you will clear your database of this theme\'s options. In other words, you will lose any previously saved settings. Are you sure you want to continue?', TB_GETTEXT_DOMAIN ),
+				'clear_title'		=> __( 'Clear Options', TB_GETTEXT_DOMAIN ),
 				'edit_layout'		=> __( 'Edit Layout', TB_GETTEXT_DOMAIN ),
 				'edit_sidebar'		=> __( 'Edit', TB_GETTEXT_DOMAIN ),
 				'edit_slider'		=> __( 'Edit Slider', TB_GETTEXT_DOMAIN ),
@@ -31,9 +33,16 @@ function themeblvd_get_admin_locals( $type ) {
 				'layout_created'	=> __( 'Layout created!', TB_GETTEXT_DOMAIN ),
 				'sidebar_created'	=> __( 'Widget Area created!', TB_GETTEXT_DOMAIN ),
 				'slider_created'	=> __( 'Slider created!', TB_GETTEXT_DOMAIN ),
-				'primary_query'		=> __( 'Oops! You can only have one primary query element per layout. A paginated post list or paginated post grid would be examples of primary query elements.', TB_GETTEXT_DOMAIN )
+				'primary_query'		=> __( 'Oops! You can only have one primary query element per layout. A paginated post list or paginated post grid would be examples of primary query elements.', TB_GETTEXT_DOMAIN ),
+				'reset'				=> __( 'By doing this, all of your default theme settings will be saved, and you will lose any previously saved settings. Are you sure you want to continue?', TB_GETTEXT_DOMAIN ),
+				'reset_title'		=> __( 'Restore Defaults', TB_GETTEXT_DOMAIN )
 			);
 			break;
+		// Customizer JS strings
+		case ( 'customizer_js' ) :
+			$locals = array (
+				'disclaimer'		=> __( 'Note: The customizer provides a simulated preview, and results may vary slightly when published and viewed on your live website.', TB_GETTEXT_DOMAIN )
+			);
 		// Could add more types other than JS here later.
 	}
 	return apply_filters( 'themeblvd_locals_'.$type, $locals );

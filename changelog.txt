@@ -1,6 +1,74 @@
 Breakout Changelog
 ==================
 
+1.1.3
+-----
+
+* **Added compatibility with WordPress 3.4 Customizer (still experimental).**
+* Added optional pause on hover feature to standard slider options.
+* Added alt tags to images in sliders for you SEO folks.
+* Added title as accepted parameter for img tags when saving theme textareas.
+* Fixed Lucida Grande font selection from Theme Options.
+* Removed clear:both; CSS on header tags.
+* Updated all admin modules to work with [this tutorial](http://www.wpjumpstart.com/tutorial/changing-user-role-access-for-admin-modules/).
+* Improved display of image attachments for attachment.php
+* Fixed pagination for single posts with wp link pages function.
+* Fixed search form to work with WP sites installed in sub-directories different than the site url.
+* Adjusted responsive images for IE8 and below.
+* Fixed PHP warning when saving Content element of the Layout Builder and no floating widgets areas exist.
+* Adjusted slider mobile fallback to display shortcodes in descriptions.
+* Adjusted so when no custom layouts have been created, you won't see any message about custom layouts under "Page Attributes" until you attempt to select the "Custom Layout" page template.
+* Added specific support for WordPress Multisite signup page.
+* Added stripslashes to titles of tabs to allow apostrophes. 
+* Styled mobile fallback for sliders to look nicer.
+* Fixed option for header when selecting if you chose a light or dark background color.
+
+### Effected Files ###
+
+* /assets/css/colors.css
+* /assets/css/colors.min.css
+* /assets/css/ie.css
+* /assets/css/theme.css
+* /assets/css/theme.min.css
+* /assets/images/menu-bg-light.png
+* /content.php
+* /content-attachment.php
+* /content-page.php
+* /framework/admin/assets/css/customizer.css (new file)
+* /framework/admin/assets/js/customizer.js (new file)
+* /framework/admin/assets/js/customizer.min.js (new file)
+* /framework/admin/assets/js/meta-box.js
+* /framework/admin/assets/js/meta-box.min.js
+* /framework/admin/assets/js/shared.js
+* /framework/admin/assets/js/shared.min.js
+* /framework/admin/functions/display.php
+* /framework/admin/functions/general.php
+* /framework/admin/modules/builder/builder-framework.php
+* /framework/admin/modules/options/options-framework.php
+* /framework/admin/modules/options/options-sanitize.php
+* /framework/admin/modules/sidebars/sidebars-framework.php
+* /framework/admin/modules/sliders/sliders-ajax.php
+* /framework/admin/modules/sliders/sliders-default.php
+* /framework/admin/modules/sliders/sliders-framework.php
+* /framework/admin/modules/sliders/sliders-interface.php
+* /framework/admin/functions/general.php
+* /framework/admin/functions/locals.php
+* /framework/api/builder.php
+* /framework/api/customizer.php (new file)
+* /framework/api/helpers.php
+* /framework/api/options.php
+* /framework/frontend/functions/builder.php
+* /framework/frontend/functions/display.php
+* /framework/frontend/functions/general.php
+* /framework/frontend/functions/sliders.php
+* /framework/themeblvd.php
+* /includes/options.php
+* /includes/theme-functions.php
+* /lang/breakout.po
+* /searchform.php
+
+--------------------------------------------------------------
+
 1.1.2
 -----
 

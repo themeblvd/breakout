@@ -412,9 +412,8 @@
  */
 
 (function($){
-
 	tbc_confirm = function(string, args, callback)
-	{
+	{	
 		var default_args =
 			{
 			'confirm'		:	false, 		// Ok and Cancel buttons
@@ -427,130 +426,168 @@
 			'textNo'		:	'No'		// No button default text
 			}
 	
-	if(args) 
+		if(args) 
 		{
-		for(var index in default_args) 
-			{ if(typeof args[index] == "undefined") args[index] = default_args[index]; } 
-		}
-	
-	var aHeight = $(document).height();
-	var aWidth = $(document).width();
-	$('body').append('<div class="appriseOverlay" id="aOverlay"></div>');
-	$('.appriseOverlay').css('height', aHeight).css('width', aWidth).fadeIn(100);
-	$('body').append('<div class="appriseOuter"></div>');
-	$('.appriseOuter').append('<div class="appriseInner"></div>');
-	$('.appriseInner').append(string);
-	$('.appriseOuter').css("left", ( $(window).width() - $('.appriseOuter').width() ) / 2+$(window).scrollLeft() + "px");
-	
-	if(args)
-		{
-		if(args['animate'])
+			for(var index in default_args) 
 			{ 
-			var aniSpeed = args['animate'];
-			if(isNaN(aniSpeed)) { aniSpeed = 400; }
-			$('.appriseOuter').css('top', '-200px').show().animate({top:"100px"}, aniSpeed);
-			}
-		else
-			{ $('.appriseOuter').css('top', '100px').fadeIn(200); }
+				if(typeof args[index] == "undefined") args[index] = default_args[index];
+			} 
 		}
-	else
-		{ $('.appriseOuter').css('top', '100px').fadeIn(200); }
 	
-	if(args)
+		var aHeight = $(document).height();
+		var aWidth = $(document).width();
+		$('body').append('<div class="appriseOverlay" id="aOverlay"></div>');
+		$('.appriseOverlay').css('height', aHeight).css('width', aWidth).fadeIn(100);
+		$('body').append('<div class="appriseOuter"></div>');
+		$('.appriseOuter').append('<div class="appriseInner"></div>');
+		$('.appriseInner').append(string);
+		$('.appriseOuter').css("left", ( $(window).width() - $('.appriseOuter').width() ) / 2+$(window).scrollLeft() + "px");
+	
+		if(args)
 		{
-		if(args['input'])
-			{
-			if(typeof(args['input'])=='string')
-				{
-				$('.appriseInner').append('<div class="aInput"><input type="text" class="aTextbox" t="aTextbox" value="'+args['input']+'" /></div>');
-				}
+			if(args['animate'])
+			{ 
+				var aniSpeed = args['animate'];
+				if(isNaN(aniSpeed)) { aniSpeed = 400; }
+				$('.appriseOuter').css('top', '-200px').show().animate({top:"100px"}, aniSpeed);
+			}
 			else
-				{
-				$('.appriseInner').append('<div class="aInput"><input type="text" class="aTextbox" t="aTextbox" /></div>');
-				}
-			$('.aTextbox').focus();
-			}
-		}
-	
-	$('.appriseInner').append('<div class="aButtons"></div>');
-	if(args)
-		{
-		if(args['confirm'] || args['input'])
 			{ 
-			$('.aButtons').append('<button value="ok">'+args['textOk']+'</button>');
-			$('.aButtons').append('<button value="cancel">'+args['textCancel']+'</button>'); 
+				$('.appriseOuter').css('top', '100px').fadeIn(200);
 			}
-		else if(args['verify'])
-			{
-			$('.aButtons').append('<button value="ok">'+args['textYes']+'</button>');
-			$('.aButtons').append('<button value="cancel">'+args['textNo']+'</button>');
-			}
-		else
-			{ $('.aButtons').append('<button value="ok">'+args['textOk']+'</button>'); }
 		}
-	else
-		{ $('.aButtons').append('<button value="ok">Ok</button>'); }
+		else
+		{ 
+			$('.appriseOuter').css('top', '100px').fadeIn(200);
+		}
 	
-	$(document).keydown(function(e) 
+		if(args)
 		{
-		if($('.appriseOverlay').is(':visible'))
+			if(args['input'])
 			{
-			if(e.keyCode == 13) 
-				{ $('.aButtons > button[value="ok"]').click(); }
-			if(e.keyCode == 27) 
-				{ $('.aButtons > button[value="cancel"]').click(); }
+				if(typeof(args['input'])=='string')
+				{
+					$('.appriseInner').append('<div class="aInput"><input type="text" class="aTextbox" t="aTextbox" value="'+args['input']+'" /></div>');
+				}
+				else
+				{
+					$('.appriseInner').append('<div class="aInput"><input type="text" class="aTextbox" t="aTextbox" /></div>');
+				}
+				$('.aTextbox').focus();
+			}
+		}
+	
+		$('.appriseInner').append('<div class="aButtons"></div>');
+		if(args)
+		{
+			if(args['confirm'] || args['input'])
+			{ 
+				$('.aButtons').append('<button value="ok">'+args['textOk']+'</button>');
+				$('.aButtons').append('<button value="cancel">'+args['textCancel']+'</button>'); 
+			}
+			else if(args['verify'])
+			{
+				$('.aButtons').append('<button value="ok">'+args['textYes']+'</button>');
+				$('.aButtons').append('<button value="cancel">'+args['textNo']+'</button>');
+			}
+			else
+			{
+				$('.aButtons').append('<button value="ok">'+args['textOk']+'</button>');
+			}
+		}
+		else
+		{
+			$('.aButtons').append('<button value="ok">Ok</button>');
+		}
+	
+		$(document).keydown(function(e) 
+		{
+			if($('.appriseOverlay').is(':visible'))
+			{
+				if(e.keyCode == 13) 
+				{ 
+					$('.aButtons > button[value="ok"]').click();
+				}
+				if(e.keyCode == 27) 
+				{
+					$('.aButtons > button[value="cancel"]').click();
+				}
 			}
 		});
 	
-	var aText = $('.aTextbox').val();
-	if(!aText) { aText = false; }
-	$('.aTextbox').keyup(function()
-		{ aText = $(this).val(); });
+		var aText = $('.aTextbox').val();
+		if(!aText) { aText = false; }
+		$('.aTextbox').keyup(function()
+		{ 
+			aText = $(this).val(); 
+		});
 	
-	$('.aButtons > button').click(function()
+		$('.aButtons > button').click(function()
 		{
-		$('.appriseOverlay').remove();
-		$('.appriseOuter').remove();
-		if(callback)
+			$('.appriseOverlay').remove();
+			$('.appriseOuter').remove();
+			if(callback)
 			{
-			var wButton = $(this).attr("value");
-			if(wButton=='ok')
+				var wButton = $(this).attr("value");
+				if(wButton=='ok')
 				{ 
-				if(args)
+					if(args)
 					{
-					if(args['input'])
-						{ callback(aText); }
-					else
-						{ callback(true); }
+						if(args['input'])
+						{ 
+							callback(aText);
+						}
+						else
+						{ 
+							callback(true);
+						}
 					}
-				else
-					{ callback(true); }
+					else
+					{ 
+						callback(true);
+					}
 				}
-			else if(wButton=='cancel')
-				{ callback(false); }
+				else if(wButton=='cancel')
+				{ 
+					callback(false);
+				}
 			}
 		});
 	}
-
 })(jQuery);
 
 /**
- * Media uploader for slider
+ * Theme Options reset handling
  */
 
-(function($){
-
-	$('#media-items .image-size .field').hover(
-		function () {
-			$(this).html('This has no effect when working with Sliders.');
-		}, 
-		function () {
-			//$(this).find("span:last").remove();
-		}
-	);
-	
-	$('#media-items .image-size .field').hover(function() {
-		alert('balls');
+jQuery(document).ready(function($) {
+    $('#themeblvd_theme_options .reset-button').click(function(){
+		tbc_confirm('<h3>'+themeblvd.reset_title+'</h3>'+themeblvd.reset, {'confirm':true}, function(r)
+		{
+	    	if(r)
+	        {
+	        	// Add in reset so our sanitizaiton callback reconizes.
+	        	$('#themeblvd_theme_options').append('<input type="hidden" name="reset" value="true" />');
+	        	
+	        	// Submit form
+	        	$('#themeblvd_theme_options').submit();
+	        }
+	    });
+	    return false;
 	});
 	
-})(jQuery);
+	$('#themeblvd_theme_options .clear-button').click(function(){
+		tbc_confirm('<h3>'+themeblvd.clear_title+'</h3>'+themeblvd.clear, {'confirm':true}, function(r)
+		{
+	    	if(r)
+	        {
+	        	// Add in reset so our sanitizaiton callback reconizes.
+	        	$('#themeblvd_theme_options').append('<input type="hidden" name="clear" value="true" />');
+	        	
+	        	// Submit form
+	        	$('#themeblvd_theme_options').submit();
+	        }
+	    });
+	    return false;
+	});
+});

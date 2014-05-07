@@ -901,7 +901,7 @@ if( ! function_exists( 'themeblvd_tabs' ) ) {
 		foreach( $options['setup']['names'] as $key => $name ) {
 			if( $i == 0 ) 
 				$class = 'active';
-			$output .= '<li class="'.$class.'"><a href="#'.$id.'-'.$key.'" title="'.$name.'">'.$name.'</a></li>';
+			$output .= '<li class="'.$class.'"><a href="#'.$id.'-'.$key.'" title="'.stripslashes($name).'">'.stripslashes($name).'</a></li>';
 			$class = null;
 			$i++;
 		}

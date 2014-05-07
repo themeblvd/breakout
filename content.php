@@ -18,8 +18,9 @@ global $show_meta;
 		<div class="entry-content">
 			<?php themeblvd_the_post_thumbnail( $location ); ?>
 			<?php the_content(); ?>
+			<div class="clear"></div>
 			<?php themeblvd_blog_tags(); ?>
-			<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', TB_GETTEXT_DOMAIN ), 'after' => '</div>' ) ); ?>
+			<?php wp_link_pages( array( 'before' => '<div class="page-link">' . themeblvd_get_local('pages').': ', 'after' => '</div>' ) ); ?>
 			<?php edit_post_link( __( 'Edit', TB_GETTEXT_DOMAIN ), '<span class="edit-link">', '</span>' ); ?>
 		</div><!-- .entry-content -->
 	</article><!-- #post-<?php the_ID(); ?> -->

@@ -10,6 +10,7 @@ if( ! function_exists( 'themeblvd_api_init' ) ) {
 		
 		global $_themeblvd_core_options;
 		global $_themeblvd_core_elements;
+		global $_themeblvd_customizer_sections;
 		global $_themeblvd_registered_elements;
 		global $_themeblvd_user_sample_layouts;
 		global $_themeblvd_remove_sample_layouts;
@@ -21,6 +22,7 @@ if( ! function_exists( 'themeblvd_api_init' ) ) {
 		
 		// Options
 		$_themeblvd_core_options = themeblvd_get_core_options(); // Filters must be applied before framework. 
+		$_themeblvd_customizer_sections = array();
 		
 		// Core elements with options
 		$_themeblvd_core_elements = themeblvd_get_core_elements(); // Filters must be applied before framework. 
@@ -1097,4 +1099,317 @@ if( ! function_exists( 'themeblvd_image_size_names_choose' ) ) {
 		$themeblvd_sizes = apply_filters( 'themeblvd_choose_sizes', $themeblvd_sizes );
 		return array_merge( $sizes, $themeblvd_sizes );
 	}
+}
+
+/**
+ * Set allowed tags in the admin panel. This works by 
+ * adding the framework's allowed admin tags to WP's 
+ * global $allowedtags.
+ *
+ * @since 2.0.0
+ * Note: Moved to /framework/api/helpers.php in v2.1.0
+ *
+ * @param $type string type of field 'text' or 'textarea'
+ */
+
+function themeblvd_allowed_tags( $extended = false ) {
+	
+	global $allowedtags;
+	$tags = $allowedtags;
+	
+	// Tags to add
+	$addons = array(
+		'a' => array(
+			'href' => array(),
+			'title' => array(),
+			'class' => array(),
+			'id'	=> array(),
+			'style' => array(),
+			'rel' => array(),
+			'target' => array()
+		),
+		'img' => array(
+			'alt' => array(),
+			'title' => array(),
+			'src' => array(),
+			'class' => array(),
+			'id'	=> array(),
+			'style' => array()
+		),
+		'br' => array()
+	);
+	$addons = apply_filters( 'themeblvd_allowed_tags_basic', $addons );
+	
+	// Add in extended HTML tags
+	if( $extended ) {
+		$extended_addons = array(
+			'h1' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'h2' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'h3' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'h4' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'h5' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'h6' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'script' => array(
+				'type' => array(),
+				'src' => array()
+			),
+			'div' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'p' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'ul' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'li' => array(
+				'class' => array(),
+				'id'	=> array(),
+				'style' => array()
+			),
+			'iframe' => array(
+				'style' => array(),
+				'width' => array(),
+				'height' => array(),
+				'src' => array(),
+				'frameborder' => array(),
+				'allowfullscreen' => array(),
+				'webkitAllowFullScreen' => array(),
+				'mozallowfullscreen' => array()
+			)
+		);
+		$extended_addons = apply_filters( 'themeblvd_allowed_tags_extended', $extended_addons );
+		$addons = array_merge( $addons, $extended_addons );
+	}
+	
+	// Add the addons to the final array
+	$tags = array_merge( $tags, $addons );
+	
+	return apply_filters( 'themeblvd_allowed_tags', $tags );
+	
+}
+
+/**
+ * Generates default column widths for column element.
+ *
+ * @since 2.0.0
+ * Note: Moved to /framework/api/helpers.php in v2.1.0
+ */
+
+function themeblvd_column_widths() {
+	$widths = array (
+		'1-col' => array (					// User selects 1 columns
+			array(
+				'name' 	=> '100%',
+				'value' => 'grid_12',
+			)
+		),
+		'2-col' => array (					// User selects 2 columns
+			array(
+				'name' 	=> '20% | 80%',
+				'value' => 'grid_fifth_1-grid_fifth_4',
+			),
+			array(
+				'name' 	=> '25% | 75%',
+				'value' => 'grid_3-grid_9',
+			),
+			array(
+				'name' 	=> '30% | 70%',
+				'value' => 'grid_tenth_3-grid_tenth_7',
+			),
+			array(
+				'name' 	=> '33% | 66%',
+				'value' => 'grid_4-grid_8',
+			),
+			array(
+				'name' 	=> '50% | 50%',
+				'value' => 'grid_6-grid_6',
+			),
+			array(
+				'name' 	=> '66% | 33%',
+				'value' => 'grid_8-grid_4',
+			),
+			array(
+				'name' 	=> '70% | 30%',
+				'value' => 'grid_tenth_7-grid_tenth_3',
+			),
+			array(
+				'name' 	=> '75% | 25%',
+				'value' => 'grid_9-grid_3',
+			),
+			array(
+				'name' 	=> '80% | 20%',
+				'value' => 'grid_fifth_4-grid_fifth_1',
+			)
+		),
+		'3-col' => array (					// User selects 3 columns
+			array(
+				'name' 	=> '33% | 33% | 33%',
+				'value' => 'grid_4-grid_4-grid_4',
+			),
+			array(
+				'name' 	=> '25% | 25% | 50%',
+				'value' => 'grid_3-grid_3-grid_6',
+			),
+			array(
+				'name' 	=> '25% | 50% | 25%',
+				'value' => 'grid_3-grid_6-grid_3',
+			),
+			array(
+				'name' 	=> '50% | 25% | 25% ',
+				'value' => 'grid_6-grid_3-grid_3',
+			),
+			array(
+				'name' 	=> '20% | 20% | 60%',
+				'value' => 'grid_fifth_1-grid_fifth_1-grid_fifth_3',
+			),
+			array(
+				'name' 	=> '20% | 60% | 20%',
+				'value' => 'grid_fifth_1-grid_fifth_3-grid_fifth_1',
+			),
+			array(
+				'name' 	=> '60% | 20% | 20%',
+				'value' => 'grid_fifth_3-grid_fifth_1-grid_fifth_1',
+			),
+			array(
+				'name' 	=> '40% | 40% | 20%',
+				'value' => 'grid_fifth_2-grid_fifth_2-grid_fifth_1',
+			),
+			array(
+				'name' 	=> '40% | 20% | 40%',
+				'value' => 'grid_fifth_2-grid_fifth_1-grid_fifth_2',
+			),
+			array(
+				'name' 	=> '20% | 40% | 40%',
+				'value' => 'grid_fifth_1-grid_fifth_2-grid_fifth_2',
+			),
+			array(
+				'name' 	=> '30% | 30% | 40%',
+				'value' => 'grid_tenth_3-grid_tenth_3-grid_fifth_2',
+			),
+			array(
+				'name' 	=> '30% | 40% | 30%',
+				'value' => 'grid_tenth_3-grid_fifth_2-grid_tenth_3',
+			),
+			array(
+				'name' 	=> '40% | 30% | 30%',
+				'value' => 'grid_fifth_2-grid_tenth_3-grid_tenth_3',
+			)
+		),
+		'4-col' => array (					// User selects 4 columns
+			array(
+				'name' 	=> '25% | 25% | 25% | 25%',
+				'value' => 'grid_3-grid_3-grid_3-grid_3',
+			),
+			array(
+				'name' 	=> '20% | 20% | 20% | 40%',
+				'value' => 'grid_fifth_1-grid_fifth_1-grid_fifth_1-grid_fifth_2',
+			),
+			array(
+				'name' 	=> '20% | 20% | 40% | 20%',
+				'value' => 'grid_fifth_1-grid_fifth_1-grid_fifth_2-grid_fifth_1',
+			),
+			array(
+				'name' 	=> '20% | 40% | 20% | 20%',
+				'value' => 'grid_fifth_1-grid_fifth_2-grid_fifth_1-grid_fifth_1',
+			),
+			array(
+				'name' 	=> '40% | 20% | 20% | 20%',
+				'value' => 'grid_fifth_2-grid_fifth_1-grid_fifth_1-grid_fifth_1',
+			)
+		),
+		'5-col' => array (						// User selects 5 columns
+			array(
+				'name' 	=> '20% | 20% | 20% | 20% | 20%',
+				'value' => 'grid_fifth_1-grid_fifth_1-grid_fifth_1-grid_fifth_1-grid_fifth_1',
+			)
+		)
+	);
+	return apply_filters( 'themeblvd_column_widths', $widths );
+}
+
+/**
+ * Setup all possible assignments (i.e. WordPress conditionals) 
+ * that could be assigned to an item. An example where this is 
+ * currently used is to assign custom sidebars to various WP 
+ * conditionals.
+ *
+ * @since 2.0.0
+ * Note: Moved to /framework/api/helpers.php in v2.1.0
+ */
+ 
+function themeblvd_conditionals_config() {
+	$conditionals = array(
+		'pages' => array(
+			'id'	=> 'pages',
+			'name'	=> __( 'Pages', TB_GETTEXT_DOMAIN ),
+			'empty'	=> __( 'No pages to display.', TB_GETTEXT_DOMAIN )
+		),
+		'posts' => array(
+			'id'	=> 'posts',
+			'name'	=> __( 'Posts', TB_GETTEXT_DOMAIN ),
+			'empty'	=> __( 'No posts to display.', TB_GETTEXT_DOMAIN )
+		),
+		'posts_in_category' => array(
+			'id'	=> 'posts_in_category',
+			'name'	=> __( 'Posts in Category', TB_GETTEXT_DOMAIN ),
+			'empty'	=> __( 'No categories to display.', TB_GETTEXT_DOMAIN )
+		),
+		'categories' => array(
+			'id'	=> 'categories',
+			'name'	=> __( 'Category Archives', TB_GETTEXT_DOMAIN ),
+			'empty'	=> __( 'No categories to display.', TB_GETTEXT_DOMAIN )
+		),
+		'tags' => array(
+			'id'	=> 'tags',
+			'name'	=> __( 'Tag Archives', TB_GETTEXT_DOMAIN ),
+			'empty'	=> __( 'No tags to display.', TB_GETTEXT_DOMAIN )
+		),
+		'top' => array(
+			'id'	=> 'top',
+			'name'	=> __( 'Hierarchy', TB_GETTEXT_DOMAIN ),
+			'items'	=> array(
+				'home' 			=> __( 'Homepage', TB_GETTEXT_DOMAIN ),
+				'posts' 		=> __( 'All Posts', TB_GETTEXT_DOMAIN ),
+				'pages' 		=> __( 'All Pages', TB_GETTEXT_DOMAIN ),
+				'archives' 		=> __( 'All Archives', TB_GETTEXT_DOMAIN ),
+				'categories'	=> __( 'All Category Archives', TB_GETTEXT_DOMAIN ),
+				'tags' 			=> __( 'All Tag Archives', TB_GETTEXT_DOMAIN ),
+				'authors' 		=> __( 'All Author Archives', TB_GETTEXT_DOMAIN ),
+				'search' 		=> __( 'Search Results', TB_GETTEXT_DOMAIN ),
+				'404' 			=> __( '404 Page', TB_GETTEXT_DOMAIN )
+			)
+		)
+	);
+	return apply_filters( 'themeblvd_conditionals_config', $conditionals );
 }

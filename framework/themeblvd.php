@@ -35,6 +35,7 @@ if( is_admin() ) {
 	require_once( TB_FRAMEWORK_URL . '/admin/modules/sidebars/sidebars-framework.php' );
 	require_once( TB_FRAMEWORK_URL . '/admin/modules/sliders/sliders-framework.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/builder.php' );
+	require_once( TB_FRAMEWORK_URL . '/api/customizer.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/helpers.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/options.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/sidebars.php' );
@@ -61,6 +62,13 @@ if( is_admin() ) {
 	add_action( 'wp_before_admin_bar_render', 'themeblvd_admin_menu_bar' );
 	add_action( 'themeblvd_options_footer_text', 'optionsframework_footer_text' );
 	add_action( 'admin_init', 'themeblvd_stats' );
+	add_action( 'admin_menu', 'themeblvd_hijack_page_atts' );
+	add_action( 'add_meta_boxes', 'themeblvd_add_meta_boxes' );
+	add_action( 'save_post', 'themeblvd_save_page_atts' );
+	add_action( 'save_post', 'themeblvd_save_meta_boxes' );
+	add_action( 'customize_register', 'themeblvd_customizer_init' );
+	add_action( 'customize_controls_print_styles', 'themeblvd_customizer_styles' );
+	add_action( 'customize_controls_print_scripts', 'themeblvd_customizer_scripts' );
 	
 	// Apply other hooks after theme has had a chance to add filters
 	add_action( 'after_setup_theme', 'themeblvd_format_options', 1000 );
@@ -68,10 +76,6 @@ if( is_admin() ) {
 	add_action( 'after_setup_theme', 'themeblvd_add_theme_support', 1000 );
 	add_action( 'after_setup_theme', 'themeblvd_register_navs', 1000 );
 	add_action( 'after_setup_theme', 'themeblvd_register_sidebars', 1000 );
-	add_action( 'admin_menu', 'themeblvd_hijack_page_atts' );
-	add_action( 'add_meta_boxes', 'themeblvd_add_meta_boxes' );
-	add_action( 'save_post', 'themeblvd_save_page_atts' );
-	add_action( 'save_post', 'themeblvd_save_meta_boxes' );
 
 	// Run theme functions
 	require_once ( get_template_directory() . '/includes/theme-functions.php' );
@@ -83,7 +87,10 @@ if( is_admin() ) {
 	/*------------------------------------------------------*/
 
 	// Include files
+	require_once( TB_FRAMEWORK_URL . '/admin/modules/options/options-sanitize.php' );
+	require_once( TB_FRAMEWORK_URL . '/admin/modules/options/options-framework.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/builder.php' );
+	require_once( TB_FRAMEWORK_URL . '/api/customizer.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/helpers.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/options.php' );
 	require_once( TB_FRAMEWORK_URL . '/api/sidebars.php' );
@@ -115,6 +122,7 @@ if( is_admin() ) {
 	add_filter( 'themeblvd_the_content', 'do_shortcode' );
 	add_filter( 'image_size_names_choose', 'themeblvd_image_size_names_choose' );
 	add_filter( 'themeblvd_tweet_filter', 'themeblvd_tweet_filter_default', 10, 2 );
+	add_filter( 'themeblvd_sidebar_layout', 'themeblvd_wpmultisite_signup_sidebar_layout' );
 	
 	// Apply initial hooks
 	add_action( 'after_setup_theme', 'themeblvd_register_posts', 5 );
@@ -123,12 +131,13 @@ if( is_admin() ) {
 	add_action( 'wp_enqueue_scripts', 'themeblvd_include_scripts' );
 	add_action( 'wp_print_styles', 'themeblvd_include_styles', 5 );
 	add_action( 'wp_before_admin_bar_render', 'themeblvd_admin_menu_bar' );
+	add_action( 'customize_register', 'themeblvd_customizer_init' );
 
 	// Apply other hooks after theme has had a chance to add filters
 	add_action( 'after_setup_theme', 'themeblvd_format_options', 1000 );
 	add_action( 'after_setup_theme', 'themeblvd_register_navs', 1000 );
 	add_action( 'after_setup_theme', 'themeblvd_register_sidebars', 1000 );
-	add_action( 'template_redirect', 'themeblvd_frontend_init', 5 ); // This needs to run before any plugins hook into it
+	add_action( 'wp', 'themeblvd_frontend_init', 5 ); // This needs to run before any plugins hook into it
 	add_action( 'wp_print_styles', 'themeblvd_deregister_stylesheets', 1000 );
 	
 	// <head> hooks
@@ -184,6 +193,10 @@ if( is_admin() ) {
 	// Sliders
 	add_action( 'themeblvd_standard_slider', 'themeblvd_standard_slider_default', 9, 3 );
 	add_action( 'themeblvd_carrousel_slider', 'themeblvd_carrousel_slider_default', 9, 3 );
+	
+	// WordPress Multisite Signup
+	add_action( 'before_signup_form', 'themeblvd_before_signup_form' );
+	add_action( 'after_signup_form', 'themeblvd_after_signup_form' );
 	
 	// Run theme functions
 	require_once ( get_template_directory() . '/includes/theme-functions.php' );

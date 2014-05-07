@@ -103,7 +103,7 @@ if( ! function_exists( 'themeblvd_get_core_options' ) ) {
 				'name' => __( 'Header', TB_GETTEXT_DOMAIN ),
 				'options' => array(	
 					'logo' => array( 
-						'name' 		=> 'Logo',
+						'name' 		=> __( 'Logo', TB_GETTEXT_DOMAIN ),
 						'desc' 		=> __( 'Configure the primary branding logo for the header of your site.', TB_GETTEXT_DOMAIN ),
 						'id' 		=> 'logo',
 						'std' 		=> array( 'type' => 'image', 'image' => get_template_directory_uri().'/assets/images/logo.png' ),
@@ -544,12 +544,13 @@ if( ! function_exists( 'themeblvd_get_option' ) ) {
 			if( $default ) {
 				$option = $default;
 			} else {
-				$raw_options = themeblvd_get_formatted_options();
-				if( ! empty( $raw_options ) ) {
-					foreach( $raw_options as $raw_option ) {
-						if( isset( $raw_option['id'] ) && $raw_option['id'] == $primary && isset( $raw_option['std'] ) )
-							$option = $raw_option['std'];
-						
+				$default_options = of_get_default_values();
+				if( isset( $default_options[$primary] ) ) {
+					if( $seconday ) {
+						if( is_array( $default_options[$primary] ) && isset( $default_options[$primary][$seconday] ) )
+							$option = $default_options[$primary][$seconday];
+					} else {
+						$option = $default_options[$primary];
 					}
 				}
 			}
@@ -747,5 +748,37 @@ if( ! function_exists( 'themeblvd_edit_option' ) ) {
 			if( isset( $_themeblvd_core_options[$tab_id]['sections'][$section_id] ) )
 				if( isset( $_themeblvd_core_options[$tab_id]['sections'][$section_id]['options'][$option_id] ) )
 					$_themeblvd_core_options[$tab_id]['sections'][$section_id]['options'][$option_id][$att] = $value;
+	}
+}
+
+/**
+ * For each theme, we use a unique identifier to store 
+ * the theme's options in the database based on the current 
+ * name of the theme. This is can be filtered with 
+ * "themeblvd_option_id".
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_get_option_name' ) ) {
+	function themeblvd_get_option_name() {
+	
+		// This gets the theme name from the stylesheet (lowercase and without spaces)
+		if( function_exists( 'wp_get_theme' ) ) {
+			// Use wp_get_theme for WP 3.4+
+			$theme_data = wp_get_theme( get_stylesheet() );
+			$themename = preg_replace('/\W/', '', strtolower( $theme_data->get('Name') ) );
+		} else {
+			// Deprecated theme data retrieval
+			$themename = get_theme_data( get_stylesheet_directory() . '/style.css');
+			$themename = $themename['Name'];
+			$themename = preg_replace('/\W/', '', strtolower( $themename ) );
+		}
+		
+		// This is what ID the options will be saved under in the database. 
+		// By default, it's generated from the current installed theme. 
+		// So that means if you activate a child theme, you'll then need 
+		// re-configure theme options.
+		return apply_filters( 'themeblvd_option_id', $themename );
 	}
 }

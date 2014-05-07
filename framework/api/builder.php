@@ -39,6 +39,7 @@ if( ! function_exists( 'themeblvd_get_core_elements' ) ) {
 		
 		// Setup array for floating sidebars
 		$sidebars = themeblvd_get_select( 'sidebars' );
+		if( ! $sidebars ) $sidebars['null'] = __( 'You haven\'t created any floating widget areas yet.', TB_GETTEXT_DOMAIN );
 			
 		// Setup array for categories select
 		$categories_select = themeblvd_get_select( 'categories' );
@@ -1534,7 +1535,7 @@ if( ! function_exists( 'themeblvd_add_sample_layout' ) ) {
 										if( $key == $option['id'] )
 											$default_value = $value;
 							// Is there a default value for the element in the builder?
-							if( ! $default_value )
+							if( $default_value === null )
 								if( isset( $option['std'] ) )
 									$default_value = $option['std'];
 							// Apply value if this an actual option with ID

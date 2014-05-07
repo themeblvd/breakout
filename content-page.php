@@ -12,6 +12,7 @@
 		<?php endif; ?>
 		<div class="entry-content">
 			<?php the_content(); ?>
+			<div class="clear"></div>
 			<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', TB_GETTEXT_DOMAIN ), 'after' => '</div>' ) ); ?>
 			<?php edit_post_link( __( 'Edit', TB_GETTEXT_DOMAIN ), '<span class="edit-link">', '</span>' ); ?>
 		</div><!-- .entry-content -->

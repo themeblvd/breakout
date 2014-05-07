@@ -22,9 +22,8 @@ if( ! function_exists( 'themeblvd_frontend_init' ) ) {
 		$sidebar_layout = '';
 		
 		// Setup global theme options
-		$config = get_option( 'optionsframework' );
-		if ( isset( $config['id'] ) )
-			$_themeblvd_theme_settings = get_option( $config['id'] );
+		$option_name = themeblvd_get_option_name();
+		$_themeblvd_theme_settings = get_option( $option_name );
 		
 		/*------------------------------------------------------*/
 		/* Primary Post ID
@@ -626,7 +625,7 @@ if( ! function_exists( 'themeblvd_font_stacks' ) ) {
 			'baskerville'	=> 'Baskerville, "Times New Roman", Times, serif',
 			'georgia'   	=> 'Georgia, Times, "Times New Roman", serif',
 			'helvetica' 	=> '"Helvetica Neue", Helvetica, Arial,sans-serif',
-			'lucida'  		=> '"Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;',
+			'lucida'  		=> '"Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
 			'palatino'  	=> 'Palatino, "Palatino Linotype", Georgia, Times, "Times New Roman", serif',
 			'tahoma'    	=> 'Tahoma, Geneva, Verdana, sans-serif',
 			'times'     	=> 'Times New Roman',
@@ -732,5 +731,23 @@ if( ! function_exists( 'themeblvd_closing_styles' ) ) {
 		// Show user stylesheets after 
 		// ALL styles if any exist.
 		themeblvd_user_stylesheets( 4 );
+	}
+}
+
+/**
+ * Adjust sidebar layout to always be full_width if we're 
+ * on the WordPress Multisite signup page. This function is
+ * added as a filter to themeblvd_sidebar_layout, which gets 
+ * applied in themeblvd_frontend_init.
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_wpmultisite_signup_sidebar_layout' ) ) {
+	function themeblvd_wpmultisite_signup_sidebar_layout( $sidebar_layout ) {
+		global $pagenow;
+		if( $pagenow == 'wp-signup.php' )
+			$sidebar_layout = 'full_width';
+		return $sidebar_layout;
 	}
 }

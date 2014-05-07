@@ -256,7 +256,6 @@ body, input, textarea {
 }
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-	clear: both;
 	font-weight: bold;
 }
 h1 {
@@ -834,8 +833,9 @@ img#wpstats {
 	font-size: 2.8em;
 	margin: 0;
 }
-.header_logo .tb-text-logo a {
-	color: inherit;
+#top .header_logo .tb-text-logo a,
+#top .header_logo .tb-text-logo a:hover {
+	color: #ffffff;
 }
 .header_logo .tagline {
 	color: #ffffff;
@@ -1752,6 +1752,12 @@ div.pp_default .pp_description {
 .double_sidebar_right .element-slider-standard .themeblvd-video-wrapper { /* Limit height on primary area slider */
 	max-height: 163px; 
 }
+.slider-fallback li.slider-fallback-slide {
+	padding: 15px;	
+}
+.slider-fallback li.slider-fallback-slide:last-child {
+	border-bottom: none;
+}
 
 /* Post List/Post Grid (override default post list/grid) */
 .element-post_list .article-wrap,
@@ -1825,6 +1831,71 @@ div.pp_default .pp_description {
 	margin-top: 0;
 }
 
+/* =Header/Footer options
+----------------------------------------------- */
+
+/* User selects they've chosen a light color for header BG */
+.header_text_dark #top:after {
+	content:"";
+	background: url(../images/thin-light-divider.png) 0 bottom repeat-x;
+	display:block;
+	padding-bottom: 1px;
+}
+.header_text_dark #top,
+.header_text_dark #top a,
+.header_text_dark #top .header_logo .tb-text-logo a,
+.header_text_dark #top .header_logo .tb-text-logo a:hover,
+.header_text_dark .header_logo .tagline,
+.header_text_dark #access li a,
+.header_text_dark #access li a:hover {
+	color: #666666;
+}
+.header_text_dark #branding {
+	background-image: url(../images/thick-light-divider.png);
+}
+.header_text_dark #access li.home a,
+.header_text_dark #access li.home a:hover {
+	background-image: url(../images/menu-home-light.png);
+}
+.header_text_dark #branding .themeblvd-contact-bar li a {
+	background-image: url(../../framework/frontend/assets/images/parts/social-media-dark.png);
+}
+.header_text_dark #access .container,
+.header_text_dark #access:after,
+.header_text_dark #access:before,
+.header_text_dark #access li a:hover {
+	background-image: url(../images/menu-bg-light.png);
+}
+.header_text_dark #access li {
+	background-image: url(../images/menu-divider-light.png);
+}
+.header_text_dark #access li a > .sf-sub-indicator {
+	background-image: url(../images/sf-arrows-505050.png);
+}
+.header_text_dark #access li li {
+	background-image: none;
+}
+.header_text_dark #access li li a:hover {
+	background-image: none;
+	color: inherit;
+}
+
+/* User selects they've chosen a light color for footer BG */
+.footer_text_dark #bottom {
+	color: #666666;
+}
+.footer_text_dark #bottom #colophon,
+.footer_text_dark #bottom .copyright {
+	background-image: url(../images/thick-light-divider.png);
+}
+.footer_text_dark #bottom .tb-contact_widget ul.simple-contact li.link,
+.footer_text_dark #bottom .tb-contact_widget ul.simple-contact li.phone,
+.footer_text_dark #bottom .tb-contact_widget ul.simple-contact li.email,
+.footer_text_dark #bottom .tb-contact_widget ul.simple-contact li.contact,
+.footer_text_dark #bottom .tb-contact_widget ul.simple-contact li.skype {
+	background-image: url(../../framework/frontend/assets/images/parts/simple-contact.png);
+}
+		
 /* =WPML Bridge
 ----------------------------------------------- */
 

@@ -136,43 +136,6 @@ if( ! function_exists( 'breakout_styles' ) ) {
 			background-repeat: <?php echo $textures[$header_texture]['repeat']; ?>;
 			<?php endif; ?>
 		}		
-		<?php if( 'header_text_dark' == themeblvd_get_option( 'header_text_color' ) ) : ?>
-		#top:after {
-			content:"";
-			background: url(<?php echo get_template_directory_uri(); ?>/assets/images/thin-light-divider.png) 0 bottom repeat-x;
-			display:block;
-			padding-bottom: 1px;
-		}
-		#top,
-		#top a,
-		.header_logo .tagline,
-		#access li a,
-		#access li a:hover {
-			color: #666666;
-		}
-		#branding {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/thick-light-divider.png);
-		}
-		#access li.home a,
-		#access li.home a:hover {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/menu-home-light.png);
-		}
-		#branding .themeblvd-contact-bar li a {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/framework/frontend/assets/images/parts/social-media-dark.png);
-		}
-		#access .container,
-		#access:after,
-		#access:before,
-		#access li a:hover {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/menu-bg-light.png);
-		}
-		#access li {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/menu-divider-light.png);
-		}
-		#access li a > .sf-sub-indicator {
-    		background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/sf-arrows-505050.png);
-    	}
-		<?php endif; ?>
 		/* Footer Color and Texture */
 		body,
 		#bottom,
@@ -186,22 +149,6 @@ if( ! function_exists( 'breakout_styles' ) ) {
 			background-repeat: <?php echo $textures[$footer_texture]['repeat']; ?>;
 			<?php endif; ?>
 		}
-		<?php if( 'footer_text_dark' == themeblvd_get_option( 'footer_text' ) ) : ?>
-		#bottom {
-			color: #666666;
-		}
-		#bottom #colophon,
-		#bottom .copyright {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/thick-light-divider.png);
-		}
-		#bottom .tb-contact_widget ul.simple-contact li.link,
-		#bottom .tb-contact_widget ul.simple-contact li.phone,
-		#bottom .tb-contact_widget ul.simple-contact li.email,
-		#bottom .tb-contact_widget ul.simple-contact li.contact,
-		#bottom .tb-contact_widget ul.simple-contact li.skype {
-			background-image: url(<?php echo get_template_directory_uri(); ?>/framework/frontend/assets/images/parts/simple-contact.png);
-		}
-		<?php endif; ?>
 		/* Link Colors */
 		a {
 			color: <?php echo themeblvd_get_option('link_color'); ?>;
@@ -277,6 +224,8 @@ add_action( 'wp_head', 'breakout_styles' ); // Must come after framework loads s
 if( ! function_exists( 'breakout_body_class' ) ) {
 	function breakout_body_class( $classes ) {
 		$classes[] = themeblvd_get_option( 'content_color' );
+		$classes[] = themeblvd_get_option( 'header_text' );
+		$classes[] = themeblvd_get_option( 'footer_text' );
 		return $classes;
 	}
 }

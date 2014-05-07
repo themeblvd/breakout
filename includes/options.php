@@ -125,14 +125,14 @@ if( ! function_exists( 'breakout_options' ) ) {
 
 		// Add Styles > Links section
 		$links_options = array(
-			'link_color' => array( 
+			array( 
 				'name' 		=> __( 'Link Color', TB_GETTEXT_DOMAIN ),
 				'desc' 		=> __( 'Choose the color you\'d like applied to links.', TB_GETTEXT_DOMAIN ),
 				'id' 		=> 'link_color',
 				'std' 		=> '#2a9ed4',
 				'type' 		=> 'color'
 			),
-			'link_hover_color' => array( 
+			array( 
 				'name' 		=> __( 'Link Hover Color', TB_GETTEXT_DOMAIN ),
 				'desc' 		=> __( 'Choose the color you\'d like applied to links when they are hovered over.', TB_GETTEXT_DOMAIN ),
 				'id' 		=> 'link_hover_color',
@@ -323,3 +323,401 @@ if( ! function_exists( 'breakout_options' ) ) {
 	}
 }
 add_action( 'after_setup_theme', 'breakout_options' );
+
+/**
+ * Setup theme for customizer.
+ */
+ 
+if( ! function_exists( 'breakout_customizer' ) ) {
+	function breakout_customizer(){
+		
+		// Textures
+		$texture_options = array( 'none' => __( 'None', TB_GETTEXT_DOMAIN ) );
+		$textures = themeblvd_get_textures();
+		foreach( $textures as $id => $atts ) {
+			$texture_options[$id] = $atts['name'];
+		}
+		
+		// Setup logo options
+		$logo_options = array(
+			'logo' => array( 
+				'name' 		=> __( 'Logo', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'logo',
+				'type' 		=> 'logo',
+				'transport'	=> 'postMessage'
+			)
+		);
+		themeblvd_add_customizer_section( 'logo', __( 'Logo', TB_GETTEXT_DOMAIN ), $logo_options, 1 );
+		
+		// Setup header style options
+		$header_options = array(
+			'header_color' => array( 
+				'name' 		=> __( 'Header Background Color', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'header_color',
+				'type' 		=> 'color',
+				'transport'	=> 'postMessage'
+			),
+			'header_text' => array(
+				'name' 		=> __( 'Header Brightness', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'header_text',
+				'type' 		=> 'radio',
+				'options'	=> array(
+					'header_text_light' => __( 'I chose a dark color in the previous option.', TB_GETTEXT_DOMAIN ),
+					'header_text_dark' => __( 'I chose a light color in the previous option.', TB_GETTEXT_DOMAIN )
+				),
+				'transport'	=> 'postMessage'
+			),
+			'header_texture' => array(
+				'name' 		=> __( 'Header Background Texture', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'header_texture',
+				'type' 		=> 'select',
+				'options'	=> $texture_options,
+				'transport'	=> 'postMessage'
+			),
+			'header_tagline' => array( 
+				'name' 		=> __( 'Header Text', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'header_tagline',
+				'type' 		=> 'text',
+				'transport'	=> 'postMessage'
+			)
+		);
+		themeblvd_add_customizer_section( 'header', __( 'Header', TB_GETTEXT_DOMAIN ), $header_options, 2 );
+		
+		// Setup main content area options
+		$main_options = array(
+			'content_color' => array(	
+				'name' 		=> __( 'Content Color', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'content_color',
+				'type' 		=> 'select',
+				'options'	=> array(
+					'content_dark' => __( 'Dark', TB_GETTEXT_DOMAIN ),
+					'content_light' => __( 'Light', TB_GETTEXT_DOMAIN ),
+					'content_tan' => __( 'Tan', TB_GETTEXT_DOMAIN )
+				),
+				'transport'	=> 'postMessage'
+			),
+			'content_texture' => array(
+				'name' 		=> __( 'Content Background Texture', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'content_texture',
+				'type' 		=> 'select',
+				'options'	=> $texture_options,
+				'transport'	=> 'postMessage'
+			),
+			'accent_color' => array( 
+				'name' 		=> __( 'Accent Color', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'accent_color',
+				'type' 		=> 'color'
+			),
+			'accent_text' => array(
+				'name' 		=> __( 'Accent Color Brightness', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'accent_text',
+				'type' 		=> 'radio',
+				'options'	=> array(
+					'accent_text_light' => __( 'I chose a dark color in the previous option.', TB_GETTEXT_DOMAIN ),
+					'accent_text_dark' => __( 'I chose a light color in the previous option.', TB_GETTEXT_DOMAIN )
+				)
+			)
+		);
+		themeblvd_add_customizer_section( 'main', __( 'Main', TB_GETTEXT_DOMAIN ), $main_options, 101 );
+		
+		// Setup footer style options
+		$footer_options = array(
+			'footer_color' => array( 
+				'name' 		=> __( 'Footer Background Color', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'footer_color',
+				'type' 		=> 'color',
+				'transport'	=> 'postMessage'
+			),
+			'footer_text' => array(
+				'name' 		=> __( 'Footer Brightness', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_text',
+				'type' 		=> 'radio',
+				'options'	=> array(
+					'footer_text_light' => __( 'I chose a dark color in the previous option.', TB_GETTEXT_DOMAIN ),
+					'footer_text_dark' => __( 'I chose a light color in the previous option.', TB_GETTEXT_DOMAIN )
+				),
+				'transport'	=> 'postMessage'
+			),
+			'footer_texture' => array(
+				'name' 		=> __( 'Footer Background Texture', TB_GETTEXT_DOMAIN ),
+				'id'		=> 'footer_texture',
+				'type' 		=> 'select',
+				'options'	=> $texture_options,
+				'transport'	=> 'postMessage'
+			)
+		);
+		themeblvd_add_customizer_section( 'footer', __( 'Footer', TB_GETTEXT_DOMAIN ), $footer_options, 102 );
+		
+		// Setup primary font options
+		$font_options = array(
+			'typography_body' => array( 
+				'name' 		=> __( 'Primary Font', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'typography_body',
+				'atts'		=> array('size', 'face'),
+				'type' 		=> 'typography',
+				'transport'	=> 'postMessage'
+			),
+			'typography_header' => array( 
+				'name' 		=> __( 'Header Font', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'typography_header',
+				'atts'		=> array('face'),
+				'type' 		=> 'typography',
+				'transport'	=> 'postMessage'
+			),
+			'typography_special' => array(
+				'name' 		=> __( 'Special Font', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'typography_special',
+				'atts'		=> array('face'),
+				'type' 		=> 'typography',
+				'transport'	=> 'postMessage'
+			)
+		);
+		themeblvd_add_customizer_section( 'typography', __( 'Typography', TB_GETTEXT_DOMAIN ), $font_options, 103 );
+		
+		// Setup link styles
+		$link_options = array(
+			'link_color' => array( 
+				'name' 		=> __( 'Link Color', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'link_color',
+				'type' 		=> 'color'
+			),
+			'link_hover_color' => array( 
+				'name' 		=> __( 'Link Hover Color', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'link_hover_color',
+				'type' 		=> 'color'
+			),
+			'footer_link_color' => array(
+				'name' 		=> __( 'Footer Link Color', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_link_color',
+				'type' 		=> 'color'
+			),
+			'footer_link_hover_color' => array(
+				'name' 		=> __( 'Footer Link Hover Color', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'footer_link_hover_color',
+				'type' 		=> 'color'
+			)
+		);
+		themeblvd_add_customizer_section( 'links', __( 'Links', TB_GETTEXT_DOMAIN ), $link_options, 104 );
+		
+		// Setup custom styles option
+		$custom_styles_options = array(
+			'custom_styles' => array( 
+				'name' 		=> __( 'Enter styles to preview their results.', TB_GETTEXT_DOMAIN ),
+				'id' 		=> 'custom_styles',
+				'type' 		=> 'textarea',
+				'transport'	=> 'postMessage'
+			)
+		);
+		themeblvd_add_customizer_section( 'custom_css', __( 'Custom CSS', TB_GETTEXT_DOMAIN ), $custom_styles_options, 121 );
+	}
+}
+add_action( 'after_setup_theme', 'breakout_customizer' );
+
+/**
+ * Add specific theme elements to customizer.
+ */
+
+if( ! function_exists( 'breakout_customizer_init' ) ) {
+	function breakout_customizer_init( $wp_customize ){
+		// Add real-time option edits
+		if ( $wp_customize->is_preview() && ! is_admin() ){
+			add_action( 'wp_footer', 'breakout_customizer_preview', 21 );
+		}
+	}
+}
+add_action( 'customize_register', 'breakout_customizer_init' );
+
+/**
+ * Add real-time option edits for this theme in customizer.
+ */
+
+if( ! function_exists( 'breakout_customizer_preview' ) ) {
+	function breakout_customizer_preview( $wp_customize ){
+		
+		// Global options name
+		$option_name = themeblvd_get_option_name();
+		
+		// Begin output	
+		?>
+		<script type="text/javascript">
+		window.onload = function(){ // window.onload for silly IE9 bug fix	
+			(function($){
+				
+				// Variables
+				var template_url = "<?php echo get_template_directory_uri(); ?>";
+				
+				// ---------------------------------------------------------
+				// Logo
+				// ---------------------------------------------------------
+				
+				<?php themeblvd_customizer_preview_logo(); ?>
+				
+				// ---------------------------------------------------------
+				// Header
+				// ---------------------------------------------------------
+				
+				/* Header Color */
+				wp.customize('<?php echo $option_name; ?>[header_color]',function( value ) {
+					value.bind(function(color) {
+						$('#top').css('background-color', color );
+					});
+				});
+				
+				/* Header Brightness */
+				wp.customize('<?php echo $option_name; ?>[header_text]',function( value ) {
+					value.bind(function(brightness) {
+						if( brightness == 'header_text_dark' )
+						{
+							$('body').removeClass('header_text_light');
+							$('body').addClass('header_text_dark');
+						}
+						else
+						{
+							$('body').removeClass('header_text_dark');
+							$('body').addClass('header_text_light');
+						}
+					});
+				});
+				
+				/* Header Texture */
+				wp.customize('<?php echo $option_name; ?>[header_texture]',function( value ) {
+					value.bind(function(texture) {
+						$('#top').css('background-image', 'url('+template_url+'/framework/frontend/assets/images/textures/'+texture+'.png)' );
+					});
+				});
+				
+				/* Header Tagline */
+				wp.customize('<?php echo $option_name; ?>[header_tagline]',function( value ) {
+					value.bind(function(to) {
+						$('.header-text').html(to);
+					});
+				});
+				
+				// ---------------------------------------------------------
+				// Main Content
+				// ---------------------------------------------------------
+				
+				/* Content Color */
+				wp.customize('<?php echo $option_name; ?>[content_color]',function( value ) {
+					value.bind(function(body_class) {
+						$('body').removeClass('content_dark');
+						$('body').removeClass('content_light');
+						$('body').removeClass('content_tan');
+						$('body').addClass(body_class);
+					});
+				});
+				
+				/* Content Texture */
+				wp.customize('<?php echo $option_name; ?>[content_texture]',function( value ) {
+					value.bind(function(texture) {
+						$('#wrapper').css('background-image', 'url('+template_url+'/framework/frontend/assets/images/textures/'+texture+'.png)' );
+					});
+				});
+				
+				// ---------------------------------------------------------
+				// Footer
+				// ---------------------------------------------------------
+				
+				/* Footer Color */
+				wp.customize('<?php echo $option_name; ?>[footer_color]',function( value ) {
+					value.bind(function(to) {
+						$('body, #bottom, #bottom .copyright span').css('background-color', to );
+					});
+				});
+				
+				/* Footer Brightness */
+				wp.customize('<?php echo $option_name; ?>[footer_text]',function( value ) {
+					value.bind(function(brightness) {
+						if( brightness == 'footer_text_dark' )
+						{
+							$('body').removeClass('footer_text_light');
+							$('body').addClass('footer_text_dark');
+						}
+						else
+						{
+							$('body').removeClass('footer_text_dark');
+							$('body').addClass('footer_text_light');
+						}
+					});
+				});
+				
+				/* Footer Texture */
+				wp.customize('<?php echo $option_name; ?>[footer_texture]',function( value ) {
+					value.bind(function(texture) {
+						$('body, #bottom, #bottom .copyright span').css('background-image', 'url('+template_url+'/framework/frontend/assets/images/textures/'+texture+'.png)');
+					});
+				});
+				
+				// ---------------------------------------------------------
+				// Typography
+				// ---------------------------------------------------------
+				
+				<?php themeblvd_customizer_preview_font_prep(); ?>
+				<?php themeblvd_customizer_preview_primary_font(); ?>
+				<?php themeblvd_customizer_preview_header_font(); ?>
+				
+				// ---------------------------------------------------------
+				// Special Typography
+				// ---------------------------------------------------------
+				
+				var special_font_selectors = '#featured .media-full .slide-title, #content .media-full .slide-title, #featured_below .media-full .slide-title, .element-slogan .slogan .slogan-text, .element-tweet, .special-font';
+
+				/* Special Typography - Face */
+				wp.customize('<?php echo $option_name; ?>[typography_special][face]',function( value ) {
+					value.bind(function(face) {
+						if( face == 'google' ){
+							googleFonts.specialToggle = true;
+							var google_font = googleFonts.specialName.split(":"),
+								google_font = google_font[0];
+							$(special_font_selectors).css('font-family', google_font);
+						}
+						else
+						{
+							googleFonts.specialToggle = false;
+							$(special_font_selectors).css('font-family', fontStacks[face]);
+						}
+					});
+				});
+				
+				/* Special Typography - Google */
+				wp.customize('<?php echo $option_name; ?>[typography_special][google]',function( value ) {
+					value.bind(function(google_font) {
+						// Only proceed if user has actually selected for 
+						// a google font to show in previous option.
+						if(googleFonts.specialToggle)
+						{
+							// Set global google font for reference in 
+							// other options.
+							googleFonts.specialName = google_font;
+							
+							// Remove previous google font to avoid clutter.
+							$('.preview_google_special_font').remove();
+							
+							// Format font name for inclusion
+							var include_google_font = google_font.replace(/ /g,'+');
+							
+							// Include font
+							$('head').append('<link href="http://fonts.googleapis.com/css?family='+include_google_font+'" rel="stylesheet" type="text/css" class="preview_google_special_font" />');
+							
+							// Format for CSS
+							google_font = google_font.split(":");
+							google_font = google_font[0];
+							
+							// Apply font in CSS
+							$(special_font_selectors).css('font-family', google_font);
+						}
+					});
+				});
+				
+				// ---------------------------------------------------------
+				// Custom CSS
+				// ---------------------------------------------------------
+				
+				<?php themeblvd_customizer_preview_styles(); ?>
+				
+			})(jQuery);
+		} // End window.onload for silly IE9 bug
+		</script>
+		<?php 
+	}
+}

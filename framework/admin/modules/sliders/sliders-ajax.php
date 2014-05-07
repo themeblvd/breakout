@@ -342,9 +342,8 @@ if( ! function_exists( 'slider_blvd_ajax_edit_slider' ) ) {
 	function slider_blvd_ajax_edit_slider() {
 		$slider_id = $_POST['data'];
 		$types = slider_blvd_recognized_sliders();
-		$sliders = get_option( slider_blvd_get_option_id() );
 		echo $slider_id.'[(=>)]';
-		slider_blvd_edit( $_POST['data'], $types, $sliders );
+		slider_blvd_edit( $_POST['data'], $types );
 		die();
 	}
 }

@@ -17,7 +17,7 @@ if( ! function_exists( 'themeblvd_standard_slider_js' ) ) {
 			$(window).load(function() {
 				$('#tb-slider-<?php echo $id; ?> .flexslider').flexslider({
 					animation: "<?php echo $options['fx']; ?>",
-					// pauseOnHover: true - Removed because currently causes conflicts with pause/play functionality
+					// pauseOnHover: true - This was replaced with a custom solution to work with other controls, see below with "pause_on_hover" option.
 					<?php if( $options['timeout'] ) : ?>
 					slideshowSpeed: <?php echo $options['timeout']; ?>000,
 					<?php else : ?>
@@ -51,6 +51,24 @@ if( ! function_exists( 'themeblvd_standard_slider_js' ) ) {
         					$('#tb-slider-<?php echo $id; ?> .play').show();
         					slider.pause();
         				});
+        				<?php if( isset( $options['pause_on_hover'] ) ) : ?>
+	        				<?php if( $options['pause_on_hover'] == 'pause_on' || $options['pause_on_hover'] == 'pause_on_off' ) : ?>
+	        				$('#tb-slider-<?php echo $id; ?>').hover(
+								function() {
+									$('#tb-slider-<?php echo $id; ?> .pause').hide();
+									$('#tb-slider-<?php echo $id; ?> .play').show();
+									slider.pause();
+								}, 
+								function() {
+									<?php if( $options['pause_on_hover'] == 'pause_on_off' ) : ?>
+									$('#tb-slider-<?php echo $id; ?> .play').hide();
+									$('#tb-slider-<?php echo $id; ?> .pause').show();
+									slider.resume();
+									<?php endif; ?>
+								}
+	        				);
+	        				<?php endif; ?>
+        				<?php endif; ?>
         			}
 				}).parent().find('.tb-loader').fadeOut();
 			});
@@ -148,8 +166,13 @@ if( ! function_exists( 'themeblvd_standard_slider_default' ) ) {
 													$image_size = 'slider-staged';
 												// Image URL
 												$image_url = null;
+												$image_title = null;
 												if( isset( $slide['image'][$image_size] ) && $slide['image'][$image_size] )
 													$image_url = $slide['image'][$image_size]; // We do a strict check here so no errors will be thrown with old versions of the framework.
+												if( isset( $slide['image']['id'] ) ) {
+													$attachment = get_post( $slide['image']['id'], OBJECT );
+													$image_title = $attachment->post_title;
+												}
 												if( ! $image_url ) {
 													// This should only get used if user updates to v2.1.0 and 
 													// didn't re-save their slider. 
@@ -222,7 +245,7 @@ if( ! function_exists( 'themeblvd_standard_slider_default' ) ) {
 																			<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span>Image Link</span></a>
 																		<?php endif; ?>
 																	<?php endif; ?>
-																	<img src="<?php echo $image_url; ?>" />
+																	<img src="<?php echo $image_url; ?>" alt="<?php echo $image_title; ?>" />
 																<?php else : ?>
 																	<?php echo $video; ?>
 																<?php endif; ?>
@@ -282,36 +305,43 @@ if( ! function_exists( 'themeblvd_carrousel_slider_default' ) ) {
 				</div><!-- .roundabout-nav (end) -->
 				<?php endif; ?>
 				<ul class="carrousel-slider">
-					<?php foreach( $slides as $slide ) : ?>
-						<li class="slide">
-							<div class="slide-body">
-								<div class="grid-protection">
-									<?php
-									// Image
-									$image_url = null;
-									if( isset( $slide['image']['grid_4'] ) && $slide['image']['grid_4'] )
-										$image_url = $slide['image']['grid_4'];
-									if( ! $image_url ) {
-										$attachment = wp_get_attachment_image_src( $slide['image']['id'], 'grid_4' );
-										$image_url = $attachment[0];
-									}
-									// Elements
-									$elements = array();
-									if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-										$elements = $slide['elements']['include'];
-									?>
-									<?php if( in_array( 'image_link', $elements ) ) : ?>
-										<?php if( $slide['elements']['image_link']['target'] == 'lightbox' ) : ?>
-											<a href="<?php echo $slide['elements']['image_link']['url']; ?>" class="image-link enlarge" rel="themeblvd_lightbox" title=""><span>Image Link</span></a>
-										<?php else : ?>
-											<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span>Image Link</span></a>
+					<?php if( $slides ) : ?>
+						<?php foreach( $slides as $slide ) : ?>
+							<li class="slide">
+								<div class="slide-body">
+									<div class="grid-protection">
+										<?php
+										// Image
+										$image_url = null;
+										$image_title = null;
+										if( isset( $slide['image']['grid_4'] ) && $slide['image']['grid_4'] )
+											$image_url = $slide['image']['grid_4'];
+										if( isset( $slide['image']['id'] ) ) {
+											$attachment = get_post( $slide['image']['id'], OBJECT );
+											$image_title = $attachment->post_title;
+										}
+										if( ! $image_url ) {
+											$attachment = wp_get_attachment_image_src( $slide['image']['id'], 'grid_4' );
+											$image_url = $attachment[0];
+										}
+										// Elements
+										$elements = array();
+										if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
+											$elements = $slide['elements']['include'];
+										?>
+										<?php if( in_array( 'image_link', $elements ) ) : ?>
+											<?php if( $slide['elements']['image_link']['target'] == 'lightbox' ) : ?>
+												<a href="<?php echo $slide['elements']['image_link']['url']; ?>" class="image-link enlarge" rel="themeblvd_lightbox" title=""><span>Image Link</span></a>
+											<?php else : ?>
+												<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span>Image Link</span></a>
+											<?php endif; ?>
 										<?php endif; ?>
-									<?php endif; ?>
-									<img src="<?php echo $image_url; ?>" />
-								</div><!-- .grid-protection (end) -->
-							</div><!-- .slide-body (end) -->
-						</li>
-					<?php endforeach; ?>
+										<img src="<?php echo $image_url; ?>" alt="<?php echo $image_title; ?>" />
+									</div><!-- .grid-protection (end) -->
+								</div><!-- .slide-body (end) -->
+							</li>
+						<?php endforeach; ?>
+					<?php endif; ?>
 				</ul>
 			</div><!-- .slider-inner (end) -->
 		</div><!-- .slider-wrapper (end) -->
@@ -351,8 +381,13 @@ if( ! function_exists( 'themeblvd_slider_fallback' ) ) {
 					$slide['position'] == 'full' ? $image_size = 'slider-large' : $image_size = 'slider-staged'; // Use crop size to match standard slider display, depending on image position				
 					$image_size = apply_filters( 'themeblvd_slider_fallback_img_size', $image_size, $fallback, $slide['position'] ); // Apply optional filter and pass in fallback type & image position
 					$image_url = null;
+					$image_title = null;
 					if( isset( $slide['image'][$image_size] ) && $slide['image'][$image_size] )
 						$image_url = $slide['image'][$image_size]; // We do a strict check here so no errors will be thrown with old versions of the framework.
+					if( isset( $slide['image']['id'] ) ) {
+						$attachment = get_post( $slide['image']['id'], OBJECT );
+						$image_title = $attachment->post_title;
+					}
 					if( ! $image_url ) {
 						// This should only get used if user updates to v2.1.0 and 
 						// didn't re-save their slider. 
@@ -390,7 +425,7 @@ if( ! function_exists( 'themeblvd_slider_fallback' ) ) {
 							else
 								echo '<a href="'.$slide['elements']['image_link']['url'].'" target="'.$slide['elements']['image_link']['target'].'" class="image-link external">';
 						}
-						echo '<img src="'.$image_url.'" />';	
+						echo '<img src="'.$image_url.'" alt="'.$image_title.'" />';	
 						if( in_array( 'image_link', $elements ) )
 							echo '</a>';
 					}
@@ -399,7 +434,7 @@ if( ! function_exists( 'themeblvd_slider_fallback' ) ) {
 						echo $video;
 					// Description
 					if( in_array( 'description', $elements ) && isset( $slide['elements']['description'] ) && $slide['elements']['description'] )
-						echo '<p class="slide-description-text">'.stripslashes($slide['elements']['description']).'</p>';
+						echo '<p class="slide-description-text">'.do_shortcode(stripslashes($slide['elements']['description'])).'</p>';
 					// Button
 					if( in_array( 'button', $elements ) && isset( $slide['elements']['button']['text'] ) && $slide['elements']['button']['text'] )
 						echo '<p class="slide-description-button">'.themeblvd_button( stripslashes( $slide['elements']['button']['text'] ), $slide['elements']['button']['url'], 'default', $slide['elements']['button']['target'], 'medium' ).'</p>';

@@ -1,113 +1,46 @@
 <?php
-/*-----------------------------------------------------------------------------------*/
-/* Run Theme Options - Based on Devin Price's Theme Options framework
-/*-----------------------------------------------------------------------------------*/
-
 /**
+ * Run Theme Options
+ * 
  * We check the user-role before actually adding the admin page the 
  * user sees, however we run the rest of the options framework in 
  * the background just in case its needed for other admin modules.
  */
 
 function optionsframework_rolescheck () {
+	global $pagenow;
 	if ( themeblvd_supports( 'admin', 'options' ) && current_user_can( themeblvd_admin_module_cap( 'options' ) ) ) {
 		add_action( 'admin_menu', 'optionsframework_add_page');
 	}
 	add_action( 'admin_init', 'optionsframework_init' );
 	add_action( 'admin_init', 'optionsframework_mlu_init' );
 }
-add_action('init', 'optionsframework_rolescheck' );
+add_action( 'init', 'optionsframework_rolescheck' );
 
 /**
- * Creates the settings in the database by looping through the array
- * we supplied in options.php.  This is a neat way to do it since
- * we won't have to save settings for headers, descriptions, or arguments.
+ * Here we're basically just registering the settings for 
+ * WordPress with register_setting. We are storing all of 
+ * our theme's options in a single array stored in the WP 
+ * options table based on the name of the current theme.
+ * 
+ * This is concept is based on Otto's article on the 
+ * Settings API.
+ * 
+ * http://ottopress.com/2009/wordpress-settings-api-tutorial/
  *
- * Read more about the Settings API in the WordPress codex:
- * http://codex.wordpress.org/Settings_API
- *
+ * Note: You can alter the option name used for storing 
+ * the theme options by using the filter "themeblvd_option_id".
  */
 
 if( ! function_exists( 'optionsframework_init' ) ) {
 	function optionsframework_init() {
-	
-		// Include the required files
-		// EDIT: Included in themeblvd.php as of v2.1.0
-		// require_once dirname( __FILE__ ) . '/options-interface.php';
-		// require_once dirname( __FILE__ ) . '/options-medialibrary-uploader.php';
 		
-		// Get current settings	
-		$optionsframework_settings = get_option('optionsframework' );
+		// Get unique identifier for this theme's options.
+		$option_name = themeblvd_get_option_name();
 		
-		// Updates the unique option id in the database if it has changed
-		optionsframework_option_name();
-		
-		// Gets the unique id, returning a default if it isn't defined
-		if ( isset($optionsframework_settings['id']) ) {
-			$option_name = $optionsframework_settings['id'];
-		}
-		else {
-			$option_name = 'optionsframework';
-		}
-		
-		// If the option has no saved data, load the defaults
-		if ( ! get_option($option_name) ) {
-			optionsframework_setdefaults();
-		}
-	
 		// Registers the settings fields and callback
-		register_setting( 'optionsframework', $option_name, 'optionsframework_validate' );
-	}
-}
-
-/**
- * Adds default options to the database if they aren't already present.
- * May update this later to load only on plugin activation, or theme
- * activation since most people won't be editing the options.php
- * on a regular basis.
- *
- * http://codex.wordpress.org/Function_Reference/add_option
- *
- */
-
-if( ! function_exists( 'optionsframework_setdefaults' ) ) {
-	function optionsframework_setdefaults() {
-	
-		$optionsframework_settings = get_option('optionsframework');
-	
-		// Gets the unique option id
-		$option_name = $optionsframework_settings['id'];
+		register_setting( $option_name, $option_name, 'optionsframework_validate' );
 		
-		/* 
-		 * Each theme will hopefully have a unique id, and all of its options saved
-		 * as a separate option set.  We need to track all of these option sets so
-		 * it can be easily deleted if someone wishes to remove the plugin and
-		 * its associated data.  No need to clutter the database.  
-		 *
-		 */
-		
-		if ( isset($optionsframework_settings['knownoptions']) ) {
-			$knownoptions =  $optionsframework_settings['knownoptions'];
-			if ( !in_array($option_name, $knownoptions) ) {
-				array_push( $knownoptions, $option_name );
-				$optionsframework_settings['knownoptions'] = $knownoptions;
-				update_option('optionsframework', $optionsframework_settings);
-			}
-		} else {
-			$newoptionname = array($option_name);
-			$optionsframework_settings['knownoptions'] = $newoptionname;
-			update_option('optionsframework', $optionsframework_settings);
-		}
-	
-		// Gets the default options data from the array in options.php
-		$options = themeblvd_get_formatted_options();
-		
-		// If the options haven't been added to the database yet, they are added now
-		$values = of_get_default_values();
-		
-		if ( isset($values) ) {
-			add_option( $option_name, $values ); // Add option with default settings
-		}
 	}
 }
 
@@ -119,11 +52,11 @@ if ( ! function_exists( 'optionsframework_add_page' ) ) {
 	function optionsframework_add_page() {
 	
 		$title = __( 'Theme Options', TB_GETTEXT_DOMAIN );
-		$of_page = add_theme_page( $title, $title, themeblvd_admin_module_cap( 'options' ), 'options-framework', 'optionsframework_page' );
+		$options_page = add_theme_page( $title, $title, themeblvd_admin_module_cap( 'options' ), 'options-framework', 'optionsframework_page' );
 		
 		// Adds actions to hook in the required css and javascript
-		add_action("admin_print_styles-$of_page",'optionsframework_load_styles');
-		add_action("admin_print_scripts-$of_page", 'optionsframework_load_scripts');
+		add_action( 'admin_print_styles-'.$options_page,'optionsframework_load_styles');
+		add_action( 'admin_print_scripts-'.$options_page, 'optionsframework_load_scripts');
 		
 	}
 }
@@ -134,23 +67,23 @@ if ( ! function_exists( 'optionsframework_add_page' ) ) {
 
 if( ! function_exists( 'optionsframework_load_styles' ) ) {
 	function optionsframework_load_styles() {
+		// Enqueued styles
 		wp_enqueue_style('admin-style', OPTIONS_FRAMEWORK_DIRECTORY.'css/admin-style.css');
 		wp_enqueue_style('sharedframework-style', THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'css/admin-style.css');
 		wp_enqueue_style('color-picker', OPTIONS_FRAMEWORK_DIRECTORY.'css/colorpicker.css');
 	}
 }
-	
 
 /**
  * Loads the javascript
  */
 
 if( ! function_exists( 'optionsframework_load_scripts' ) ) {
-	function optionsframework_load_scripts() {
-		
+	function optionsframework_load_scripts() {		
 		// Enqueued scripts
 		wp_enqueue_script('jquery-ui-core');
 		wp_enqueue_script('sharedframework-scripts', THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'js/shared.min.js', array('jquery'));
+		wp_localize_script('sharedframework-scripts', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
 		wp_enqueue_script('color-picker', OPTIONS_FRAMEWORK_DIRECTORY.'js/colorpicker.js', array('jquery'));
 		wp_enqueue_script('options-custom', OPTIONS_FRAMEWORK_DIRECTORY.'js/options-custom.js', array('jquery'));
 	}
@@ -159,32 +92,31 @@ if( ! function_exists( 'optionsframework_load_scripts' ) ) {
 /* 
  * Builds out the options panel.
  *
- * If we were using the Settings API as it was likely intended we would use
- * do_settings_sections here.  But as we don't want the settings wrapped in a table,
- * we'll call our own custom optionsframework_fields.  See options-interface.php
- * for specifics on how each individual field is generated.
+ * If we were using the Settings API as it was likely intended 
+ * we would use do_settings_sections here.  But as we don't want 
+ * the settings wrapped in a table, we'll call our own custom 
+ * optionsframework_fields.  See options-interface.php for 
+ * specifics on how each individual field is generated.
  *
  * Nonces are provided using the settings_fields()
- *
  */
 
 if ( ! function_exists( 'optionsframework_page' ) ) {
 	function optionsframework_page() {
 		
-		$optionsframework_settings = get_option('optionsframework');
+		// Get unique identifier for this theme's options.
+		$option_name = themeblvd_get_option_name();
 		
-		// Gets the unique option id
-		if (isset($optionsframework_settings['id']))
-			$option_name = $optionsframework_settings['id'];
-		else
-			$option_name = 'optionsframework';
-			
-		$settings = get_option($option_name);
+		// Get any current settings from the database.
+		$settings = get_option( $option_name );
+	    
+	    // Get options.
 	    $options = themeblvd_get_formatted_options();
 		$return = optionsframework_fields( $option_name, $options, $settings  );
+		
+		// Display any errors or update messages.
 		settings_errors();
 		?>
-	    
 		<div class="wrap">
 			<div class="admin-module-header">
 				<?php do_action( 'themeblvd_admin_module_header', 'options' ); ?>
@@ -193,30 +125,28 @@ if ( ! function_exists( 'optionsframework_page' ) ) {
 		    <h2 class="nav-tab-wrapper">
 		        <?php echo $return[1]; ?>
 		    </h2>
-		    
 		    <div class="metabox-holder">
-		    <div id="optionsframework">
-				<form action="options.php" method="post">
-					<?php settings_fields('optionsframework'); ?>
-			
-					<?php echo $return[0]; /* Settings */ ?>
-			        
-			        <div id="optionsframework-submit">
-						<input type="submit" class="button-primary" name="update" value="<?php esc_attr_e( 'Save Options', TB_GETTEXT_DOMAIN ); ?>" />
-			            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults', TB_GETTEXT_DOMAIN ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!', TB_GETTEXT_DOMAIN ) ); ?>' );" />
-			            <div class="clear"></div>
-					</div>
-				</form>
-				<div class="tb-footer-text">
-					<?php do_action( 'themeblvd_options_footer_text' ); ?>
-				</div><!-- .tb-footer-text (end) -->
-			</div> <!-- / #container -->
-			<div class="admin-module-footer">
-				<?php do_action( 'themeblvd_admin_module_footer', 'options' ); ?>
-			</div>
-		</div>
-	</div> <!-- / .wrap -->
-	<?php
+			    <div id="optionsframework">
+					<form id="themeblvd_theme_options" action="options.php" method="post">
+						<?php settings_fields( $option_name ); ?>
+						<?php echo $return[0]; /* Settings */ ?>
+				        <div id="optionsframework-submit">
+							<input type="submit" class="button-primary" name="update" value="<?php esc_attr_e( 'Save Options', TB_GETTEXT_DOMAIN ); ?>" />
+							<input type="submit" class="reset-button button-secondary" value="<?php esc_attr_e( 'Restore Defaults', TB_GETTEXT_DOMAIN ); ?>" />
+							<input type="submit" class="clear-button button-secondary" value="<?php esc_attr_e( 'Clear Options', TB_GETTEXT_DOMAIN ); ?>" />
+				           	<div class="clear"></div>
+						</div>
+					</form>
+					<div class="tb-footer-text">
+						<?php do_action( 'themeblvd_options_footer_text' ); ?>
+					</div><!-- .tb-footer-text (end) -->
+				</div><!-- #optionsframework (end) -->
+				<div class="admin-module-footer">
+					<?php do_action( 'themeblvd_admin_module_footer', 'options' ); ?>
+				</div><!-- .admin-module-footer (end) -->
+			</div><!-- .metabox-holder (end) -->
+		</div><!-- .wrap (end) -->
+		<?php
 	}
 }
 
@@ -263,66 +193,81 @@ if ( ! function_exists( 'optionsframework_footer_text' ) ) {
 
 if ( ! function_exists( 'optionsframework_validate' ) ) {
 	function optionsframework_validate( $input ) {
-	
-		/*
-		 * Restore Defaults.
-		 *
-		 * In the event that the user clicked the "Restore Defaults"
-		 * button, the options defined in the theme's options.php
-		 * file will be added to the option for the active theme.
-		 */
-		 
+		
+		// Get unique identifier for this theme's options.
+		$option_name = themeblvd_get_option_name();
+		
+		// Restore Defaults.
+		//
+		// In the event that the user clicked the "Restore Defaults"
+		// button, the options defined in the theme's options.php
+		// file will be added to the option for the active theme.
+		
 		if ( isset( $_POST['reset'] ) ) {
-			add_settings_error( 'options-framework', 'restore_defaults', __( 'Default options restored.', TB_GETTEXT_DOMAIN ), 'updated fade' );
+			add_settings_error( $option_name, 'restore_defaults', __( 'Default options restored.', TB_GETTEXT_DOMAIN ), 'error fade' );
 			return of_get_default_values();
 		}
-	
-		/*
-		 * Udpdate Settings.
-		 */
-		 
-		if ( isset( $_POST['update'] ) ) {
-			$clean = array();
-			$options = themeblvd_get_formatted_options();
-			foreach ( $options as $option ) {
-	
-				if ( ! isset( $option['id'] ) ) {
-					continue;
-				}
-	
-				if ( ! isset( $option['type'] ) ) {
-					continue;
-				}
-	
-				$id = preg_replace( '/\W/', '', strtolower( $option['id'] ) );
-	
-				// Set checkbox to false if it wasn't sent in the $_POST
-				if ( 'checkbox' == $option['type'] && ! isset( $input[$id] ) ) {
-					$input[$id] = '0';
-				}
-	
-				// Set each item in the multicheck to false if it wasn't sent in the $_POST
-				if ( 'multicheck' == $option['type'] && ! isset( $input[$id] ) ) {
-					foreach ( $option['options'] as $key => $value ) {
-						$input[$id][$key] = '0';
-					}
-				}
-	
-				// For a value to be submitted to database it must pass through a sanitization filter
-				if ( has_filter( 'of_sanitize_' . $option['type'] ) ) {
-					$clean[$id] = apply_filters( 'of_sanitize_' . $option['type'], $input[$id], $option );
-				}
-			}
-	
-			add_settings_error( 'options-framework', 'save_options', __( 'Options saved.', TB_GETTEXT_DOMAIN ), 'updated fade' );
-			return $clean;
-		}
-	
-		/*
-		 * Request Not Recognized.
-		 */
 		
-		return of_get_default_values();
+		// Clear options.
+		//
+		// This gives the user a chance to clear the options from 
+		// the database.
+		 
+		if ( isset( $_POST['clear'] ) ) {
+			add_settings_error( $option_name, 'restore_defaults', __( 'Options cleared from database.', TB_GETTEXT_DOMAIN ), 'error fade' );
+			return null;
+		}
+		 
+		// Udpdate Settings.
+		// 
+		// This runs through all registered options and sanitizes them. 
+		// However, the catch here that is a bit different than the 
+		// original options framework, is that we first check if each 
+		// option was present in the $input before adding it our sanitized 
+		// options to return.
+		//
+		// By doing this, when we save from the customizer, if it doesn't 
+		// include ALL registered options, it will not effect those options 
+		// upon saving that weren't included with the customizer.
+		 
+		$clean = array();
+		$options = themeblvd_get_formatted_options();
+		foreach( $options as $option ){
+
+			// Skip if we don't have an ID or type.
+			if ( ! isset( $option['id'] ) || ! isset( $option['type'] ) )
+				continue;
+			
+			// Make sure ID is formatted right.
+			$id = preg_replace( '/\W/', '', strtolower( $option['id'] ) );
+
+			// Skip if this is the customizer and current option wasn't 
+			// sent in the input. This current method means we can't have 
+			// any checkboxes or multichecks in the customizer.
+			// (something to fix later hopefully)
+			if( isset( $_POST['customized'] ) && ! isset( $input[$id] ) )
+				continue;
+
+			// Set checkbox to false if it wasn't sent in the $_POST
+			if ( 'checkbox' == $option['type'] && ! isset( $input[$id] ) )
+				$input[$id] = '0';
+
+			// Set each item in the multicheck to false if it wasn't sent in the $_POST
+			if ( 'multicheck' == $option['type'] && ! isset( $input[$id] ) )
+				foreach ( $option['options'] as $key => $value )
+					$input[$id][$key] = '0';
+
+			// For a value to be submitted to database it must pass through a sanitization filter
+			if ( has_filter( 'of_sanitize_' . $option['type'] ) )
+				$clean[$id] = apply_filters( 'of_sanitize_' . $option['type'], $input[$id], $option );
+				
+		}
+		
+		// Add update message for page re-fresh
+		add_settings_error( 'options-framework', 'save_options', __( 'Options saved.', TB_GETTEXT_DOMAIN ), 'updated fade' );
+		
+		// Return sanitized options
+		return $clean;
 	}
 }
 
@@ -345,54 +290,19 @@ if ( ! function_exists( 'of_get_default_values' ) ) {
 		$output = array();
 		$config = themeblvd_get_formatted_options();
 		foreach ( (array) $config as $option ) {
-			if ( ! isset( $option['id'] ) ) {
+			
+			// Skip if any vital items are not set.
+			if ( ! isset( $option['id'] ) )
 				continue;
-			}
-			if ( ! isset( $option['std'] ) ) {
+			if ( ! isset( $option['std'] ) )
 				continue;
-			}
-			if ( ! isset( $option['type'] ) ) {
+			if ( ! isset( $option['type'] ) )
 				continue;
-			}
-			if ( has_filter( 'of_sanitize_' . $option['type'] ) ) {
+			
+			// Continue with adding the option in.
+			if ( has_filter( 'of_sanitize_' . $option['type'] ) )
 				$output[$option['id']] = apply_filters( 'of_sanitize_' . $option['type'], $option['std'], $option );
-			}
 		}
 		return $output;
-	}
-}
-
-/**
- * A unique identifier is defined to store the options in the database and reference them from the theme.
- * By default it uses the theme name, in lowercase and without spaces, but this can be changed if needed.
- * If the identifier changes, it'll appear as if the options have been reset.
- * 
- */
-
-if( ! function_exists( 'optionsframework_option_name' ) ) {
-	function optionsframework_option_name() {
-	
-		// This gets the theme name from the stylesheet (lowercase and without spaces)
-		if( function_exists( 'wp_get_theme' ) ) {
-			// Use wp_get_theme for WP 3.4+
-			$theme_data = wp_get_theme( get_stylesheet() );
-			$themename = preg_replace('/\W/', '', strtolower( $theme_data->get('Name') ) );
-		} else {
-			// Deprecated theme data retrieval
-			$themename = get_theme_data( get_stylesheet_directory() . '/style.css');
-			$themename = $themename['Name'];
-			$themename = preg_replace('/\W/', '', strtolower( $themename ) );
-		}
-		
-		// This is what ID the options will be saved under in the database. 
-		// By default, it's generated from the current installed theme. 
-		// So that means if you activate a child theme, you'll then need 
-		// re-configure theme options.
-		$themename = apply_filters( 'themeblvd_option_id', $themename );
-
-		// Update option
-		$optionsframework_settings = get_option('optionsframework');
-		$optionsframework_settings['id'] = $themename;
-		update_option('optionsframework', $optionsframework_settings);
 	}
 }

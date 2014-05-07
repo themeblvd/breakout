@@ -1,9 +1,7 @@
 <?php
-/*-----------------------------------------------------------------------------------*/
-/* Run Sidebar Blvd - An addon to Options Framework
-/*-----------------------------------------------------------------------------------*/
-
 /**
+ * Run Sidebar Manager
+ *
  * We check the user-role before running the 
  * sidebars framework.
  *
@@ -29,26 +27,9 @@ add_action( 'init', 'sidebar_blvd_rolescheck' );
 
 if( ! function_exists( 'sidebar_blvd_init' ) ) {	
 	function sidebar_blvd_init() {
-	
 		// Include the required files
 		require_once dirname( __FILE__ ) . '/sidebars-interface.php';
 		require_once dirname( __FILE__ ) . '/sidebars-ajax.php';
-	}
-}
-
-/** 
- * Get the get_option id used for storing sidebars 
- *
- * @since 2.0.0
- */
-
-if( ! function_exists( 'sidebar_blvd_get_option_id' ) ) {
-	function sidebar_blvd_get_option_id() {
-		$of_settings = get_option( 'optionsframework' );
-		$id = null;
-		if( isset( $of_settings['id'] ) )
-			$id = $of_settings['id'].'_sidebars';
-		return $id;
 	}
 }
 
@@ -62,15 +43,15 @@ if ( ! function_exists( 'sidebar_blvd_add_page' ) ) {
 	function sidebar_blvd_add_page() {
 		
 		$title = __( 'Widget Areas', TB_GETTEXT_DOMAIN );
-		$bb_page = add_theme_page( $title, $title, 'edit_theme_options', 'sidebar_blvd', 'sidebar_blvd_page' );
+		$bb_page = add_theme_page( $title, $title, themeblvd_admin_module_cap( 'sidebars' ), 'sidebar_blvd', 'sidebar_blvd_page' );
 		
 		// Adds actions to hook in the required css and javascript
-		add_action( "admin_print_styles-$bb_page", 'optionsframework_load_styles' );
-		add_action( "admin_print_scripts-$bb_page", 'optionsframework_load_scripts' );
-		add_action( "admin_print_styles-$bb_page", 'sidebar_blvd_load_styles' );
-		add_action( "admin_print_scripts-$bb_page", 'sidebar_blvd_load_scripts' );
-		add_action( "admin_print_styles-$bb_page", 'optionsframework_mlu_css', 0 );
-		add_action( "admin_print_scripts-$bb_page", 'optionsframework_mlu_js', 0 );
+		add_action( 'admin_print_styles-'.$bb_page, 'optionsframework_load_styles' );
+		add_action( 'admin_print_scripts-'.$bb_page, 'optionsframework_load_scripts' );
+		add_action( 'admin_print_styles-'.$bb_page, 'sidebar_blvd_load_styles' );
+		add_action( 'admin_print_scripts-'.$bb_page, 'sidebar_blvd_load_scripts' );
+		add_action( 'admin_print_styles-'.$bb_page, 'optionsframework_mlu_css', 0 );
+		add_action( 'admin_print_scripts-'.$bb_page, 'optionsframework_mlu_js', 0 );
 		
 	}
 }
@@ -206,7 +187,6 @@ if ( ! function_exists( 'sidebar_blvd_page_footer' ) ) {
 
 if ( ! function_exists( 'sidebar_blvd_page' ) ) {
 	function sidebar_blvd_page() {
-	
 		sidebar_blvd_page_header();
 		?>
     	<!-- MANAGE SIDEBARS (start) -->

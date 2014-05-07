@@ -121,6 +121,17 @@ if( ! function_exists( 'slider_blvd_recognized_sliders' ) ) {
 				)
 			),
 			array(
+				'id'		=> 'pause_on_hover',
+				'name'		=> __( 'Enable pause on hover?', TB_GETTEXT_DOMAIN ),
+				'std'		=> 'pause_on',
+				'type'		=> 'select',
+				'options'		=> array(
+		            'pause_on'		=> __( 'Pause on hover only.', TB_GETTEXT_DOMAIN ),
+		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', TB_GETTEXT_DOMAIN ),
+		            'disable'		=> __( 'No, disable this all together.', TB_GETTEXT_DOMAIN )
+				)
+			),
+			array(
 				'id'		=> 'mobile_fallback',
 				'name'		=> __( 'How to display on mobile devices?', TB_GETTEXT_DOMAIN ),
 				'std'		=> 'full_list',

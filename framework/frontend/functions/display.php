@@ -622,7 +622,7 @@ if( ! function_exists( 'themeblvd_blog_content_default' ) ) {
 	function themeblvd_blog_content_default( $type ) {
 		if( $type == 'content' ) {
 			// Show full content
-			the_content();
+			the_content( themeblvd_get_local('read_more').' &rarr;' );
 		} else {
 			// Show excerpt and read more button
 			the_excerpt();
@@ -661,5 +661,43 @@ if( ! function_exists( 'themeblvd_element_close_default' ) ) {
 		echo '</div><!-- .element-inner-wrap (end) -->';
 		echo '</div><!-- .element-inner (end) -->';
 		echo '</div><!-- .element (end) -->';
+	}
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* WordPress Multisite
+/*-----------------------------------------------------------------------------------*/
+
+/**
+ * Before sign-up form
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_before_signup_form' ) ) {
+	function themeblvd_before_signup_form() {
+		themeblvd_main_start();
+		themeblvd_main_top();
+		// themeblvd_breadcrumbs();
+		themeblvd_before_layout();
+		echo '<div id="sidebar_layout">';
+		echo '<div class="sidebar_layout-inner">';
+		echo '<div class="grid-protection">';
+	}
+}
+
+/**
+ * After sign-up form
+ *
+ * @since 2.1.0
+ */
+
+if( ! function_exists( 'themeblvd_after_signup_form' ) ) {
+	function themeblvd_after_signup_form() {
+		echo '</div><!-- .grid-protection (end) -->';
+		echo '</div><!-- .sidebar_layout-inner (end) -->';
+		echo '</div><!-- .sidebar-layout-wrapper (end) -->';
+		themeblvd_main_bottom();
+		themeblvd_main_end();
 	}
 }

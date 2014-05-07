@@ -1,9 +1,7 @@
 <?php
-/*-----------------------------------------------------------------------------------*/
-/* Run Slider Blvd - An addon to Options Framework
-/*-----------------------------------------------------------------------------------*/
-
 /**
+ * Run Slider Manager
+ *
  * We check the user-role before running the 
  * sliders framework.
  *
@@ -77,22 +75,6 @@ if( ! function_exists( 'slider_blvd_slider_defaults' ) ) {
 	}
 }
 
-/**
- * Get the get_option id used for storing sliders
- *
- * @since 2.0.0 
- */
-
-if( ! function_exists( 'slider_blvd_get_option_id' ) ) {
-	function slider_blvd_get_option_id() {
-		$of_settings = get_option( 'optionsframework' );
-		$id = null;
-		if( isset( $of_settings['id'] ) )
-			$id = $of_settings['id'].'_sliders';
-		return $id;
-	}
-}
-
 /** 
  * Add a menu page for Sliders
  *
@@ -103,15 +85,15 @@ if ( ! function_exists( 'slider_blvd_add_page' ) ) {
 	function slider_blvd_add_page() {
 		
 		$icon = THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'images/icon-images.png';
-		$sb_page = add_object_page( 'Slider Manager', 'Sliders', 'administrator', 'slider_blvd', 'slider_blvd_page', $icon, 31 );
+		$sb_page = add_object_page( 'Slider Manager', 'Sliders', themeblvd_admin_module_cap( 'sliders' ), 'slider_blvd', 'slider_blvd_page', $icon, 31 );
 		
 		// Adds actions to hook in the required css and javascript
-		add_action( "admin_print_styles-$sb_page", 'optionsframework_load_styles' );
-		add_action( "admin_print_scripts-$sb_page", 'optionsframework_load_scripts' );
-		add_action( "admin_print_styles-$sb_page", 'slider_blvd_load_styles' );
-		add_action( "admin_print_scripts-$sb_page", 'slider_blvd_load_scripts' );
-		add_action( "admin_print_styles-$sb_page", 'optionsframework_mlu_css', 0 );
-		add_action( "admin_print_scripts-$sb_page", 'optionsframework_mlu_js', 0 );
+		add_action( 'admin_print_styles-'.$sb_page, 'optionsframework_load_styles' );
+		add_action( 'admin_print_scripts-'.$sb_page, 'optionsframework_load_scripts' );
+		add_action( 'admin_print_styles-'.$sb_page, 'slider_blvd_load_styles' );
+		add_action( 'admin_print_scripts-'.$sb_page, 'slider_blvd_load_scripts' );
+		add_action( 'admin_print_styles-'.$sb_page, 'optionsframework_mlu_css', 0 );
+		add_action( 'admin_print_scripts-'.$sb_page, 'optionsframework_mlu_js', 0 );
 		
 	}
 }
@@ -294,7 +276,6 @@ if ( ! function_exists( 'slider_blvd_page_footer' ) ) {
 if ( ! function_exists( 'slider_blvd_page' ) ) {
 	function slider_blvd_page() {
 		$types = slider_blvd_recognized_sliders();
-		$sliders = get_option( slider_blvd_get_option_id() );
 		slider_blvd_page_header();
 		?>
     	<!-- MANAGE SLIDER (start) -->
@@ -306,7 +287,7 @@ if ( ! function_exists( 'slider_blvd_page' ) ) {
 				echo '<input type="hidden" name="option_page" value="optionsframework_manage_sliders" />';
 				echo '<input type="hidden" name="_wpnonce" value="'.$manage_nonce.'" />';
 				?>
-				<div class="ajax-mitt"><?php slider_blvd_manage( $types, $sliders ); ?></div>
+				<div class="ajax-mitt"><?php slider_blvd_manage(); ?></div>
 			</form><!-- #manage_sliders (end) -->
 		</div><!-- #manage (end) -->
 		

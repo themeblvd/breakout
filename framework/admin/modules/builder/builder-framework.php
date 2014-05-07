@@ -1,9 +1,7 @@
 <?php
-/*-----------------------------------------------------------------------------------*/
-/* Run Builder Blvd - An addon to Options Framework
-/*-----------------------------------------------------------------------------------*/
-
 /**
+ * Run Layout Builder
+ * 
  * We check the user-role before running the 
  * builder framework.
  *
@@ -38,22 +36,6 @@ if( ! function_exists( 'builder_blvd_init' ) ) {
 }
 
 /**
- * Get the get_option id used for storing builder
- *
- * @since 2.0.0
- */
-
-if( ! function_exists( 'builder_blvd_get_option_id' ) ) {
-	function builder_blvd_get_option_id() {
-		$of_settings = get_option( 'optionsframework' );
-		$id = null;
-		if( isset( $of_settings['id'] ) )
-			$id = $of_settings['id'].'_builder';
-		return $id;
-	}
-}
-
-/**
  * Add a menu page for Builder
  *
  * @since 2.0.0 
@@ -63,15 +45,15 @@ if ( ! function_exists( 'builder_blvd_add_page' ) ) {
 	function builder_blvd_add_page() {
 	
 		$icon = THEMEBLVD_ADMIN_ASSETS_DIRECTORY . 'images/icon-builder.png';
-		$bb_page = add_object_page( 'Layout Builder', 'Builder', 'administrator', 'builder_blvd', 'builder_blvd_page', $icon, 30 );
+		$bb_page = add_object_page( 'Layout Builder', 'Builder', themeblvd_admin_module_cap( 'builder' ), 'builder_blvd', 'builder_blvd_page', $icon, 30 );
 		
 		// Adds actions to hook in the required css and javascript
-		add_action( "admin_print_styles-$bb_page", 'optionsframework_load_styles' );
-		add_action( "admin_print_scripts-$bb_page", 'optionsframework_load_scripts' );
-		add_action( "admin_print_styles-$bb_page", 'builder_blvd_load_styles' );
-		add_action( "admin_print_scripts-$bb_page", 'builder_blvd_load_scripts' );
-		add_action( "admin_print_styles-$bb_page", 'optionsframework_mlu_css', 0 );
-		add_action( "admin_print_scripts-$bb_page", 'optionsframework_mlu_js', 0 );
+		add_action( 'admin_print_styles-'.$bb_page, 'optionsframework_load_styles' );
+		add_action( 'admin_print_scripts-'.$bb_page, 'optionsframework_load_scripts' );
+		add_action( 'admin_print_styles-'.$bb_page, 'builder_blvd_load_styles' );
+		add_action( 'admin_print_scripts-'.$bb_page, 'builder_blvd_load_scripts' );
+		add_action( 'admin_print_styles-'.$bb_page, 'optionsframework_mlu_css', 0 );
+		add_action( 'admin_print_scripts-'.$bb_page, 'optionsframework_mlu_js', 0 );
 		
 	}
 }
