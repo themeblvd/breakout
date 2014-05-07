@@ -402,6 +402,24 @@ function breakout_wpml_theme_locations( $current_locations ) {
 }
 add_filter( 'tb_wpml_theme_locations', 'breakout_wpml_theme_locations' );
 
+/**
+ * Modify recommended plugins.
+ *
+ * @since 2.0.0
+ */
+function breakout_plugins( $plugins ){
+
+	// Add Twitter
+	$plugins['tweeple'] = array(
+		'name'		=> 'Tweeple',
+		'slug'		=> 'tweeple',
+		'required'	=> false
+	);
+
+	return $plugins;
+}
+add_filter( 'themeblvd_plugins', 'breakout_plugins' );
+
 /*-----------------------------------------------------------------------------------*/
 /* Theme Blvd Hooked Functions
 /*
@@ -431,21 +449,6 @@ function breakout_social_media() {
 		<?php endif; ?>
 	</div><!-- .header-addon (end) -->
 	<?php
-}
-endif;
-
-if( ! function_exists( 'breakout_social_media' ) ) :
-/**
- * Featured slider on blog
- *
- * @since 1.0.0
- */
-function breakout_featured_blog() {
-	if( themeblvd_get_option( 'blog_featured' ) ){
-		echo '<div class="element">';
-		themeblvd_slider( themeblvd_get_option( 'blog_slider' ) );
-		echo '</div>';
-	}
 }
 endif;
 
@@ -571,7 +574,6 @@ endif;
 
 // Remove hooks
 remove_action( 'themeblvd_featured_end', 'themeblvd_featured_end_default' );
-remove_action( 'themeblvd_featured_blog', 'themeblvd_featured_blog_default' );
 remove_action( 'themeblvd_footer_sub_content', 'themeblvd_footer_sub_content_default' );
 remove_action( 'themeblvd_blog_meta', 'themeblvd_blog_meta_default' );
 remove_action( 'themeblvd_featured_below_start', 'themeblvd_featured_below_start_default' );
@@ -580,7 +582,6 @@ remove_action( 'themeblvd_featured_below_end', 'themeblvd_featured_below_end_def
 // Add hooks
 add_action( 'themeblvd_header_addon', 'breakout_social_media' );
 add_action( 'themeblvd_featured_end', 'breakout_featured_end' );
-add_action( 'themeblvd_featured_blog', 'breakout_featured_blog' );
 add_action( 'themeblvd_footer_sub_content', 'breakout_footer_sub_content' );
 add_action( 'themeblvd_blog_meta', 'breakout_blog_meta' );
 add_action( 'themeblvd_featured_below_start', 'breakout_featured_below_start' );
