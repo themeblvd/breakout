@@ -456,25 +456,6 @@ function breakout_social_media() {
 }
 endif;
 
-if( ! function_exists( 'breakout_featured_end' ) ) :
-/**
- * End of Featured section (adds the secondary bg panel)
- *
- * @since 1.0.0
- */
-function breakout_featured_end() {
-	?>
-				<div class="clear"></div>
-			</div><!-- .featured-content (end) -->
-			<div class="secondary-bg"></div>
-		</div><!-- .featured-inner (end) -->
-	</div><!-- #featured (end) -->
-
-	<!-- FEATURED (end) -->
-	<?php
-}
-endif;
-
 if( ! function_exists( 'breakout_footer_sub_content' ) ) :
 /**
  * Copyright
@@ -528,65 +509,15 @@ function breakout_blog_meta() {
 }
 endif;
 
-if( ! function_exists( 'breakout_featured_below_start' ) ) :
-/**
- * Featured below start
- *
- * @since 1.0.0
- */
-function breakout_featured_below_start() {
-	$classes = '';
-	$featured_below = themeblvd_config( 'featured_below' );
-	if( $featured_below ) {
-		foreach( $featured_below as $class )
-			$classes .= " $class";
-
-	}
-	?>
-	<!-- FEATURED BELOW (start) -->
-
-	<div id="featured_below">
-		<div class="featured_below-inner<?php echo $classes; ?>">
-			<div class="featured_below-content">
-				<div class="inner-wrapper">
-	<?php
-}
-endif;
-
-if( ! function_exists( 'breakout_featured_below_end' ) ) :
-/**
- * Featured below end
- *
- * @since 1.0.0
- */
-function breakout_featured_below_end() {
-	?>
-					<div class="clear"></div>
-				</div><!-- .inner-wrap (end) -->
-			</div><!-- .featured_below-content (end) -->
-		</div><!-- .featured_below-inner (end) -->
-	</div><!-- #featured_below (end) -->
-
-	<!-- FEATURED BELOW (end) -->
-	<?php
-}
-endif;
-
 /*-----------------------------------------------------------------------------------*/
 /* Hook Adjustments on framework
 /*-----------------------------------------------------------------------------------*/
 
 // Remove hooks
-remove_action( 'themeblvd_featured_end', 'themeblvd_featured_end_default' );
 remove_action( 'themeblvd_footer_sub_content', 'themeblvd_footer_sub_content_default' );
 remove_action( 'themeblvd_blog_meta', 'themeblvd_blog_meta_default' );
-remove_action( 'themeblvd_featured_below_start', 'themeblvd_featured_below_start_default' );
-remove_action( 'themeblvd_featured_below_end', 'themeblvd_featured_below_end_default' );
 
 // Add hooks
 add_action( 'themeblvd_header_addon', 'breakout_social_media' );
-add_action( 'themeblvd_featured_end', 'breakout_featured_end' );
 add_action( 'themeblvd_footer_sub_content', 'breakout_footer_sub_content' );
 add_action( 'themeblvd_blog_meta', 'breakout_blog_meta' );
-add_action( 'themeblvd_featured_below_start', 'breakout_featured_below_start' );
-add_action( 'themeblvd_featured_below_end', 'breakout_featured_below_end' );
