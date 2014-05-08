@@ -174,24 +174,24 @@ function breakout_options() {
 			'name' 		=> __( 'Primary Font', 'themeblvd' ),
 			'desc' 		=> __( 'This applies to most of the text on your site.', 'themeblvd' ),
 			'id' 		=> 'typography_body',
-			'std' 		=> array('size' => '12px','face' => 'arial','color' => '', 'google' => ''),
-			'atts'		=> array('size', 'face'),
+			'std' 		=> array('size' => '12px', 'style' => 'normal', 'face' => 'arial', 'color' => '', 'google' => ''),
+			'atts'		=> array('size', 'style', 'face'),
 			'type' 		=> 'typography'
 		),
 		array(
 			'name' 		=> __( 'Header Font', 'themeblvd' ),
 			'desc' 		=> __( 'This applies to all of the primary headers throughout your site (h1, h2, h3, h4, h5, h6). This would include header tags used in redundant areas like widgets and the content of posts and pages.', 'themeblvd' ),
 			'id' 		=> 'typography_header',
-			'std' 		=> array('size' => '','face' => 'helvetica','color' => '', 'google' => ''),
-			'atts'		=> array('face'),
+			'std' 		=> array('size' => '', 'style' => 'bold', 'face' => 'helvetica', 'color' => '', 'google' => ''),
+			'atts'		=> array('style', 'face'),
 			'type' 		=> 'typography'
 		),
 		array(
 			'name' 		=> __( 'Special Font', 'themeblvd' ),
 			'desc' 		=> __( 'It can be kind of overkill to select a super fancy font for the previous option, but here is where you can go crazy. There are a few special areas in this theme where this font will get used.', 'themeblvd' ),
 			'id' 		=> 'typography_special',
-			'std' 		=> array('size' => '','face' => 'google','color' => '', 'google' => 'Josefin Sans'),
-			'atts'		=> array('face'),
+			'std' 		=> array('size' => '', 'style' => 'normal', 'face' => 'google','color' => '', 'google' => 'Josefin Sans'),
+			'atts'		=> array('style', 'face'),
 			'type' 		=> 'typography'
 		)
 	);
