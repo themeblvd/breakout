@@ -301,7 +301,7 @@ function breakout_sample_layouts() {
 			'defaults' => array(
 	            'setup' => array (
 					'num' => 2,
-					'style' => 'open',
+					'style' => 'framed',
 					'names' => array(
 						'tab_1' => 'Why Breakout?',
 						'tab_2' => 'From the Portfolio'
@@ -319,7 +319,40 @@ function breakout_sample_layouts() {
 					'raw_format' => 0
 				)
 	        )
-		)
+		),
+		array(
+			'type' => 'columns',
+			'location' => 'primary',
+			'defaults' => array(
+	           'setup' => array(
+					'num' => '3',
+					'width' => array(
+						'2' => 'grid_6-grid_6',
+						'3' => 'grid_4-grid_4-grid_4',
+						'4' => 'grid_3-grid_3-grid_3-grid_3',
+						'5' => 'grid_fifth_1-grid_fifth_1-grid_fifth_1-grid_fifth_1-grid_fifth_1'
+					)
+				),
+		       'col_1' => array(
+					'type'			=> 'raw',
+					'page' 			=> null,
+					'raw'			=> "<div class=\"text-center\">\n[vector_icon icon=\"star\" class=\"fa-5x\" color=\"#444\"]\n\n<h3>Hello, Breakout!</h3>\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n</div>\n\n<div class=\"text-center\">\n[vector_icon icon=\"users\" class=\"fa-5x\" color=\"#444\"]\n\n<h3>For Everyone</h3>\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n</div>",
+					'raw_format'	=> 1
+				),
+                'col_2' => array(
+					'type'			=> 'raw',
+					'page'			=> null,
+					'raw'			=> "<div class=\"text-center\">\n[vector_icon icon=\"mobile\" class=\"fa-5x\" color=\"#444\"]\n\n<h3>Totally Responsive</h3>\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n</div>\n\n<div class=\"text-center\">\n[vector_icon icon=\"wrench\" class=\"fa-5x\" color=\"#444\"]\n\n<h3>Completely Customizable</h3>\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n</div>",
+					'raw_format'	=> 1
+				),
+                'col_3' => array(
+					'type'			=> 'raw',
+					'page'			=> null,
+					'raw'			=> "<div class=\"text-center\">\n[vector_icon icon=\"magic\" class=\"fa-5x\" color=\"#444\"]\n\n<h3>Pixel-Perfect</h3>\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n</div>\n\n<div class=\"text-center\">\n[vector_icon icon=\"question\" class=\"fa-5x\" color=\"#444\"]\n\n<h3>Outstanding Support</h3>\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n</div>",
+					'raw_format'	=> 1
+				)
+		    )
+		),
 	);
 	themeblvd_add_sample_layout( 'breakout', 'Breakout Homepage', get_template_directory_uri().'/assets/images/sample-breakout.png', 'full_width', $elements );
 
@@ -415,13 +448,36 @@ add_filter( 'themeblvd_plugins', 'breakout_plugins' );
  * Apply gradient buttons, which were default
  * before Bootstrap 3.
  *
- * @since 2.1.0
+ * @since 2.0.0
  */
 function akita_btn_gradient( $class ) {
 	$class[] = 'tb-btn-gradient';
 	return $class;
 }
 add_filter( 'body_class', 'akita_btn_gradient' );
+
+/**
+ * Element classes. Added "boxed-element" class to all
+ * relvant elements.
+ *
+ * @since 2.0.0
+ */
+function breakout_element_classes( $classes, $type, $options, $location ) {
+
+	$classes['element_content'][] = 'boxed-element';
+	$classes['element_post_grid'][] = 'boxed-element';
+	$classes['element_post_list'][] = 'boxed-element';
+	$classes['element_columns'][] = 'boxed-element';
+	$classes['element_post_grid_slider'][] = 'boxed-element';
+	$classes['element_post_list_slider'][] = 'boxed-element';
+	$classes['element_slogan'][] = 'boxed-element';
+	$classes['element_tweet'][] = 'boxed-element';
+
+	$classes['element_slider'][] = 'top-shadow';
+
+	return $classes;
+}
+add_filter( 'themeblvd_element_classes', 'breakout_element_classes', 10, 4 );
 
 /*-----------------------------------------------------------------------------------*/
 /* Theme Blvd Hooked Functions
