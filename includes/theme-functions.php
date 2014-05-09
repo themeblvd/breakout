@@ -136,6 +136,10 @@ function breakout_styles() {
 		background-repeat: <?php echo $textures[$header_texture]['repeat']; ?>;
 		<?php endif; ?>
 	}
+	.standard-slider .media-full .content .slide-title,
+	.tb-nivo-slider-wrapper .nivo-caption .content .slide-title {
+		background-color: <?php echo themeblvd_get_option('header_color'); ?>;
+	}
 	/* Footer Color and Texture */
 	body,
 	#bottom,
@@ -175,34 +179,6 @@ function breakout_styles() {
 	#bottom .widget ul li a:hover {
 		color: <?php echo themeblvd_get_option('footer_link_hover_color'); ?>;
 	}
-	<?php if( themeblvd_get_option( 'responsive_css' ) == 'false' ) : ?>
-	/* Non-Responsive Structure */
-	#top #branding .content,
-	#main .main-content,
-	#featured .featured-content,
-	#colophon .footer_content,
-	#colophon #footer_sub_content,
-	#colophon .footer-below {
-		width: 960px;
-	}
-	#top #branding .content {
-		width: 976px;
-	}
-	#colophon #footer_sub_content {
-		width: 980px;
-	}
-	<?php else : ?>
-		<?php if( themeblvd_get_option( 'mobile_nav' ) == 'mobile_nav_select' ) : ?>
-		@media (max-width: 480px) {
-			#access {
-				display:none;
-			}
-			.responsive-nav {
-				display: block;
-			}
-		}
-		<?php endif; ?>
-	<?php endif; ?>
 	<?php
 	// Compress inline styles
 	$styles = themeblvd_compress( ob_get_clean() );
@@ -257,9 +233,15 @@ add_action( 'wp_head', 'breakout_include_fonts', 5 );
  * Styles selected in Theme Options panel.
  */
 function breakout_body_class( $classes ) {
+
 	$classes[] = themeblvd_get_option( 'content_color' );
 	$classes[] = themeblvd_get_option( 'header_text' );
 	$classes[] = themeblvd_get_option( 'footer_text' );
+
+	if ( themeblvd_supports( 'display', 'responsive' ) ) {
+		$classes[] = 'responsive';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'breakout_body_class' );
@@ -550,6 +532,20 @@ function breakout_blog_meta() {
 }
 endif;
 
+if ( !function_exists( 'breakout_viewport_non_responsive' ) ) :
+/**
+ * Output meta viewport tag when the user turns OFF
+ * responsive design.
+ *
+ * @since 2.0.0
+ */
+function breakout_viewport_non_responsive() {
+	if ( ! themeblvd_supports( 'display', 'responsive' ) ) {
+		echo '<meta name="viewport" content="width=1020">'."\n";
+	}
+}
+endif;
+
 /*-----------------------------------------------------------------------------------*/
 /* Hook Adjustments on framework
 /*-----------------------------------------------------------------------------------*/
@@ -562,3 +558,4 @@ remove_action( 'themeblvd_blog_meta', 'themeblvd_blog_meta_default' );
 add_action( 'themeblvd_header_addon', 'breakout_social_media' );
 add_action( 'themeblvd_footer_sub_content', 'breakout_footer_sub_content' );
 add_action( 'themeblvd_blog_meta', 'breakout_blog_meta' );
+add_action( 'wp_head', 'breakout_viewport_non_responsive' );
