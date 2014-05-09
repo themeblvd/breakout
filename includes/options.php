@@ -38,24 +38,6 @@ function breakout_options() {
 			'std'		=> 'diagnol_thin_light',
 			'type' 		=> 'select',
 			'options'	=> $texture_options
-		),
-		array(
-			'name' 		=> __( 'Accent Color', 'themeblvd' ),
-			'desc' 		=> __( 'This color gets applied to some minor items throughout the theme such as the default color of buttons and elements within sliders.', 'themeblvd' ),
-			'id' 		=> 'accent_color',
-			'std' 		=> '#28313c',
-			'type' 		=> 'color'
-		),
-		array(
-			'name' 		=> __( 'Accent Color Brightness', 'themeblvd' ),
-			'desc' 		=> __( 'In the previous option, did you choose a dark color or a light color? This will determine how text is styled in the areas with this background color.', 'themeblvd' ),
-			'id' 		=> 'accent_text',
-			'std' 		=> 'accent_text_light',
-			'type' 		=> 'select',
-			'options'	=> array(
-				'accent_text_light' => __( 'I chose a dark color in the previous option.', 'themeblvd' ),
-				'accent_text_dark' => __( 'I chose a light color in the previous option.', 'themeblvd' )
-			)
 		)
 	);
 	themeblvd_add_option_section( 'styles', 'main_styles', __( 'Main', 'themeblvd' ), null, $main_options, false );

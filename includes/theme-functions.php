@@ -125,19 +125,6 @@ function breakout_styles() {
 		background-repeat: <?php echo $textures[$content_texture]['repeat']; ?>;
 		<?php endif; ?>
 	}
-	/* Accent Color */
-	#featured .media-full .slide-title span,
-	#content .media-full .slide-title span,
-	#featured_below .media-full .slide-title span,
-	.standard-slider .image-link,
-	.carrousel-slider .image-link {
-		background-color: <?php echo $accent_color; ?>;
-		<?php if( 'accent_text_dark' == themeblvd_get_option( 'accent_text' ) ) : ?>
-		color: #666666;
-		<?php else : ?>
-		color: #ffffff;
-		<?php endif; ?>
-	}
 	/* Header Color and Texture */
 	#top {
 		background-color: <?php echo themeblvd_get_option('header_color'); ?>;
