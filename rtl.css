@@ -6,152 +6,257 @@ it's just a matter of overwriting all the horizontal positioning attributes
 of your CSS stylesheet in a separate stylesheet file named rtl.css.
 
 http://codex.wordpress.org/Right_to_Left_Language_Support
-
 */
 
-/* =Framework
+/* =Global RTL
 ----------------------------------------------- */
-
-.sf-menu li { float:right; }
-.sf-menu li:hover ul, .sf-menu li.sfHover ul { left:inherit;right:0; }
-ul.sf-menu li li:hover ul,ul.sf-menu li li.sfHover ul,ul.sf-menu li li li:hover ul,ul.sf-menu li li li.sfHover ul { left:inherit; right:10em; }
-.sf-sub-indicator { right:inherit; left:.75em; }
-.themeblvd-contact-bar li { float:right; }
-.themeblvd-search input.search-input { float:right; }
-.dropcap { float:right; margin:5px 0 0 7px; }
-.tb-tabs .tab-nav ul li { float:right; }
-.tb-tabs-framed .tab-nav ul li a, .tb-tabs-open .tab-nav ul li a { margin:0 0 0 2px; }
-.element-tweet .tweet-icon { float:right;margin:0 0 0 30px; }
-.themeblvd-search input[type="submit"] { float:left; margin:3px 0 0 5px; }
-.element-slogan .has_button .tb-button { float:left; margin:0 20px 0 0; }
-.tb-toggle a.toggle-trigger span { right:10px; left:inherit; }
-.tb-button, input[type=submit] { margin: 5px 0 5px 10px; }
-
-
-/* =Global Elements and Typography
--------------------------------------------------------------- */
 
 body {
 	direction: rtl;
 	unicode-bidi: embed;
 }
-caption, th, td {
-	text-align: right;
-}
-ul, ol {
-	margin: 0 2.5em 1.625em 0;
-}
 
-/* =Content
+/* =Theme Blvd Framework
 ----------------------------------------------- */
 
-.pagination li {
-	float: right;
-	padding: 0 0 0 3px;
-}
-.entry-content td,
-.comment-content td {
-	padding: 6px 0 6px 10px;
-}
-#content .gallery-columns-4 .gallery-item {
-	padding-left:2%;
-}
+@import url('framework/frontend/assets/css/rtl.css');
 
 /* =Post List
 ----------------------------------------------- */
 
-.post_list_paginated .read-more {
-	right: inherit;
-	left: 0;
+.entry-meta .category {
+	padding-right: 10px;
+}
+.entry-meta .comments-link {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-left: none;
+	padding-right: 10px;
+	padding-left: 0;
 }
 
 /* =Comments
 ----------------------------------------------- */
 
 #comments .comment-body {
-	padding: 15px 83px 15px 15px;
+	padding: 15px;
+	padding-right: 83px;
 }
 #comments .comment-body .avatar {
 	right: 15px;
 	left: inherit;
 }
 #comments .comment-body .reply a {
-	border-left: none;
-	border-right: 1px solid #e1e1e1;
 	right: inherit;
-	left: 0;
+	left: 5px;
 }
 #comments ul.children {
+	border-left: none;
+	border-right: 1px solid #e9e9e9;
 	margin: 10px 15px 10px 0;
-	padding: 0 20px 10px 0;
+	padding: 10px 20px 10px 0;
 }
-#commentform input {
-	margin: 0 0 0 10px;
+#commentform input[type=text] {
+	margin-right: 0;
+	margin-left: 10px;
 }
 
 /* =Header
 -------------------------------------------------------------- */
 
-#branding .social-media {
+/* Contact Buttons */
+#branding .header-addon {
 	right: inherit;
-	left: 30px;
+	left: 35px;
 }
-#access ul ul {
-	margin: 0 -1px 0 0;
+#branding .themeblvd-contact-bar ul {
+	float: left;
 }
-#access li {
-	border-right: none;
-	border-left: 1px solid #e1e1e1;
+#branding .header-text {
+	text-align: left;
+}
+
+/* Primary Navigation */
+#access ul {
 	float: right;
 }
-#access li a.sf-with-ul {
-	padding-left: 2.4em;
+#primary-menu > li {
+	background-position: left 0;
+	float: right;
+	padding-right: 0;
+	padding-left: 2px;
 }
-#access ul.sf-menu li li:hover ul,
-#access ul.sf-menu li li.sfHover ul,
-#access ul.sf-menu li li li:hover ul,
-#access ul.sf-menu li li li.sfHover ul {
+#primary-menu > li:first-child {
+	margin-right: -6px;
+	margin-left: 0;
+}
+#primary-menu > li > a.sf-with-ul {
+	padding-right: inherit;
+	padding-left: 37px;
+}
+#primary-menu li li:hover ul,
+#primary-menu li li.sfHover ul,
+#primary-menu li li li:hover ul,
+#primary-menu li li li.sfHover ul {
 	left: inherit;
 	right: 200px; /* Matches previous ul width */
+}
+#primary-menu li a > .sf-sub-indicator {
+	right: inherit;
+	left: 15px;
+}
+#primary-menu li li a > .sf-sub-indicator {
+	right: inherit;
+	left: 10px;
+}
+#primary-menu > [class^="menu-icon-"] > a {
+	padding-left: inherit;
+	padding-right: 15px;
+}
+
+/* Responsive Toggle */
+#top .btn-navbar {
+	margin-left: 0;
+	margin-right: 15px;
 }
 
 /* =Widgets
 ----------------------------------------------- */
 
 .widget ul ul {
-	margin-left: 0;
-	margin-right: 1.5em;
-}
-
-/* =Plugins
------------------------------------------------ */
-
-/* Contact Form 7 */
-div.wpcf7 input,
-div.wpcf7 select {
-	margin-right: 0;
-	margin-left: 10px;
+	padding-left: 0;
+	padding-right: 1.5em;
 }
 
 /* =Builder
 ----------------------------------------------- */
 
-.element-post_list .post_list .read-more,
-.element-post_list_slider .post_list .read-more {
-	float: left;
-}
-.element-post_list_paginated .read-more {
-	right: inherit;
-	left: 0;
+/* Headline */
+#content .element-headline {
+	padding-left: 0;
+	padding-right: 5px;
 }
 
-/* =IE7
+/* Sliders: Full-Width Image Slides */
+.standard-slider .media-full .content,
+.tb-nivo-slider-wrapper .nivo-caption {
+	right: 2%;
+	left: inherit;
+}
+
+/* Post List */
+.element-post_list .tags,
+.element-post_list_slider .tags {
+	float: right;
+}
+
+/* =WPML Bridge
 ----------------------------------------------- */
 
-#main #content, 
-#main .fixed-sidebar {
-	*margin-left:-1px;  /* IE7 */
+.header-addon-with-wpml .social-media {
+	float: left;
 }
-.last {
-	*margin-lfet: -20px; /* IE7 Fix */
+.header-addon-with-wpml .tb-wpml-flaglist {
+	float: left;
+	margin-right: 0;
+	margin-left: 5px;
+}
+#wrapper #access .tb-wpml-flaglist {
+	float: left;
+	margin: 10px 0 0 10px;
+}
+#breadcrumbs .tb-wpml-breadcrumbs .tb-wpml-flaglist {
+	margin-right: 0;
+	margin-left: 10px;
+}
+
+/* =Responsive Structure
+------------------------------------------------- */
+
+/* Optimized for Tablets */
+@media (max-width: 992px) {
+
+	/* Main Menu */
+	#access li a.sf-with-ul {
+		padding-right: inherit;
+		padding-left: 28px;
+	}
+	#access li a > .sf-sub-indicator {
+		left: 10px;
+	}
+	#access ul.sf-menu > [class^="menu-icon-"] > a {
+		padding-left: inherit;
+		padding-right: 8px;
+	}
+
+}
+
+/* Optimized for Mobile Devices */
+@media (max-width: 767px) {
+
+	/* Header */
+	#branding .header_logo {
+		float: none;
+	}
+	#branding .header-addon {
+		margin: 0;
+	}
+	#branding .themeblvd-contact-bar ul {
+		float: none;
+	}
+	#branding .themeblvd-contact-bar li {
+		float: none;
+	}
+
+	/* Main Menu */
+	#access ul,
+	#access li {
+		float: none;
+	}
+	#primary-menu li li a {
+		padding-left: 10px !important;
+	}
+	#primary-menu li li a {
+		padding-right: 10px;
+	}
+	#primary-menu li li li a {
+		padding-right: 25px;
+	}
+	#primary-menu li li li li a {
+		padding-right: 40px;
+	}
+
+	/* Posts */
+	.attachment-small {
+		float: none;
+		margin-left: 0;
+	}
+
+	/* Comments */
+	#comments .comment-body {
+		padding: 15px 15px 25px 15px;
+	}
+	#comments .comment-body .comment-author,
+	#comments .comment-body .comment-meta {
+		padding-left: 15px;
+		padding-right: 60px;
+	}
+	#comments ul.children {
+		margin-right: 0;
+		padding-right: 0;
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+
+	/* Slogan */
+	.element-slogan .tb-slogan [class*="btn"] {
+		float: none;
+	}
+
+	/* Post Grids */
+	.post_grid .featured-image-wrapper div.featured-image {
+		margin-left: auto;
+	    margin-right: auto;
+	}
+
 }
