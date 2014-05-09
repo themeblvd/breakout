@@ -468,8 +468,6 @@ function breakout_element_classes( $classes, $type, $options, $location ) {
 	$classes['element_post_grid'][] = 'boxed-element';
 	$classes['element_post_list'][] = 'boxed-element';
 	$classes['element_columns'][] = 'boxed-element';
-	$classes['element_post_grid_slider'][] = 'boxed-element';
-	$classes['element_post_list_slider'][] = 'boxed-element';
 	$classes['element_slogan'][] = 'boxed-element';
 	$classes['element_tweet'][] = 'boxed-element';
 
