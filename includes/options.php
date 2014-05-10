@@ -415,11 +415,9 @@ function breakout_customizer(){
 			'id'		=> 'content_color',
 			'type' 		=> 'select',
 			'options'	=> array(
-				'content_dark' => __( 'Dark', 'themeblvd' ),
-				'content_light' => __( 'Light', 'themeblvd' ),
-				'content_tan' => __( 'Tan', 'themeblvd' )
-			),
-			'transport'	=> 'postMessage'
+				'content_dark' 	=> __( 'Dark', 'themeblvd' ),
+				'content_light' => __( 'Light', 'themeblvd' )
+			)
 		),
 		'content_texture' => array(
 			'name' 		=> __( 'Content Background Texture', 'themeblvd' ),
@@ -427,20 +425,6 @@ function breakout_customizer(){
 			'type' 		=> 'select',
 			'options'	=> $texture_options,
 			'transport'	=> 'postMessage'
-		),
-		'accent_color' => array(
-			'name' 		=> __( 'Accent Color', 'themeblvd' ),
-			'id' 		=> 'accent_color',
-			'type' 		=> 'color'
-		),
-		'accent_text' => array(
-			'name' 		=> __( 'Accent Color Brightness', 'themeblvd' ),
-			'id' 		=> 'accent_text',
-			'type' 		=> 'radio',
-			'options'	=> array(
-				'accent_text_light' => __( 'I chose a dark color in the previous option.', 'themeblvd' ),
-				'accent_text_dark' => __( 'I chose a light color in the previous option.', 'themeblvd' )
-			)
 		)
 	);
 	themeblvd_add_customizer_section( 'main', __( 'Main', 'themeblvd' ), $main_options, 101 );
@@ -583,7 +567,7 @@ function breakout_customizer_preview( $wp_customize ){
 			/* Header Color */
 			wp.customize('<?php echo $option_name; ?>[header_color]',function( value ) {
 				value.bind(function(color) {
-					$('#top').css('background-color', color );
+					$('#top, .slide-title').css('background-color', color );
 				});
 			});
 
@@ -606,7 +590,7 @@ function breakout_customizer_preview( $wp_customize ){
 			/* Header Texture */
 			wp.customize('<?php echo $option_name; ?>[header_texture]',function( value ) {
 				value.bind(function(texture) {
-					$('#top').css('background-image', 'url('+template_url+'/framework/frontend/assets/images/textures/'+texture+'.png)' );
+					$('#top').css('background-image', 'url('+template_url+'/framework/assets/images/textures/'+texture+'.png)' );
 				});
 			});
 
@@ -634,7 +618,7 @@ function breakout_customizer_preview( $wp_customize ){
 			/* Content Texture */
 			wp.customize('<?php echo $option_name; ?>[content_texture]',function( value ) {
 				value.bind(function(texture) {
-					$('#wrapper').css('background-image', 'url('+template_url+'/framework/frontend/assets/images/textures/'+texture+'.png)' );
+					$('#wrapper').css('background-image', 'url('+template_url+'/framework/assets/images/textures/'+texture+'.png)' );
 				});
 			});
 
@@ -668,7 +652,7 @@ function breakout_customizer_preview( $wp_customize ){
 			/* Footer Texture */
 			wp.customize('<?php echo $option_name; ?>[footer_texture]',function( value ) {
 				value.bind(function(texture) {
-					$('body, #bottom, #bottom .copyright span').css('background-image', 'url('+template_url+'/framework/frontend/assets/images/textures/'+texture+'.png)');
+					$('body, #bottom, #bottom .copyright span').css('background-image', 'url('+template_url+'/framework/assets/images/textures/'+texture+'.png)');
 				});
 			});
 
