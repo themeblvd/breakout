@@ -155,16 +155,6 @@ article .entry-title a {
 	border-color: #000000;
 }
 
-/* Tabs (match boxed elements) */
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-	border-color: #000000;
-}
-.tb-tabs-framed .tab-content {
-	border-color: #000000;
-}
-
 /* Post List/Grid */
 .lead-link {
 	color: #ffffff;
