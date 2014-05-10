@@ -20,8 +20,6 @@ require_once( get_template_directory() . '/includes/options.php' );
  */
 function breakout_css() {
 
-	// @TODO CHANGE CSS FILES TO MIN
-
 	// For plugins not inserting their scripts/stylesheets
 	// correctly in the admin.
 	if ( is_admin() ) {
@@ -37,9 +35,9 @@ function breakout_css() {
 
 	$template_directory_uri = get_template_directory_uri();
 
-	wp_register_style( 'themeblvd_breakout', $template_directory_uri . '/assets/css/theme.css', $api->get_framework_deps(), $theme_version );
-	wp_register_style( 'themeblvd_dark', $template_directory_uri . '/assets/css/dark.css', array('themeblvd_breakout'), $theme_version );
-	wp_register_style( 'themeblvd_responsive', $template_directory_uri . '/assets/css/responsive.css', array('themeblvd_breakout'), $theme_version );
+	wp_register_style( 'themeblvd_breakout', $template_directory_uri . '/assets/css/theme.min.css', $api->get_framework_deps(), $theme_version );
+	wp_register_style( 'themeblvd_dark', $template_directory_uri . '/assets/css/dark.min.css', array('themeblvd_breakout'), $theme_version );
+	wp_register_style( 'themeblvd_responsive', $template_directory_uri . '/assets/css/responsive.min.css', array('themeblvd_breakout'), $theme_version );
 	wp_register_style( 'themeblvd_ie', $template_directory_uri . '/assets/css/ie.css', array('themeblvd_breakout'), $theme_version );
 	wp_register_style( 'themeblvd_theme', get_stylesheet_uri(), array('themeblvd_breakout'), $theme_version );
 
