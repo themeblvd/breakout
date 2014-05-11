@@ -4,8 +4,74 @@ Breakout Changelog
 2.0.0
 -----
 
-TEMP NOTES:
--Removed "Tan" style option
+*Warning: Make sure to read this article before updating: [Updating to theme with framework 2.3+](http://support.themeblvd.com/updating-to-framework-v2-3/)*
+
+* **Updated Theme Blvd framework to 2.4.4**
+* Admin styling adjustments for WordPress 3.8+
+* Improvements and fixes for WordPress 3.6+
+	* Added support for WordPress 3.5+ media uploader.
+	* Added responsive support for self-hosted videos.
+	* Added responsive support for self-hosted audio files.
+	* Resulting pagination from using `<!--nextpage-->` is now filtered to output like framework's pagination.
+* Added [Twitter Bootstrap](http://twitter.github.io/bootstrap/) 3.1 and [FontAwesome](http://fortawesome.github.io/Font-Awesome/) 4.
+	* Complete CSS overhaul.
+	* Basic HiDPI (i.e. Retina) support added to main layout elements.
+	* Tons of responsive improvements for mobile devices and tablets.
+	* Improved mobile appearance when responsive design is turned *off*.
+	* Icon-support added to WordPress's menu builder.
+	* Styling enhancements for WordPress's "Custom Menu" widget when used in sidebars.
+	* All Bootstrap components and javascript available for use within your custom HTML and Child themes.
+* Layout Builder functionality moved to [Theme Blvd Layout Builder](http://wordpress.org/plugins/theme-blvd-layout-builder/) plugin.
+	* Now edit custom layouts directly from the Edit Page screen, in addition to the Builder.
+	* Minor UI improvements for managing layouts.
+	* Can now edit layout names and ID's after creating them.
+* Slider functionality moved to [Theme Blvd Sliders](http://wordpress.org/plugins/theme-blvd-sliders/) plugin.
+	* [Nivo](http://dev7studios.com/nivo-slider/) slider type added.
+	* [Bootstrap Carousel](http://getbootstrap.com/javascript/#carousel) slider type added.
+	* No more fixed CSS heights on sliders any where.
+	* Height limits on slider videos is now controlled when editing a slider.
+	* Custom image size selection added.
+	* Full-size image links added.
+	* Buttons on full-width image slides removed; use image link instead.
+	* Post Slider added, which generates standard slider from a set of posts.
+	* Minor UI improvements for managing sliders.
+	* Can now edit slider names and ID's after creating them.
+	* Sliders now displayed on frontend much more efficiently.
+	* Much more extendable for developers.
+* Custom widget area functionality moved to [Theme Blvd Widget Areas](http://wordpress.org/plugins/theme-blvd-widget-areas/) plugin.
+	* Custom [conditional support](http://codex.wordpress.org/Conditional_Tags) for assigning widget areas added.
+	* Can now apply custom sidebars directly while editing pages, if you like.
+	* Minor UI improvements for managing widget areas.
+* Widgets moved to [Theme Blvd Widget Pack](http://wordpress.org/plugins/theme-blvd-widget-pack/) plugin.
+	* Twitter widget has been removed; use [Tweeple](http://wordpress.org/plugins/tweeple/) plugin instead.
+	* Horizontal menu widget added for collapsible widget areas.
+	* Mini Post Grid can now take a standard gallery.
+* Shortcodes moved to [Theme Blvd Shortcodes](http://wordpress.org/plugins/theme-blvd-shortcodes/) plugin.
+	* Many new shortcodes and enhancements added for Twitter Bootstrap integration.
+	* New `[gallery_slider]` shortcode to quickly create sliders -- Ex: `[gallery_slider ids="1,2,3"]`
+	* A lot of current shortcodes have changed, but with backward compatibility in mind.
+	* Lightbox shortcode added with Auto Lightbox feature. ([See video](https://vimeo.com/65843469))
+	* The `[icon]` shortcode now accepts custom icons; simply create an "icons" folder in your Child theme.
+	* New general documentation website for shortcode usage. [shortcodes.themeblvd.com](http://shortcodes.themeblvd.com)
+* Default lightbox integration now uses [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/).
+	* Huge improvements to responsive handling.
+	* Corresponding setup options added to *Appearance > Theme Options > Content > Lightbox*.
+	* Google map support added for lightbox popups.
+	* Get prettyPhoto back by activating the [Theme Blvd prettyPhoto](http://wordpress.org/plugins/theme-blvd-prettyphoto/) plugin (with HiDPI/Retina support added).
+* Theme Options updates.
+	* Minor UI enhancements.
+	* Added option to select color of social media icons.
+	* Added HiDPI (Retina) support for logo option.
+	* Added new lightbox options.
+	* Removed "Accent Color" option.
+	* Removed "Tan" selection from content color option.
+	* Removed analytics option ([use plugin](http://wordpress.org/plugins/simple-analytics/)).
+* Enhanced developer love.
+	* Huge framework improvements to the API system, database querying, and performance.
+	* Tons of new filters and actions added.
+	* CSS files re-arranged for easier Child theme CSS mods; now use style.css.
+	* A lot of code re-formatting, commenting and overall cleanup for better organization and readability.
+	* Still continuing to grow the developer documentation. [dev.themeblvd.com](http://dev.themeblvd.com).
 
 --------------------------------------------------------------
 
