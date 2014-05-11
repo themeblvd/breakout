@@ -19,7 +19,9 @@
 article,
 #respond,
 .fixed-sidebar .widget .widget-inner,
-.element.boxed-element > .element-inner,
+.featured-content > .element.boxed-element > .element-inner,
+#content > .inner > .element.boxed-element > .element-inner,
+.featured_below-content > .element.boxed-element > .element-inner,
 #comments .comment-body {
 	background-color: #2e2e2e;
 	border-color: #000000;

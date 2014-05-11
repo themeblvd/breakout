@@ -29,7 +29,9 @@
 
 .article-wrap,
 .fixed-sidebar .widget,
-.element.boxed-element,
+.featured-content > .element.boxed-element,
+#content > .inner > .element.boxed-element,
+.featured_below-content > .element.boxed-element,
 .top-shadow,
 #comments li {
 	background-position: center top;
@@ -43,8 +45,12 @@
 	margin: 0 0 10px 0; /* Builder elements don't get their margin here */
 }
 .article-wrap,
-.element.boxed-element,
-.top-shadow,
+.featured-content > .element.boxed-element,
+#content > .inner > .element.boxed-element,
+.featured_below-content > .element.boxed-element,
+.featured-content > .element.top-shadow,
+#content > .inner > .element.top-shadow,
+.featured_below-content > .element.top-shadow,
 #comments li {
 	background-image: url(../images/article-shadow-light.png);
 }
@@ -54,7 +60,9 @@
 article,
 #respond,
 .fixed-sidebar .widget .widget-inner,
-.element.boxed-element > .element-inner,
+.featured-content > .element.boxed-element > .element-inner,
+#content > .inner > .element.boxed-element > .element-inner,
+.featured_below-content > .element.boxed-element > .element-inner,
 #comments .comment-body {
 	background-color: #ffffff;
 	border: 1px solid #d1d1d1;
@@ -940,24 +948,40 @@ body, /* body bg matches footer to give illusion footer goes all the way to the 
 }
 
 /* Element Spacing */
-.element {
+.featured-content > .element,
+#content > .inner > .element,
+.featured_below-content > .element {
 	padding: 0;
 	margin-bottom: 20px;
 }
-.element.boxed-element,
-.element.top-shadow {
+.featured-content > .element.boxed-element,
+#content > .inner > .element.boxed-element,
+.featured_below-content > .element.boxed-element,
+.featured-content > .element.top-shadow,
+#content > .inner > .element.top-shadow,
+.featured_below-content > .element.top-shadow {
 	margin-top: -10px;
 	padding-top: 10px;
 }
-.element.boxed-element.first-element,
-.element.top-shadow.first-element {
+.featured-content > .element.boxed-element.first-element,
+#content > .inner > .element.boxed-element.first-element,
+.featured_below-content > .element.boxed-element.first-element,
+.featured-content > .element.top-shadow.first-element,
+#content > .inner > .element.top-shadow.first-element,
+.featured_below-content > .element.top-shadow.first-element {
 	margin-top: 0;
 }
-.element.boxed-element.last-element,
-.element.top-shadow.last-element {
+.featured-content > .element.boxed-element.last-element,
+#content > .inner > .element.boxed-element.last-element,
+.featured_below-content > .element.boxed-element.last-element,
+.featured-content > .element.top-shadow.last-element,
+#content > .inner > .element.top-shadow.last-element,
+.featured_below-content > .element.top-shadow.last-element {
 	margin-bottom: 10px;
 }
-.element.boxed-element > .element-inner,
+.featured-content > .element.boxed-element > .element-inner,
+#content > .inner > .element.boxed-element > .element-inner,
+.featured_below-content > .element.boxed-element > .element-inner,
 .tb-tabs-open .tab-content {
 	padding: 25px;
 }
@@ -968,15 +992,6 @@ body, /* body bg matches footer to give illusion footer goes all the way to the 
 .element-post_list_slider .article-wrap {
 	background-color: transparent !important;
 	background-image: none !important;
-}
-.tab-content .boxed-element,
-.tab-content  .boxed-element > .element-inner,
-.boxed-element .boxed-element,
-.boxed-element .boxed-element > .element-inner {
-	background-color: transparent;
-	background-image: none;
-	border: none;
-	padding: 0;
 }
 
 /* Headline */
