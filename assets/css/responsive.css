@@ -22,25 +22,26 @@
 	}
 
 	/* Main Menu */
-	#access li a {
+	#primary-menu li a {
 		font-size: 11px;
 		font-weight: normal;
 		padding: 0 10px;
 	}
-	#access li.home a {
+	#primary-menu li.home a,
+	#primary-menu li.home a:hover {
 		background-position: -4px 0;
 		width: 30px;
 	}
-	#access li.home a:hover {
+	#primary-menu li.home a:hover {
 		background-position: -4px -46px;
 	}
-	#access li a.sf-with-ul {
+	#primary-menu > li > a.sf-with-ul {
 		padding-right: 28px;
 	}
-	#access li a > .sf-sub-indicator {
+	#primary-menu li a > .sf-sub-indicator {
 		right: 10px;
 	}
-	#access ul.sf-menu > [class^="menu-icon-"] > a {
+	#primary-menu > [class^="menu-icon-"] > a {
 		padding-left: 8px;
 	}
 

@@ -4,7 +4,7 @@ Breakout Changelog
 2.0.1
 -----
 
-
+* Fixed main menu's home button bug on tablet view.
 
 2.0.0
 -----
