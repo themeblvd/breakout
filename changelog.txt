@@ -1,6 +1,14 @@
 Breakout Changelog
 ==================
 
+2.0.3
+-----
+
+* Fixed duplicate closing `</a>` bug with dropdowns menus of main navigation.
+* Minor security fix.
+
+--------------------------------------------------------------
+
 2.0.2
 -----
 

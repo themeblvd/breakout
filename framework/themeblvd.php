@@ -50,11 +50,9 @@ if ( is_admin() ) {
 	add_action( 'themeblvd_api', 'themeblvd_api_init' );
 	add_action( 'admin_enqueue_scripts', 'themeblvd_non_modular_assets' );
 	add_action( 'admin_init', 'themeblvd_add_sanitization' );
-	add_action( 'admin_init', 'themeblvd_disable_nag' );
 	add_action( 'admin_init', 'themeblvd_clear_options' );
 	add_action( 'wp_before_admin_bar_render', 'themeblvd_admin_menu_bar' );
 	add_action( 'themeblvd_options_footer_text', 'themeblvd_options_footer_text_default' );
-	add_action( 'admin_init', 'themeblvd_stats' );
 	add_action( 'admin_init', 'themeblvd_update_version' );
 	add_action( 'admin_menu', 'themeblvd_hijack_page_atts' );
 	add_action( 'save_post', 'themeblvd_save_page_atts' );
