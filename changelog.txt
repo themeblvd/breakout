@@ -1,8 +1,8 @@
 Breakout Changelog
 ==================
 
-2.0.4
------
+2.0.4 - 04/21/2015
+------------------
 
 * Updated to Bootstrap 3.3.4.
 * Updated to FontAwesome 4.3.0.
@@ -10,31 +10,31 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-2.0.3
------
+2.0.3 - 01/25/2015
+------------------
 
 * Fixed duplicate closing `</a>` bug with dropdowns menus of main navigation.
 * Minor security fix.
 
 --------------------------------------------------------------
 
-2.0.2
------
+2.0.2 - 11/25/2014
+------------------
 
 * Important security fix.
 * Updated user documentation included in theme package, including new videos for Layout Builder plugin v2 update.
 
 --------------------------------------------------------------
 
-2.0.1
------
+2.0.1 - 05/15/2014
+------------------
 
 * Fixed main menu's home button bug on tablet view.
 
 --------------------------------------------------------------
 
-2.0.0
------
+2.0.0 - 05/12/2014
+------------------
 
 *Warning: Make sure to read this article before updating: [Updating to theme with framework 2.3+](http://support.themeblvd.com/updating-to-framework-v2-3/)*
 
@@ -107,8 +107,8 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.1.4
------
+1.1.4 - 06/02/2012
+------------------
 
 * Fixed bug with customizer clearing social icons saved from Theme Options page.
 * Updated FlexSlider jQuery plugin to v2.0 and made adjustments it's compatible. This shouldn't make any immediate difference in your theme, but will allow us to add functionality in the future. **If you're using the Theme Blvd News Scroller widget, make sure to update it!**
@@ -118,8 +118,8 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.1.3
------
+1.1.3 - 07/02/2012
+------------------
 
 * Added compatibility with WordPress 3.4 Customizer.
 * Added optional pause on hover feature to standard slider options.
@@ -142,16 +142,16 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.1.2
------
+1.1.2 - 06/02/2012
+------------------
 
 * Fixed issues with small thumbnails in post lists and archives after previous update. -- After making this update, although it is not required in all cases, it's suggested that you re-generate your thumbnails.
 * Adjusted header social icons so they open in a new window if they aren't the email icon.
 
 --------------------------------------------------------------
 
-1.1.1
------
+1.1.1 - 05/26/2012
+------------------
 
 * Fixed responsiveness of header logo and social icons for mobile devices.
 * Fixed shortcode generator not inserting [icon_link] properly.
@@ -166,8 +166,8 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.1.0
------
+1.1.0 - 05/20/2012
+------------------
 
 * **Updated to Theme Blvd Framework 2.1.0.**
 * Added many new styling theme options. -- *Make sure to visit your theme options after updating.*
@@ -186,8 +186,8 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.0.3
------
+1.0.3 - 01/28/2012
+------------------
 
 * Updated to Theme Blvd Framework 2.0.5.
 * Adjusted Post List and Post Grid page templates so that the title will show according to option selected under Page Options.
@@ -213,15 +213,15 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.0.2
------
+1.0.2 - 01/14/2012
+------------------
 
 * Fixed initial bug with "Theme Blvd Simple Contact" widget where the field titled "Link #5 URL" was not saving properly.
 
 --------------------------------------------------------------
 
-1.0.1
------
+1.0.1 - 12/28/2011
+------------------
 
 * Updated to Theme Blvd Framework 2.0.4.
 * Now when you turn off responsive design in your Theme Options, your site will have a fixed 960px width across all devices.
@@ -243,7 +243,7 @@ Breakout Changelog
 
 --------------------------------------------------------------
 
-1.0.0
------
+1.0.0 - 12/19/2011
+------------------
 
 * This is the first release constructed from Theme Blvd Framework version 2.0.2.
