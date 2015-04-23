@@ -351,17 +351,6 @@ function breakout_customizer(){
 		$texture_options[$id] = $atts['name'];
 	}
 
-	// Setup logo options
-	$logo_options = array(
-		'logo' => array(
-			'name' 		=> __( 'Logo', 'themeblvd' ),
-			'id' 		=> 'logo',
-			'type' 		=> 'logo',
-			'transport'	=> 'postMessage'
-		)
-	);
-	themeblvd_add_customizer_section( 'logo', __( 'Logo', 'themeblvd' ), $logo_options, 1 );
-
 	// Setup header style options
 	$header_options = array(
 		'header_color' => array(

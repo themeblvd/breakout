@@ -4,6 +4,8 @@ Breakout Changelog
 2.0.5 - 04/24/2015
 ------------------
 
+* Removed logo options from customizer; use *Appearance > Theme Options* instead.
+
 --------------------------------------------------------------
 
 2.0.4 - 04/21/2015
