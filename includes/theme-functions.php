@@ -43,22 +43,24 @@ function breakout_css() {
 
 	wp_enqueue_style( 'themeblvd_breakout' );
 
+	$add_to = 'themeblvd_breakout';
+
 	if ( themeblvd_get_option( 'content_color' ) == 'content_dark' ) {
 		wp_enqueue_style( 'themeblvd_dark' );
+		$add_to = 'themeblvd_dark';
 	}
 
 	if ( themeblvd_supports( 'display', 'responsive' ) ) {
 		wp_enqueue_style( 'themeblvd_responsive' );
+		$add_to = 'themeblvd_responsive';
 	}
 
 	// IE Styles
 	$GLOBALS['wp_styles']->add_data( 'themeblvd_ie', 'conditional', 'lt IE 9' ); // Add IE conditional
 	wp_enqueue_style( 'themeblvd_ie' );
 
-	// Inline styles from theme options --
-	// Note: Using themeblvd_ie as $handle because it's the only
-	// constant stylesheet just before style.css
-	wp_add_inline_style( 'themeblvd_ie', breakout_styles() );
+	// Inline styles from theme options.
+	wp_add_inline_style( $add_to, breakout_styles() );
 
 	// style.css -- This is mainly for WP continuity and Child theme modifications.
 	wp_enqueue_style( 'themeblvd_theme' );

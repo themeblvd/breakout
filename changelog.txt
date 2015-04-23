@@ -5,6 +5,7 @@ Breakout Changelog
 ------------------
 
 * Removed logo options from customizer; use *Appearance > Theme Options* instead.
+* Fixed: Theme-generated styles from theme options not getting applied in WordPress 4.2+
 
 --------------------------------------------------------------
 
