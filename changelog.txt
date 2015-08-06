@@ -4,6 +4,10 @@ Breakout Changelog
 2.0.6 - 08/07/2015
 ------------------
 
+* Updated to FontAwesome 4.4.0.
+* Fixed: Minor PHP warnings around retrieving posts by category from shortcodes.
+* Fixed: Minor admin compatibility issue with WPML 3.2 update.
+
 --------------------------------------------------------------
 
 2.0.5 - 04/24/2015
